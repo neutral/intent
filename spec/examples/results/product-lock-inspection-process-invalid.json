@@ -1,0 +1,7 @@
+{
+  "id": "fixture-lock",
+  "pid": 12345,
+  "journal": "tmp/intent/operations/fixture-lock.json",
+  "sourceDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "processState": "safe-to-delete"
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "intent.project.v1",
+  "name": "Fixture project",
+  "owners": [
+    "example-owner"
+  ],
+  "implementationRoots": [],
+  "exemptions": []
+}

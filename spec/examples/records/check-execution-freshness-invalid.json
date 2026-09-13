@@ -1,0 +1,11 @@
+{
+  "schema": "intent.knowledge-record.v2",
+  "kind": "check",
+  "id": "check.example",
+  "status": "current",
+  "freshness": {
+    "subjectBinding": "exact",
+    "maximumAgeMs": null,
+    "environmentBinding": "none"
+  }
+}

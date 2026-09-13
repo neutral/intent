@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+import { main } from '../../dist/apps/cli/cli.js';
+try { process.exitCode = await main(['open', ...process.argv.slice(2)]); }
+catch (error) { process.stderr.write(`${error.code ?? 'intent.cli.failed'}: ${error.message}\n`); process.exitCode = 2; }

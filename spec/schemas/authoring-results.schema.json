@@ -1,0 +1,404 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:authoring-results:v1",
+  "title": "Intent authoring results v1",
+  "description": "Structural result carriers only. Byte correspondence, source completeness, execution, and authenticity require their owning semantic checks.",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/fileProposal"
+    },
+    {
+      "$ref": "#/$defs/applyResult"
+    },
+    {
+      "$ref": "#/$defs/operationJournal"
+    },
+    {
+      "$ref": "#/$defs/operationInspection"
+    }
+  ],
+  "$defs": {
+    "fileChange": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "allOf": [
+            {
+              "$ref": "urn:intent:schema:common:v1#/$defs/path"
+            },
+            {
+              "pattern": "^intent/"
+            }
+          ]
+        },
+        "before": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 4194304
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 4194304
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "before",
+        "after"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "not": {
+            "properties": {
+              "before": {
+                "type": "null"
+              },
+              "after": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "$comment": "UTF-8 byte limits, aggregate byte count, and unique paths require semantic checks."
+    },
+    "fileProposal": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "intent.file-proposal.v1"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-]{1,100}$"
+        },
+        "sourceBasis": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "proposedBasis": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fileChange"
+          },
+          "minItems": 1,
+          "maxItems": 4096
+        },
+        "digest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        }
+      },
+      "required": [
+        "schema",
+        "id",
+        "sourceBasis",
+        "proposedBasis",
+        "changes",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "applyResult": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-]{1,100}$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "interrupted",
+            "refused"
+          ]
+        },
+        "journal": {
+          "anyOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "urn:intent:schema:common:v1#/$defs/path"
+                },
+                {
+                  "pattern": "^tmp/intent/operations/[A-Za-z0-9-]{1,100}\\.json$"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "written": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/path"
+          },
+          "uniqueItems": true
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "journal",
+        "written",
+        "error"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "refused"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "journal": {
+                "type": "null"
+              },
+              "written": {
+                "maxItems": 0
+              },
+              "error": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "journal": {
+                "type": "null"
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "interrupted"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "journal": {
+                "type": "string"
+              },
+              "error": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "operationJournal": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "intent.operation.v1"
+        },
+        "proposal": {
+          "$ref": "#/$defs/fileProposal"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-]{1,100}$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "interrupted"
+          ]
+        },
+        "journal": {
+          "allOf": [
+            {
+              "$ref": "urn:intent:schema:common:v1#/$defs/path"
+            },
+            {
+              "pattern": "^tmp/intent/operations/[A-Za-z0-9-]{1,100}\\.json$"
+            }
+          ]
+        },
+        "written": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/path"
+          },
+          "uniqueItems": true
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema",
+        "proposal",
+        "id",
+        "status",
+        "journal",
+        "written",
+        "error"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "operationInspection": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-]{1,100}$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "interrupted"
+          ]
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "$ref": "urn:intent:schema:common:v1#/$defs/path"
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "applied",
+                  "original",
+                  "changed-externally"
+                ]
+              },
+              "actualDigest": {
+                "anyOf": [
+                  {
+                    "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "path",
+              "state",
+              "actualDigest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "proposal": {
+          "$ref": "#/$defs/fileProposal"
+        },
+        "journalDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "files",
+        "proposal",
+        "journalDigest"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

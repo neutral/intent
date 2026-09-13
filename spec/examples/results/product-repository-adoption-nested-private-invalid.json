@@ -1,0 +1,95 @@
+{
+  "adoption": {
+    "complete": false,
+    "valid": false,
+    "diagnostics": [
+      {
+        "code": "intent.source.missing",
+        "severity": "error",
+        "stage": "discipline",
+        "path": "pack.json",
+        "message": "Explicit fixture represents unavailable input."
+      }
+    ],
+    "profile": "discipline-adoption-proposal-v1",
+    "pack": {
+      "complete": false,
+      "valid": false,
+      "diagnostics": [
+        {
+          "code": "intent.source.missing",
+          "severity": "error",
+          "stage": "discipline",
+          "path": "pack.json",
+          "message": "Explicit fixture represents unavailable input."
+        }
+      ],
+      "profile": "discipline-pack-validation-v1",
+      "sourceIdentity": "independent-structural-fixture",
+      "coherence": "incomplete",
+      "definition": null,
+      "definitionBytes": null,
+      "records": [],
+      "recordBytes": {},
+      "suppliedManifest": null,
+      "suppliedManifestBytes": null,
+      "candidateManifest": null,
+      "context": null,
+      "catalogBytes": null,
+      "connectionsBytes": null
+    },
+    "packChoice": null,
+    "choices": [],
+    "files": [],
+    "applied": false,
+    "context": {
+      "catalog": {
+        "schema": "intent.catalog.v1",
+        "sources": [],
+        "records": []
+      },
+      "connections": {
+        "schema": "intent.connections.v1",
+        "relationships": [],
+        "conflicts": [],
+        "sourceUses": [],
+        "coverage": [],
+        "checkSelections": []
+      }
+    }
+  },
+  "fileProposal": null,
+  "original": {
+    "sourceBasis": {
+      "kind": "export",
+      "id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "reader": "explicit-fixture"
+    },
+    "config": null,
+    "records": [],
+    "coverage": null,
+    "stages": [
+      {
+        "name": "configuration",
+        "complete": false,
+        "valid": false
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "intent.source.missing",
+        "severity": "error",
+        "stage": "configuration",
+        "message": "Knowledge must start with an exact delimiter.",
+        "path": "intent/project.json",
+        "line": 1
+      }
+    ],
+    "complete": false,
+    "valid": false,
+    "mode": "knowledge",
+    "privateTables": [],
+    "disciplines": null
+  },
+  "proposed": null
+}

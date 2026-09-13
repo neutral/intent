@@ -1,0 +1,6 @@
+{
+  "schema": "intent.knowledge-record.v2",
+  "kind": "assurance",
+  "id": "assurance.example",
+  "status": "current"
+}

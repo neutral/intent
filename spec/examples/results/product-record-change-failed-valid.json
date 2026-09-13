@@ -1,0 +1,52 @@
+{
+  "schema": "intent.record-change-proposal.v1",
+  "operation": "set-status",
+  "fileProposal": null,
+  "original": {
+    "sourceBasis": {
+      "kind": "export",
+      "id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "reader": "explicit-fixture"
+    },
+    "config": null,
+    "records": [],
+    "coverage": null,
+    "stages": [
+      {
+        "name": "configuration",
+        "complete": false,
+        "valid": false
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "intent.source.missing",
+        "severity": "error",
+        "stage": "configuration",
+        "message": "Knowledge must start with an exact delimiter.",
+        "path": "intent/project.json",
+        "line": 1
+      }
+    ],
+    "complete": false,
+    "valid": false,
+    "mode": "knowledge",
+    "disciplines": null
+  },
+  "proposed": null,
+  "impact": null,
+  "diagnostics": [
+    {
+      "code": "intent.source.missing",
+      "severity": "error",
+      "stage": "configuration",
+      "message": "Knowledge must start with an exact delimiter.",
+      "path": "intent/project.json",
+      "line": 1
+    }
+  ],
+  "complete": false,
+  "limitations": [
+    "Independently authored structural fixture; no completed execution, source correspondence, application or adoption is established."
+  ]
+}

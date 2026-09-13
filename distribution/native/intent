@@ -1,0 +1,31 @@
+#!/bin/sh
+set -eu
+launcher=$0
+while [ -L "$launcher" ]; do
+  launcher_dir=$(CDPATH= cd -- "${launcher%/*}" && pwd -P)
+  launcher=$(/usr/bin/readlink "$launcher")
+  case "$launcher" in /*) ;; *) launcher=$launcher_dir/$launcher ;; esac
+done
+bundle=$(CDPATH= cd -- "${launcher%/*}/.." && pwd -P)
+case "$0" in
+  */*) command_dir=$(CDPATH= cd -- "${0%/*}" && pwd -P); INTENT_EXECUTABLE=$command_dir/${0##*/} ;;
+  *) INTENT_EXECUTABLE=$bundle/bin/intent ;;
+esac
+export INTENT_EXECUTABLE
+if [ -x "$bundle/runtime/bin/node" ]; then
+  runtime=$bundle/runtime/bin/node
+else
+  runtime=${INTENT_NODE-}
+  case "$runtime" in /*) ;; *) echo 'Intent application payload requires INTENT_NODE set to an absolute Node.js 24+ executable.' >&2; exit 2 ;; esac
+  if [ ! -x "$runtime" ]; then echo "Intent runtime is not executable: $runtime" >&2; exit 2; fi
+  "$runtime" -e 'if (Number(process.versions.node.split(".")[0]) < 24) { console.error("Intent requires Node.js 24 or newer."); process.exit(2); }'
+fi
+if [ "${1-}" = uninstall ]; then
+  shift
+  exec "$runtime" "$bundle/install.mjs" uninstall "$@"
+fi
+if [ "${1-}" = __intent_install ]; then
+  shift
+  exec "$runtime" "$bundle/install.mjs" install "$@"
+fi
+exec "$runtime" "$bundle/app/apps/cli/intent.mjs" "$@"

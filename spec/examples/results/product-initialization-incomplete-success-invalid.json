@@ -1,0 +1,26 @@
+{
+  "schema": "intent.initialization-proposal.v1",
+  "fileProposal": null,
+  "proposed": null,
+  "diagnostics": [
+    {
+      "code": "intent.source.missing",
+      "severity": "error",
+      "stage": "configuration",
+      "message": "Knowledge must start with an exact delimiter.",
+      "path": "intent/project.json",
+      "line": 1
+    }
+  ],
+  "scope": {
+    "implementationRoots": [
+      "../invalid-request"
+    ],
+    "governedArtifacts": null,
+    "claim": "The caller supplied an invalid root token."
+  },
+  "complete": true,
+  "limitations": [
+    "Independently authored structural fixture; no completed execution, source correspondence, application or adoption is established."
+  ]
+}

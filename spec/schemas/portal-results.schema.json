@@ -1,0 +1,414 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:portal-results:v1",
+  "title": "Intent portal results v1",
+  "description": "Structural result carriers only. Byte correspondence, source completeness, execution, and authenticity require their owning semantic checks.",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/manifest"
+    },
+    {
+      "$ref": "#/$defs/build"
+    }
+  ],
+  "$defs": {
+    "selection": {
+      "type": "object",
+      "properties": {
+        "recordIds": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "recordIds"
+      ],
+      "additionalProperties": false
+    },
+    "sourceBasis": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "working-tree",
+            "export"
+          ]
+        },
+        "id": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        }
+      },
+      "required": [
+        "kind",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "record": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+        },
+        "kind": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/kind"
+        },
+        "status": {
+          "const": "current"
+        },
+        "path": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/path"
+        },
+        "sourceDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "semanticDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "source": {
+          "type": "string",
+          "pattern": "^sources/record-[1-9][0-9]*\\.txt$"
+        },
+        "page": {
+          "type": "string",
+          "pattern": "^record-[1-9][0-9]*\\.html$"
+        },
+        "contextSource": {
+          "type": "string",
+          "pattern": "^sources/record-[1-9][0-9]*\\.context\\.json$"
+        },
+        "contextDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "status",
+        "path",
+        "sourceDigest",
+        "semanticDigest",
+        "source",
+        "page",
+        "contextSource",
+        "contextDigest"
+      ],
+      "additionalProperties": false
+    },
+    "omission": {
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+        },
+        "relation": {
+          "type": "string",
+          "enum": [
+            "refines",
+            "constrains",
+            "realizes",
+            "verified-by",
+            "depends-on",
+            "related-to",
+            "source"
+          ]
+        },
+        "target": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "reason": {
+          "const": "not-selected"
+        }
+      },
+      "required": [
+        "recordId",
+        "relation",
+        "target",
+        "required",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "allOf": [
+            {
+              "$ref": "urn:intent:schema:common:v1#/$defs/path"
+            },
+            {
+              "not": {
+                "const": "manifest.json"
+              }
+            }
+          ]
+        },
+        "sourceDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "mediaType": {
+          "type": "string",
+          "enum": [
+            "text/plain; charset=utf-8",
+            "application/octet-stream",
+            "text/html; charset=utf-8",
+            "text/javascript; charset=utf-8",
+            "text/css; charset=utf-8",
+            "application/json; charset=utf-8"
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "sourceDigest",
+        "bytes",
+        "mediaType"
+      ],
+      "additionalProperties": false
+    },
+    "manifest": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "intent.portal-manifest.v1"
+        },
+        "processor": {
+          "const": "intent.processing.v2"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "\\S"
+        },
+        "sourceBasis": {
+          "$ref": "#/$defs/sourceBasis"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "inputDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/record"
+          }
+        },
+        "omissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/omission"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/output"
+          },
+          "minItems": 4,
+          "allOf": [
+            {
+              "contains": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "const": "index.html"
+                  }
+                },
+                "required": [
+                  "path"
+                ]
+              }
+            },
+            {
+              "contains": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "const": "sources.html"
+                  }
+                },
+                "required": [
+                  "path"
+                ]
+              }
+            },
+            {
+              "contains": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "const": "assets/reader.js"
+                  }
+                },
+                "required": [
+                  "path"
+                ]
+              }
+            },
+            {
+              "contains": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "const": "assets/style.css"
+                  }
+                },
+                "required": [
+                  "path"
+                ]
+              }
+            }
+          ]
+        },
+        "digest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        }
+      },
+      "required": [
+        "schema",
+        "processor",
+        "title",
+        "sourceBasis",
+        "selection",
+        "inputDigest",
+        "records",
+        "omissions",
+        "outputs",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "file": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/path"
+        },
+        "bytes": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/wireBytes"
+        },
+        "mediaType": {
+          "type": "string",
+          "enum": [
+            "text/plain; charset=utf-8",
+            "application/octet-stream",
+            "text/html; charset=utf-8",
+            "text/javascript; charset=utf-8",
+            "text/css; charset=utf-8",
+            "application/json; charset=utf-8"
+          ]
+        },
+        "sourceDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        }
+      },
+      "required": [
+        "path",
+        "bytes",
+        "mediaType",
+        "sourceDigest"
+      ],
+      "additionalProperties": false
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "manifest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/manifest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/file"
+          }
+        },
+        "diagnostics": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/diagnostics"
+        },
+        "complete": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "manifest",
+        "files",
+        "diagnostics",
+        "complete"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "complete": {
+                "const": false
+              }
+            },
+            "required": [
+              "complete"
+            ]
+          },
+          "then": {
+            "properties": {
+              "manifest": {
+                "type": "null"
+              },
+              "files": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            },
+            "required": [
+              "complete"
+            ]
+          },
+          "then": {
+            "properties": {
+              "manifest": {
+                "$ref": "#/$defs/manifest"
+              },
+              "files": {
+                "minItems": 1
+              },
+              "diagnostics": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ],
+      "$comment": "toWire(buildPortal(...)) is the JSON result carrier. Native buildPortal files contain Uint8Array bytes."
+    }
+  }
+}

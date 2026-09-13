@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:fixture-manifest:v1",
+  "title": "Intent fixture-manifest v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "intent.fixture-manifest.v1"
+    },
+    "fixtures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+          },
+          "path": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/path"
+          },
+          "schema": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/line"
+          },
+          "profile": {
+            "const": "schema"
+          },
+          "valid": {
+            "type": "boolean"
+          },
+          "description": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/text"
+          }
+        },
+        "required": [
+          "id",
+          "path",
+          "schema",
+          "profile",
+          "valid",
+          "description"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 65536
+    }
+  },
+  "required": [
+    "schema",
+    "fixtures"
+  ],
+  "additionalProperties": false
+}

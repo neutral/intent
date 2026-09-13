@@ -1,0 +1,57 @@
+{
+  "manifest": {
+    "schema": "intent.portal-manifest.v1",
+    "processor": "intent.processing.v2",
+    "title": "Selected example",
+    "sourceBasis": {
+      "kind": "export",
+      "id": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "selection": {
+      "recordIds": []
+    },
+    "inputDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "records": [],
+    "omissions": [],
+    "outputs": [
+      {
+        "path": "index.html",
+        "sourceDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "bytes": 1,
+        "mediaType": "text/html; charset=utf-8"
+      },
+      {
+        "path": "sources.html",
+        "sourceDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "bytes": 1,
+        "mediaType": "text/html; charset=utf-8"
+      },
+      {
+        "path": "assets/reader.js",
+        "sourceDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "bytes": 1,
+        "mediaType": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "assets/style.css",
+        "sourceDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "bytes": 1,
+        "mediaType": "text/css; charset=utf-8"
+      }
+    ],
+    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "files": [
+    {
+      "path": "manifest.json",
+      "bytes": {
+        "encoding": "base64",
+        "data": "e30K"
+      },
+      "mediaType": "application/json; charset=utf-8",
+      "sourceDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "diagnostics": [],
+  "complete": false
+}

@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+bundle=$(CDPATH= cd -- "${0%/*}" && pwd -P)
+exec "$bundle/bin/intent" __intent_install "$@"

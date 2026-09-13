@@ -1,0 +1,3229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:reader-results:v1",
+  "title": "Intent reader results v1",
+  "description": "Structural result carriers only. Byte correspondence, source completeness, execution, and authenticity require their owning semantic checks.",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/diagnostic"
+    },
+    {
+      "$ref": "#/$defs/record"
+    },
+    {
+      "$ref": "#/$defs/canonicalHeader"
+    },
+    {
+      "$ref": "#/$defs/recordInspection"
+    },
+    {
+      "$ref": "#/$defs/sourceEntry"
+    },
+    {
+      "$ref": "#/$defs/workspace"
+    },
+    {
+      "$ref": "#/$defs/queryPage"
+    },
+    {
+      "$ref": "#/$defs/selection"
+    },
+    {
+      "$ref": "#/$defs/comparison"
+    },
+    {
+      "$ref": "#/$defs/coverage"
+    },
+    {
+      "$ref": "#/$defs/graph"
+    },
+    {
+      "$ref": "#/$defs/disciplineRegistryInspection"
+    },
+    {
+      "$ref": "#/$defs/workspaceReview"
+    },
+    {
+      "$ref": "#/$defs/checkReading"
+    }
+  ],
+  "$defs": {
+    "nonNegativeInteger": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "wireBytes": {
+      "type": "object",
+      "properties": {
+        "encoding": {
+          "const": "base64"
+        },
+        "data": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9+/][A-Za-z0-9+/][A-Za-z0-9+/][A-Za-z0-9+/])*(?:[A-Za-z0-9+/][AQgw]==|[A-Za-z0-9+/][A-Za-z0-9+/][AEIMQUYcgkosw048]=)?$(?![\\s\\S])"
+        }
+      },
+      "required": [
+        "encoding",
+        "data"
+      ],
+      "additionalProperties": false,
+      "$comment": "The toWire projection of a native Uint8Array/Buffer. Schema checks canonical base64 syntax; decoded-byte correspondence and caller-specific size bounds require semantic checks."
+    },
+    "canonicalHeader": {
+      "$ref": "urn:intent:schema:assembled-header:v2",
+      "description": "Canonical assembled metadata reading data; never an authored header."
+    },
+    "diagnostic": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^intent\\.[A-Za-z0-9][A-Za-z0-9.-]*$"
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "error",
+            "warning",
+            "info"
+          ]
+        },
+        "stage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "line": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/positiveInteger"
+        },
+        "pointer": {
+          "type": "string",
+          "pattern": "^(?:/(?:[^~]|~[01])*)*$"
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "code",
+        "severity",
+        "stage",
+        "message",
+        "path"
+      ],
+      "additionalProperties": false,
+      "$comment": "Diagnostic locations preserve unavailable, invalid, or unplaced input. They are not assertions of normalized repository paths."
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/diagnostic"
+      }
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "maxRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536,
+          "default": 65536
+        },
+        "maxRecordBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4194304,
+          "default": 4194304
+        },
+        "maxFrontMatterBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 524288,
+          "default": 524288
+        },
+        "maxTotalRecordBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 268435456,
+          "default": 268435456
+        },
+        "maxJsonDepth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64,
+          "default": 64
+        },
+        "maxJsonNodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536,
+          "default": 65536
+        },
+        "maxGraphEdges": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 262144,
+          "default": 262144
+        },
+        "maxSources": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 262144,
+          "default": 262144
+        },
+        "maxSourceBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4194304,
+          "default": 4194304
+        },
+        "maxTotalSourceBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 268435456,
+          "default": 268435456
+        },
+        "maxPathBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096,
+          "default": 4096
+        },
+        "maxGraphDegree": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "maxGraphWork": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8388608
+        },
+        "maxGraphDiagnostics": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        }
+      },
+      "required": [
+        "maxRecords",
+        "maxRecordBytes",
+        "maxFrontMatterBytes",
+        "maxTotalRecordBytes",
+        "maxJsonDepth",
+        "maxJsonNodes",
+        "maxGraphEdges",
+        "maxSources",
+        "maxSourceBytes",
+        "maxTotalSourceBytes",
+        "maxPathBytes",
+        "maxGraphDegree",
+        "maxGraphWork",
+        "maxGraphDiagnostics"
+      ],
+      "additionalProperties": false
+    },
+    "heading": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6
+        },
+        "text": {
+          "type": "string"
+        },
+        "line": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/positiveInteger"
+        }
+      },
+      "required": [
+        "level",
+        "text",
+        "line"
+      ],
+      "additionalProperties": false
+    },
+    "record": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "header": {
+          "$ref": "urn:intent:schema:assembled-header:v2"
+        },
+        "sourceText": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "semanticDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "title": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/line"
+        },
+        "summary": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "authoredHeader": {
+          "$ref": "urn:intent:schema:knowledge-record:v2"
+        },
+        "context": {
+          "$ref": "#/$defs/recordContext"
+        }
+      },
+      "required": [
+        "path",
+        "header",
+        "sourceText",
+        "sourceDigest",
+        "semanticDigest",
+        "title",
+        "summary",
+        "authoredHeader",
+        "context"
+      ],
+      "additionalProperties": false,
+      "$comment": "One exact Markdown source plus identity, selected metadata and reading summary. Structured document views are requested separately."
+    },
+    "recordInspection": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "raw": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/record"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "$ref": "#/$defs/diagnostics"
+        },
+        "identity": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:knowledge-record:v2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "raw",
+        "record",
+        "valid",
+        "complete",
+        "diagnostics",
+        "identity"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "valid": {
+                "const": true
+              }
+            },
+            "required": [
+              "valid"
+            ]
+          },
+          "then": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    "sourceEntry": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/scopePath"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "file",
+            "symlink",
+            "directory",
+            "other"
+          ]
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "path",
+        "kind",
+        "size"
+      ],
+      "additionalProperties": false
+    },
+    "sourceBasis": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "working-tree",
+            "export"
+          ]
+        },
+        "id": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "reader": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "reader"
+      ],
+      "additionalProperties": false
+    },
+    "workspaceStage": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "enum": [
+            "configuration",
+            "globals",
+            "discovery",
+            "records",
+            "identity-relationships",
+            "coverage",
+            "sources",
+            "disciplines",
+            "source-basis",
+            "description-structure"
+          ]
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "complete",
+        "valid"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "valid": {
+                "const": true
+              }
+            },
+            "required": [
+              "valid"
+            ]
+          },
+          "then": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    "graphEdge": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "refines",
+            "constrains",
+            "realizes",
+            "verified-by",
+            "depends-on",
+            "related-to"
+          ]
+        },
+        "target": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:common:v1#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rationale": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:common:v1#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+        },
+        "sourcePath": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/path"
+        }
+      },
+      "required": [
+        "type",
+        "target",
+        "required",
+        "source",
+        "sourcePath"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-[a-z0-9]+(?:-[a-z0-9]+)*$": {}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "related-to"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "required": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "graph": {
+      "type": "object",
+      "properties": {
+        "edges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/graphEdge"
+          }
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+            },
+            "minItems": 2,
+            "uniqueItems": true
+          }
+        },
+        "diagnostics": {
+          "$ref": "#/$defs/diagnostics"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "limits": {
+          "$ref": "#/$defs/limits"
+        },
+        "workPerformed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8388608
+        }
+      },
+      "required": [
+        "edges",
+        "components",
+        "diagnostics",
+        "complete",
+        "limits",
+        "workPerformed"
+      ],
+      "additionalProperties": false
+    },
+    "coverageArtifact": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/path"
+        },
+        "owners": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "path",
+        "owners"
+      ],
+      "additionalProperties": false
+    },
+    "coverageExemption": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/path"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "file",
+            "tree"
+          ]
+        },
+        "reason": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "matchedPaths": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/path"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "path",
+        "mode",
+        "reason",
+        "matchedPaths"
+      ],
+      "additionalProperties": false
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/coverageArtifact"
+          }
+        },
+        "exemptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/coverageExemption"
+          }
+        },
+        "diagnostics": {
+          "$ref": "#/$defs/diagnostics"
+        },
+        "complete": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "artifacts",
+        "exemptions",
+        "diagnostics",
+        "complete"
+      ],
+      "additionalProperties": false
+    },
+    "disciplineRegistryInspection": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "discipline-registry-correspondence-v1"
+        },
+        "registry": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:discipline-registry:v1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "correspondence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+              },
+              "path": {
+                "$ref": "urn:intent:schema:common:v1#/$defs/path"
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "matched",
+                  "changed",
+                  "missing-record"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "path",
+              "state"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "authenticity": {
+          "const": "not-established"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "$ref": "#/$defs/diagnostics"
+        }
+      },
+      "required": [
+        "profile",
+        "registry",
+        "correspondence",
+        "authenticity",
+        "complete",
+        "valid",
+        "diagnostics"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "valid": {
+                "const": true
+              }
+            },
+            "required": [
+              "valid"
+            ]
+          },
+          "then": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    "sourceObservation": {
+      "type": "object",
+      "properties": {
+        "record": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+        },
+        "id": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+        },
+        "reference": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/source/properties/reference"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "disposition": {
+          "type": "string",
+          "enum": [
+            "resolved",
+            "unrequested",
+            "unsupported",
+            "retrieval-denied",
+            "missing",
+            "unreadable",
+            "digest-mismatch",
+            "revision-mismatch",
+            "role-mismatch"
+          ]
+        },
+        "sourceDigest": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "message": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "record",
+        "id",
+        "reference",
+        "required",
+        "disposition",
+        "sourceDigest",
+        "bytes",
+        "message"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "const": "resolved"
+              }
+            },
+            "required": [
+              "disposition"
+            ]
+          },
+          "then": {
+            "properties": {
+              "sourceDigest": {
+                "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "not": {
+                  "const": "resolved"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "sourceDigest": {
+                "type": "null"
+              },
+              "bytes": {
+                "const": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "inventoryEntry": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/path"
+        },
+        "sourceDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        }
+      },
+      "required": [
+        "path",
+        "sourceDigest"
+      ],
+      "additionalProperties": false
+    },
+    "workspace": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "workspace-v1"
+        },
+        "processor": {
+          "const": "intent.processing.v2"
+        },
+        "sourceBasis": {
+          "$ref": "#/$defs/sourceBasis"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:project:v1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limits": {
+          "$ref": "#/$defs/limits"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/record"
+          }
+        },
+        "inspections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/recordInspection"
+          }
+        },
+        "graph": {
+          "$ref": "#/$defs/graph"
+        },
+        "coverage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/coverage"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disciplines": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/disciplineRegistryInspection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceObservation"
+          }
+        },
+        "inventory": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/inventoryEntry"
+          }
+        },
+        "stages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/workspaceStage"
+          }
+        },
+        "diagnostics": {
+          "$ref": "#/$defs/diagnostics"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "context": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/recordContext"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mode": {
+          "enum": [
+            "knowledge",
+            "reconciliation"
+          ]
+        }
+      },
+      "required": [
+        "profile",
+        "processor",
+        "sourceBasis",
+        "config",
+        "limits",
+        "records",
+        "inspections",
+        "graph",
+        "coverage",
+        "disciplines",
+        "sources",
+        "inventory",
+        "stages",
+        "diagnostics",
+        "complete",
+        "valid",
+        "context",
+        "mode"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "valid": {
+                "const": true
+              }
+            },
+            "required": [
+              "valid"
+            ]
+          },
+          "then": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    "queryPage": {
+      "type": "object",
+      "properties": {
+        "basis": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/recordSummary"
+          },
+          "maxItems": 256
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "nextCursor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "complete": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "basis",
+        "records",
+        "total",
+        "nextCursor",
+        "complete"
+      ],
+      "additionalProperties": false
+    },
+    "selectionReason": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "root",
+            "required-outgoing",
+            "incoming-constraint",
+            "incoming-realization",
+            "optional-navigation"
+          ]
+        },
+        "from": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "relationship": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "refines",
+                "constrains",
+                "realizes",
+                "verified-by",
+                "depends-on",
+                "related-to"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "reason",
+        "from",
+        "relationship"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "reason": {
+                "const": "root"
+              }
+            },
+            "required": [
+              "reason"
+            ]
+          },
+          "then": {
+            "properties": {
+              "from": {
+                "type": "null"
+              },
+              "relationship": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "reason": {
+                "not": {
+                  "const": "root"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "id": {
+                "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+              },
+              "from": {
+                "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+              },
+              "relationship": {
+                "type": "string",
+                "enum": [
+                  "refines",
+                  "constrains",
+                  "realizes",
+                  "verified-by",
+                  "depends-on",
+                  "related-to"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "$comment": "A root ID is a preserved request token; an unresolved invalid token is not normalized into an invented Knowledge identity."
+    },
+    "selection": {
+      "type": "object",
+      "properties": {
+        "basis": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "roots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/record"
+          },
+          "maxItems": 65536
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/selectionReason"
+          }
+        },
+        "unresolved": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        },
+        "diagnostics": {
+          "$ref": "#/$defs/diagnostics"
+        },
+        "maxWork": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8388608
+        },
+        "workPerformed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8388608
+        }
+      },
+      "required": [
+        "basis",
+        "roots",
+        "records",
+        "reasons",
+        "unresolved",
+        "complete",
+        "limit",
+        "diagnostics",
+        "maxWork",
+        "workPerformed"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            },
+            "required": [
+              "complete"
+            ]
+          },
+          "then": {
+            "properties": {
+              "unresolved": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "fileDifference": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/path"
+        },
+        "change": {
+          "type": "string",
+          "enum": [
+            "added",
+            "deleted",
+            "modified"
+          ]
+        },
+        "before": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "change",
+        "before",
+        "after"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "change": {
+                "const": "added"
+              }
+            },
+            "required": [
+              "change"
+            ]
+          },
+          "then": {
+            "properties": {
+              "before": {
+                "type": "null"
+              },
+              "after": {
+                "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "change": {
+                "const": "deleted"
+              }
+            },
+            "required": [
+              "change"
+            ]
+          },
+          "then": {
+            "properties": {
+              "before": {
+                "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+              },
+              "after": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "change": {
+                "const": "modified"
+              }
+            },
+            "required": [
+              "change"
+            ]
+          },
+          "then": {
+            "properties": {
+              "before": {
+                "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+              },
+              "after": {
+                "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "comparison": {
+      "type": "object",
+      "properties": {
+        "before": {
+          "$ref": "#/$defs/sourceBasis"
+        },
+        "after": {
+          "$ref": "#/$defs/sourceBasis"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fileDifference"
+          }
+        },
+        "affectedIds": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+          },
+          "uniqueItems": true
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "interpretation": {
+          "const": "Impact identifies candidates for examination; it does not decide whether prose must change."
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+              },
+              "changed": {
+                "type": "boolean"
+              },
+              "before": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/recordSummary"
+                }
+              },
+              "after": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/recordSummary"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "changed",
+              "before",
+              "after"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "recordTotal": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "recordLimit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "context": {
+          "type": "object",
+          "properties": {
+            "before": {
+              "type": "object",
+              "properties": {
+                "config": {
+                  "anyOf": [
+                    {
+                      "$ref": "urn:intent:schema:project:v1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "coverage": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/coverage"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "diagnostics": {
+                  "$ref": "#/$defs/diagnostics"
+                },
+                "complete": {
+                  "type": "boolean"
+                },
+                "valid": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "config",
+                "coverage",
+                "diagnostics",
+                "complete",
+                "valid"
+              ],
+              "additionalProperties": false
+            },
+            "after": {
+              "type": "object",
+              "properties": {
+                "config": {
+                  "anyOf": [
+                    {
+                      "$ref": "urn:intent:schema:project:v1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "coverage": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/coverage"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "diagnostics": {
+                  "$ref": "#/$defs/diagnostics"
+                },
+                "complete": {
+                  "type": "boolean"
+                },
+                "valid": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "config",
+                "coverage",
+                "diagnostics",
+                "complete",
+                "valid"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "before",
+            "after"
+          ],
+          "additionalProperties": false
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "recordByteLimit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "recordBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 67108864
+        }
+      },
+      "required": [
+        "before",
+        "after",
+        "changes",
+        "affectedIds",
+        "complete",
+        "interpretation",
+        "records",
+        "recordTotal",
+        "recordLimit",
+        "context",
+        "limitations",
+        "recordByteLimit",
+        "recordBytes"
+      ],
+      "additionalProperties": false
+    },
+    "comparisonSourcePreview": {
+      "type": "object",
+      "properties": {
+        "sourceDigest": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sizeBytes": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "observed",
+            "outside-observation",
+            "binary",
+            "unavailable"
+          ]
+        },
+        "truncated": {
+          "type": "boolean"
+        },
+        "message": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "sourceDigest",
+        "sizeBytes",
+        "text",
+        "status",
+        "truncated",
+        "message"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "observed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "sourceDigest": {
+                "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+              },
+              "sizeBytes": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "outside-observation",
+                  "binary",
+                  "unavailable"
+                ]
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "text": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "workspaceReview": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "intent.workspace-review.v1"
+        },
+        "comparison": {
+          "$ref": "#/$defs/comparison"
+        },
+        "code": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "$ref": "urn:intent:schema:common:v1#/$defs/path"
+              },
+              "beforeOwners": {
+                "type": "array",
+                "items": {
+                  "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+                }
+              },
+              "afterOwners": {
+                "type": "array",
+                "items": {
+                  "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+                }
+              },
+              "before": {
+                "$ref": "#/$defs/comparisonSourcePreview"
+              },
+              "after": {
+                "$ref": "#/$defs/comparisonSourcePreview"
+              }
+            },
+            "required": [
+              "path",
+              "beforeOwners",
+              "afterOwners",
+              "before",
+              "after"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "codeTotal": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "maxFiles": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4096
+            },
+            "maxFileBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16777216
+            },
+            "maxTotalBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 268435456
+            },
+            "maxPreviewBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1048576
+            }
+          },
+          "required": [
+            "maxFiles",
+            "maxFileBytes",
+            "maxTotalBytes",
+            "maxPreviewBytes"
+          ],
+          "additionalProperties": false
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "comparison",
+        "code",
+        "codeTotal",
+        "limits",
+        "complete",
+        "limitations"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "comparison": {
+                "properties": {
+                  "complete": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "complete"
+                ]
+              }
+            },
+            "required": [
+              "comparison"
+            ]
+          },
+          "then": {
+            "properties": {
+              "complete": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "contains": {
+                  "anyOf": [
+                    {
+                      "properties": {
+                        "before": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "truncated": {
+                                  "const": true
+                                }
+                              },
+                              "required": [
+                                "truncated"
+                              ]
+                            },
+                            {
+                              "properties": {
+                                "status": {
+                                  "const": "unavailable"
+                                }
+                              },
+                              "required": [
+                                "status"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "before"
+                      ]
+                    },
+                    {
+                      "properties": {
+                        "after": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "truncated": {
+                                  "const": true
+                                }
+                              },
+                              "required": [
+                                "truncated"
+                              ]
+                            },
+                            {
+                              "properties": {
+                                "status": {
+                                  "const": "unavailable"
+                                }
+                              },
+                              "required": [
+                                "status"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "after"
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "code"
+            ]
+          },
+          "then": {
+            "properties": {
+              "complete": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "behaviorSpec": {
+      "type": "object",
+      "properties": {
+        "outcome": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "actors": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "conditions": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "included": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "excluded": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "examples": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "falsifiers": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        }
+      },
+      "required": [
+        "outcome",
+        "actors",
+        "conditions",
+        "included",
+        "excluded",
+        "examples",
+        "falsifiers"
+      ],
+      "additionalProperties": false
+    },
+    "assuranceSpec": {
+      "type": "object",
+      "properties": {
+        "obligation": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "scope": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "failureModes": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "limits": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "degradation": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "falsifiers": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        }
+      },
+      "required": [
+        "obligation",
+        "scope",
+        "failureModes",
+        "limits",
+        "degradation",
+        "falsifiers"
+      ],
+      "additionalProperties": false
+    },
+    "blueprintSpec": {
+      "type": "object",
+      "properties": {
+        "decision": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "scope": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "components": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "constraints": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "interfaces": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "dataFlows": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "tradeoffs": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "evolution": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        }
+      },
+      "required": [
+        "decision",
+        "scope",
+        "components",
+        "constraints",
+        "interfaces",
+        "dataFlows",
+        "tradeoffs",
+        "evolution"
+      ],
+      "additionalProperties": false
+    },
+    "descriptionSpec": {
+      "type": "object",
+      "properties": {
+        "responsibility": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "coverage": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:knowledge-record:v2#/$defs/coverageSelector"
+          },
+          "minItems": 1,
+          "maxItems": 4096
+        },
+        "behavior": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "boundaries": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "invariants": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "dependencies": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "failure": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "rationale": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        }
+      },
+      "required": [
+        "responsibility",
+        "coverage",
+        "behavior",
+        "boundaries",
+        "invariants",
+        "dependencies",
+        "failure",
+        "rationale"
+      ],
+      "additionalProperties": false
+    },
+    "checkSpec": {
+      "type": "object",
+      "properties": {
+        "proposition": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "subjects": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/subject"
+          },
+          "minItems": 1,
+          "maxItems": 4096
+        },
+        "evidenceKinds": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/evidenceKind"
+          },
+          "minItems": 1,
+          "maxItems": 6,
+          "uniqueItems": true
+        },
+        "evaluation": {
+          "type": "object",
+          "properties": {
+            "pass": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/text"
+            },
+            "fail": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/text"
+            },
+            "indeterminate": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/text"
+            },
+            "notRun": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/text"
+            }
+          },
+          "required": [
+            "pass",
+            "fail",
+            "indeterminate",
+            "notRun"
+          ],
+          "additionalProperties": false
+        },
+        "limits": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "falsifiers": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "evidence": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        }
+      },
+      "required": [
+        "proposition",
+        "subjects",
+        "evidenceKinds",
+        "evaluation",
+        "limits",
+        "falsifiers",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "$comment": "A Check defines verification. Its criteria describe what would satisfy or falsify the proposition; no implementation, executable configuration, or observed result is required."
+    },
+    "disciplineSpec": {
+      "type": "object",
+      "properties": {
+        "practice": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "appliesWhen": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "doesNotApplyWhen": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "guidance": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "verification": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        }
+      },
+      "required": [
+        "practice",
+        "appliesWhen",
+        "doesNotApplyWhen",
+        "guidance",
+        "verification"
+      ],
+      "additionalProperties": false
+    },
+    "sectionEntry": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192,
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:knowledge-record:v2#/$defs/entryId"
+            },
+            {
+              "pattern": "^(?:refines|constrains|realizes|verified-by|depends-on|related-to):(?:behavior|assurance|blueprint|description|check|discipline)\\.[a-z0-9]+(?:[-.][a-z0-9]+)*$"
+            }
+          ]
+        },
+        "markdown": {
+          "type": "string",
+          "minLength": 1
+        },
+        "line": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/positiveInteger"
+        }
+      },
+      "required": [
+        "id",
+        "markdown",
+        "line"
+      ],
+      "additionalProperties": false
+    },
+    "section": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/line"
+        },
+        "markdown": {
+          "type": "string"
+        },
+        "line": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/positiveInteger"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sectionEntry"
+          },
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "name",
+        "markdown",
+        "line",
+        "entries"
+      ],
+      "additionalProperties": false
+    },
+    "relationshipDetail": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "refines",
+            "constrains",
+            "realizes",
+            "verified-by",
+            "depends-on",
+            "related-to"
+          ]
+        },
+        "target": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+        },
+        "scope": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "rationale": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        }
+      },
+      "required": [
+        "type",
+        "target"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "scope"
+          ]
+        },
+        {
+          "required": [
+            "rationale"
+          ]
+        }
+      ]
+    },
+    "recordContext": {
+      "type": "object",
+      "properties": {
+        "catalog": {
+          "$ref": "urn:intent:schema:catalog:v1"
+        },
+        "connections": {
+          "$ref": "urn:intent:schema:connections:v1"
+        }
+      },
+      "required": [
+        "catalog",
+        "connections"
+      ],
+      "additionalProperties": false
+    },
+    "connectionDetail": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+          "maxLength": 160
+        },
+        "kind": {
+          "enum": [
+            "relationships",
+            "conflicts",
+            "sourceUses",
+            "coverage",
+            "checkSelections"
+          ]
+        },
+        "markdown": {
+          "type": "string",
+          "minLength": 1
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "markdown",
+        "line"
+      ],
+      "additionalProperties": false
+    },
+    "behaviorMeaning": {
+      "type": "object",
+      "properties": {
+        "outcome": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "actors": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "conditions": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "included": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "excluded": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "examples": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "falsifiers": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        }
+      },
+      "required": [
+        "outcome",
+        "actors",
+        "conditions",
+        "included",
+        "excluded",
+        "examples",
+        "falsifiers"
+      ],
+      "additionalProperties": false
+    },
+    "assuranceMeaning": {
+      "type": "object",
+      "properties": {
+        "obligation": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "scope": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "failureModes": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "limits": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "degradation": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "falsifiers": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        }
+      },
+      "required": [
+        "obligation",
+        "scope",
+        "failureModes",
+        "limits",
+        "degradation",
+        "falsifiers"
+      ],
+      "additionalProperties": false
+    },
+    "blueprintMeaning": {
+      "type": "object",
+      "properties": {
+        "decision": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "scope": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "components": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "constraints": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "interfaces": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "dataFlows": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "tradeoffs": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "evolution": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        }
+      },
+      "required": [
+        "decision",
+        "scope",
+        "components",
+        "constraints",
+        "interfaces",
+        "dataFlows",
+        "tradeoffs",
+        "evolution"
+      ],
+      "additionalProperties": false
+    },
+    "descriptionMeaning": {
+      "type": "object",
+      "properties": {
+        "responsibility": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "behavior": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "boundaries": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "invariants": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "dependencies": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "failure": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "rationale": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        }
+      },
+      "required": [
+        "responsibility",
+        "behavior",
+        "boundaries",
+        "invariants",
+        "dependencies",
+        "failure",
+        "rationale"
+      ],
+      "additionalProperties": false
+    },
+    "checkMeaning": {
+      "type": "object",
+      "properties": {
+        "proposition": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "evaluation": {
+          "type": "object",
+          "properties": {
+            "pass": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/text"
+            },
+            "fail": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/text"
+            },
+            "indeterminate": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/text"
+            },
+            "notRun": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/text"
+            }
+          },
+          "required": [
+            "pass",
+            "fail",
+            "indeterminate",
+            "notRun"
+          ],
+          "additionalProperties": false
+        },
+        "limits": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "falsifiers": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "evidence": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        }
+      },
+      "required": [
+        "proposition",
+        "evaluation",
+        "limits",
+        "falsifiers",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "$comment": "A Check defines verification. Its criteria describe what would satisfy or falsify the proposition; no implementation, executable configuration, or observed result is required."
+    },
+    "disciplineMeaning": {
+      "type": "object",
+      "properties": {
+        "practice": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "appliesWhen": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "doesNotApplyWhen": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        },
+        "guidance": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/nonemptyStrings"
+        },
+        "verification": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/strings"
+        }
+      },
+      "required": [
+        "practice",
+        "appliesWhen",
+        "doesNotApplyWhen",
+        "guidance",
+        "verification"
+      ],
+      "additionalProperties": false
+    },
+    "readableKnowledge": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+        },
+        "kind": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/kind"
+        },
+        "status": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/status"
+        },
+        "path": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/path"
+        },
+        "title": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/line"
+        },
+        "summary": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "body": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "status",
+        "path",
+        "title",
+        "summary",
+        "body"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "behavior"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "spec": {
+                "$ref": "#/$defs/behaviorSpec"
+              },
+              "id": {
+                "pattern": "^behavior\\."
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "assurance"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "spec": {
+                "$ref": "#/$defs/assuranceSpec"
+              },
+              "id": {
+                "pattern": "^assurance\\."
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "blueprint"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "spec": {
+                "$ref": "#/$defs/blueprintSpec"
+              },
+              "id": {
+                "pattern": "^blueprint\\."
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "description"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "spec": {
+                "$ref": "#/$defs/descriptionSpec"
+              },
+              "id": {
+                "pattern": "^description\\."
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "check"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "spec": {
+                "$ref": "#/$defs/checkSpec"
+              },
+              "id": {
+                "pattern": "^check\\."
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "discipline"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "spec": {
+                "$ref": "#/$defs/disciplineSpec"
+              },
+              "id": {
+                "pattern": "^discipline\\."
+              }
+            }
+          }
+        }
+      ]
+    },
+    "readableCheck": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "allOf": [
+            {
+              "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+            },
+            {
+              "pattern": "^check\\."
+            }
+          ]
+        },
+        "kind": {
+          "const": "check"
+        },
+        "status": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/status"
+        },
+        "path": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/path"
+        },
+        "title": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/line"
+        },
+        "summary": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "body": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subjects": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/subject"
+          },
+          "minItems": 1,
+          "maxItems": 4096
+        },
+        "evidenceKinds": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/evidenceKind"
+          },
+          "minItems": 1,
+          "maxItems": 6,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "status",
+        "path",
+        "title",
+        "summary",
+        "body",
+        "subjects",
+        "evidenceKinds"
+      ],
+      "additionalProperties": false
+    },
+    "checkSupport": {
+      "type": "object",
+      "properties": {
+        "knowledge": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/readableKnowledge"
+            },
+            {
+              "properties": {
+                "status": {
+                  "const": "current"
+                },
+                "kind": {
+                  "enum": [
+                    "behavior",
+                    "assurance",
+                    "blueprint",
+                    "description",
+                    "check"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "relationship": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "verified-by"
+            },
+            "target": {
+              "allOf": [
+                {
+                  "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+                },
+                {
+                  "pattern": "^check\\."
+                }
+              ]
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "scope": {
+              "anyOf": [
+                {
+                  "$ref": "urn:intent:schema:common:v1#/$defs/text"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "rationale": {
+              "anyOf": [
+                {
+                  "$ref": "urn:intent:schema:common:v1#/$defs/text"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "target",
+            "required",
+            "scope",
+            "rationale"
+          ],
+          "additionalProperties": false,
+          "patternProperties": {
+            "^x-[a-z0-9]+(?:-[a-z0-9]+)*$": {}
+          }
+        },
+        "sourceResolution": {
+          "enum": [
+            "unique",
+            "ambiguous"
+          ]
+        },
+        "targetResolution": {
+          "enum": [
+            "unique",
+            "ambiguous"
+          ]
+        }
+      },
+      "required": [
+        "knowledge",
+        "relationship",
+        "sourceResolution",
+        "targetResolution"
+      ],
+      "additionalProperties": false
+    },
+    "checkReading": {
+      "type": "object",
+      "properties": {
+        "basis": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "check": {
+          "$ref": "#/$defs/readableCheck"
+        },
+        "supportedKnowledge": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/checkSupport"
+          }
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "$ref": "#/$defs/diagnostics"
+        },
+        "context": {
+          "type": "object",
+          "properties": {
+            "complete": {
+              "type": "boolean"
+            },
+            "valid": {
+              "type": "boolean"
+            },
+            "stages": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/workspaceStage"
+              }
+            },
+            "diagnostics": {
+              "$ref": "#/$defs/diagnostics"
+            }
+          },
+          "required": [
+            "complete",
+            "valid",
+            "stages",
+            "diagnostics"
+          ],
+          "additionalProperties": false
+        },
+        "maxBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "basis",
+        "check",
+        "supportedKnowledge",
+        "complete",
+        "valid",
+        "diagnostics",
+        "context",
+        "maxBytes",
+        "limitations"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "complete": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "valid": {
+                "const": false
+              }
+            }
+          }
+        }
+      ],
+      "$comment": "Readable definition data derived from one workspace observation. Criteria and verified-by relationships are not outcomes. Current source/target resolution, full body correspondence, serialized byte bounds and contextual completeness require semantic checks."
+    },
+    "recordSummary": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "header": {
+          "$ref": "urn:intent:schema:assembled-header:v2"
+        },
+        "title": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/line"
+        },
+        "summary": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "sourceDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "semanticDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        }
+      },
+      "required": [
+        "path",
+        "header",
+        "title",
+        "summary",
+        "sourceDigest",
+        "semanticDigest"
+      ],
+      "additionalProperties": false
+    },
+    "workspaceSummary": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "knowledge",
+            "reconciliation"
+          ]
+        },
+        "sourceBasis": {
+          "$ref": "#/$defs/sourceBasis"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:project:v1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coverage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/coverage"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/workspaceStage"
+          }
+        },
+        "diagnostics": {
+          "$ref": "#/$defs/diagnostics"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/recordSummary"
+          }
+        },
+        "disciplines": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/disciplineRegistryInspection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "mode",
+        "sourceBasis",
+        "config",
+        "coverage",
+        "stages",
+        "diagnostics",
+        "complete",
+        "valid",
+        "records",
+        "disciplines"
+      ],
+      "additionalProperties": false
+    },
+    "recordDocument": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/line"
+        },
+        "summary": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/text"
+        },
+        "spec": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/behaviorSpec"
+            },
+            {
+              "$ref": "#/$defs/assuranceSpec"
+            },
+            {
+              "$ref": "#/$defs/blueprintSpec"
+            },
+            {
+              "$ref": "#/$defs/descriptionSpec"
+            },
+            {
+              "$ref": "#/$defs/checkSpec"
+            },
+            {
+              "$ref": "#/$defs/disciplineSpec"
+            }
+          ]
+        },
+        "headings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/heading"
+          },
+          "maxItems": 4096
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/section"
+          },
+          "maxItems": 4096
+        },
+        "relationshipDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relationshipDetail"
+          },
+          "maxItems": 4096
+        },
+        "connectionDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/connectionDetail"
+          },
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "body",
+        "title",
+        "summary",
+        "spec",
+        "headings",
+        "sections",
+        "relationshipDetails",
+        "connectionDetails"
+      ],
+      "additionalProperties": false
+    },
+    "guidanceDiscovery": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "maxItems": 4096,
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "pattern": "^(GUIDANCE\\.md|(guidance|families)/[^\\\\]+\\.md)$",
+                "maxLength": 1024
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "path",
+              "bytes"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "interpretation": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "files",
+        "interpretation"
+      ],
+      "additionalProperties": false
+    },
+    "guidanceReading": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^(GUIDANCE\\.md|(guidance|families)/[^\\\\]+\\.md)$",
+          "maxLength": 1024
+        },
+        "markdown": {
+          "type": "string"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 262144
+        },
+        "sourceDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        }
+      },
+      "required": [
+        "path",
+        "markdown",
+        "bytes",
+        "sourceDigest"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

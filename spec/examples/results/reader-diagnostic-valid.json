@@ -1,0 +1,8 @@
+{
+  "code": "intent.record.front-matter",
+  "severity": "error",
+  "stage": "framing",
+  "message": "Knowledge must start with an exact delimiter.",
+  "path": "intent/blueprint/example.md",
+  "line": 1
+}

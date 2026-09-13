@@ -1,0 +1,126 @@
+{
+  "format": "intent.schema-bundle.v1",
+  "dialect": "https://json-schema.org/draft/2020-12/schema",
+  "schemas": [
+    {
+      "path": "assembled-header.schema.json",
+      "id": "urn:intent:schema:assembled-header:v2",
+      "references": [
+        "urn:intent:schema:common:v1"
+      ]
+    },
+    {
+      "path": "authoring-results.schema.json",
+      "id": "urn:intent:schema:authoring-results:v1",
+      "references": [
+        "urn:intent:schema:common:v1",
+        "urn:intent:schema:integrity:v1"
+      ]
+    },
+    {
+      "path": "catalog.schema.json",
+      "id": "urn:intent:schema:catalog:v1",
+      "references": [
+        "urn:intent:schema:common:v1"
+      ]
+    },
+    {
+      "path": "common.schema.json",
+      "id": "urn:intent:schema:common:v1",
+      "references": []
+    },
+    {
+      "path": "connections.schema.json",
+      "id": "urn:intent:schema:connections:v1",
+      "references": [
+        "urn:intent:schema:common:v1"
+      ]
+    },
+    {
+      "path": "discipline-pack-manifest.schema.json",
+      "id": "urn:intent:schema:discipline-pack-manifest:v2",
+      "references": [
+        "urn:intent:schema:common:v1",
+        "urn:intent:schema:integrity:v1"
+      ]
+    },
+    {
+      "path": "discipline-pack.schema.json",
+      "id": "urn:intent:schema:discipline-pack:v2",
+      "references": [
+        "urn:intent:schema:common:v1"
+      ]
+    },
+    {
+      "path": "discipline-registry.schema.json",
+      "id": "urn:intent:schema:discipline-registry:v1",
+      "references": [
+        "urn:intent:schema:common:v1",
+        "urn:intent:schema:integrity:v1"
+      ]
+    },
+    {
+      "path": "fixture-manifest.schema.json",
+      "id": "urn:intent:schema:fixture-manifest:v1",
+      "references": [
+        "urn:intent:schema:common:v1"
+      ]
+    },
+    {
+      "path": "integrity.schema.json",
+      "id": "urn:intent:schema:integrity:v1",
+      "references": []
+    },
+    {
+      "path": "knowledge-record.schema.json",
+      "id": "urn:intent:schema:knowledge-record:v2",
+      "references": [
+        "urn:intent:schema:common:v1"
+      ]
+    },
+    {
+      "path": "portal-results.schema.json",
+      "id": "urn:intent:schema:portal-results:v1",
+      "references": [
+        "urn:intent:schema:common:v1",
+        "urn:intent:schema:integrity:v1",
+        "urn:intent:schema:reader-results:v1"
+      ]
+    },
+    {
+      "path": "product-results.schema.json",
+      "id": "urn:intent:schema:product-results:v1",
+      "references": [
+        "urn:intent:schema:authoring-results:v1",
+        "urn:intent:schema:common:v1",
+        "urn:intent:schema:discipline-pack-manifest:v2",
+        "urn:intent:schema:discipline-pack:v2",
+        "urn:intent:schema:discipline-registry:v1",
+        "urn:intent:schema:integrity:v1",
+        "urn:intent:schema:project:v1",
+        "urn:intent:schema:reader-results:v1"
+      ]
+    },
+    {
+      "path": "project.schema.json",
+      "id": "urn:intent:schema:project:v1",
+      "references": [
+        "urn:intent:schema:common:v1"
+      ]
+    },
+    {
+      "path": "reader-results.schema.json",
+      "id": "urn:intent:schema:reader-results:v1",
+      "references": [
+        "urn:intent:schema:assembled-header:v2",
+        "urn:intent:schema:catalog:v1",
+        "urn:intent:schema:common:v1",
+        "urn:intent:schema:connections:v1",
+        "urn:intent:schema:discipline-registry:v1",
+        "urn:intent:schema:integrity:v1",
+        "urn:intent:schema:knowledge-record:v2",
+        "urn:intent:schema:project:v1"
+      ]
+    }
+  ]
+}

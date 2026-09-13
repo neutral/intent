@@ -1,0 +1,9 @@
+{
+  "id": "fixture-operation",
+  "status": "interrupted",
+  "journal": "tmp/intent/operations/fixture-operation.json",
+  "written": [
+    "intent/blueprint/example.md"
+  ],
+  "error": "A later source changed."
+}

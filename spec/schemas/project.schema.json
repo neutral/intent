@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:project:v1",
+  "title": "Intent project v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "intent.project.v1"
+    },
+    "name": {
+      "$ref": "urn:intent:schema:common:v1#/$defs/line"
+    },
+    "description": {
+      "$ref": "urn:intent:schema:common:v1#/$defs/text"
+    },
+    "owners": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+      },
+      "minItems": 0,
+      "maxItems": 4096,
+      "uniqueItems": true
+    },
+    "implementationRoots": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:intent:schema:common:v1#/$defs/scopePath"
+      },
+      "minItems": 0,
+      "maxItems": 4096,
+      "uniqueItems": true
+    },
+    "exemptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/path"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "file",
+              "tree"
+            ]
+          },
+          "reason": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/text"
+          }
+        },
+        "required": [
+          "path",
+          "mode",
+          "reason"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 4096
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "maxRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536,
+          "default": 65536
+        },
+        "maxRecordBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4194304,
+          "default": 4194304
+        },
+        "maxFrontMatterBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 524288,
+          "default": 524288
+        },
+        "maxTotalRecordBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 268435456,
+          "default": 268435456
+        },
+        "maxJsonDepth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64,
+          "default": 64
+        },
+        "maxJsonNodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536,
+          "default": 65536
+        },
+        "maxGraphEdges": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 262144,
+          "default": 262144
+        },
+        "maxSources": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 262144,
+          "default": 262144
+        },
+        "maxSourceBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4194304,
+          "default": 4194304
+        },
+        "maxTotalSourceBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 268435456,
+          "default": 268435456
+        },
+        "maxPathBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096,
+          "default": 4096
+        },
+        "maxGraphDegree": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096,
+          "default": 4096
+        },
+        "maxGraphWork": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8388608,
+          "default": 8388608
+        },
+        "maxGraphDiagnostics": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096,
+          "default": 4096
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema",
+    "name",
+    "owners",
+    "implementationRoots",
+    "exemptions"
+  ],
+  "additionalProperties": false
+}

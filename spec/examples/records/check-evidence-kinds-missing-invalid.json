@@ -1,0 +1,19 @@
+{
+  "schema": "intent.knowledge-record.v2",
+  "kind": "check",
+  "id": "check.example",
+  "status": "current",
+  "owners": [
+    "example-owner"
+  ],
+  "sources": [],
+  "relationships": [],
+  "conflicts": [],
+  "tags": [],
+  "subjects": [
+    {
+      "kind": "tree",
+      "selector": "library"
+    }
+  ]
+}

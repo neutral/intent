@@ -1,0 +1,266 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:knowledge-record:v2",
+  "title": "Intent authored Knowledge header v2",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "intent.knowledge-record.v2"
+    },
+    "kind": {
+      "$ref": "urn:intent:schema:common:v1#/$defs/kind"
+    },
+    "id": {
+      "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+    },
+    "status": {
+      "$ref": "urn:intent:schema:common:v1#/$defs/status"
+    }
+  },
+  "required": [
+    "schema",
+    "kind",
+    "id",
+    "status"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "relationship": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "refines",
+            "constrains",
+            "realizes",
+            "verified-by",
+            "depends-on",
+            "related-to"
+          ]
+        },
+        "target": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+        },
+        "required": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "target",
+        "required"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-[a-z0-9]+(?:-[a-z0-9]+)*$": {}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "related-to"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "required": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "coverageSelector": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/scopePath"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "file",
+            "tree"
+          ]
+        },
+        "role": {
+          "const": "primary"
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/path"
+          },
+          "minItems": 0,
+          "maxItems": 4096,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "path",
+        "mode",
+        "role"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "file"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "path": {
+                "$ref": "urn:intent:schema:common:v1#/$defs/path"
+              }
+            },
+            "not": {
+              "required": [
+                "exclude"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "conflict": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "assurance-limit",
+            "blueprint-constraint"
+          ]
+        },
+        "target": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+        },
+        "localFact": {
+          "$ref": "#/$defs/entryId"
+        },
+        "targetFact": {
+          "$ref": "#/$defs/entryId"
+        }
+      },
+      "required": [
+        "type",
+        "target",
+        "localFact",
+        "targetFact"
+      ],
+      "additionalProperties": false
+    },
+    "entryId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+      "maxLength": 160
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "behavior"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "id": {
+            "pattern": "^behavior\\."
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "assurance"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "id": {
+            "pattern": "^assurance\\."
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "blueprint"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "id": {
+            "pattern": "^blueprint\\."
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "description"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "id": {
+            "pattern": "^description\\."
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "check"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "id": {
+            "pattern": "^check\\."
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "discipline"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "id": {
+            "pattern": "^discipline\\."
+          }
+        }
+      }
+    }
+  ],
+  "$comment": "Closed authored identity and standing only. Global catalog and connections supply metadata; Markdown owns substantive meaning."
+}

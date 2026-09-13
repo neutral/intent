@@ -1,0 +1,20 @@
+{
+  "schema": "intent.catalog.v1",
+  "sources": [
+    {
+      "id": "manual",
+      "reference": "docs/manual.md"
+    }
+  ],
+  "records": [
+    {
+      "record": "behavior.example",
+      "owners": [
+        "example-owner"
+      ],
+      "tags": [
+        "storage"
+      ]
+    }
+  ]
+}

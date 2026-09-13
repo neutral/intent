@@ -1,0 +1,20 @@
+{
+  "schema": "intent.knowledge-record.v2",
+  "kind": "description",
+  "id": "description.example",
+  "status": "current",
+  "owners": [
+    "example-owner"
+  ],
+  "sources": [],
+  "relationships": [],
+  "conflicts": [],
+  "tags": [],
+  "coverage": [
+    {
+      "path": "../private",
+      "mode": "file",
+      "role": "primary"
+    }
+  ]
+}

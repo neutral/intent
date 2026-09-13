@@ -1,0 +1,9 @@
+{
+  "schema": "intent.knowledge-record.v2",
+  "kind": "behavior",
+  "id": "behavior.example",
+  "status": "current",
+  "spec": {
+    "outcome": "Authored prose belongs in Markdown."
+  }
+}

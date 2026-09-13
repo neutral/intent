@@ -1,0 +1,18 @@
+{
+  "operationId": "fixture-original",
+  "fileProposal": null,
+  "files": [
+    {
+      "path": "intent/blueprint/example.md",
+      "state": "original",
+      "actualDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "remainingPaths": [
+    "intent/blueprint/example.md"
+  ],
+  "complete": true,
+  "limitations": [
+    "Independently authored structural fixture; no completed execution, source correspondence, application or adoption is established."
+  ]
+}

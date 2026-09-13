@@ -1,0 +1,298 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:connections:v1",
+  "title": "Intent connections v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "intent.connections.v1"
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+            "maxLength": 160
+          },
+          "record": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "refines",
+              "constrains",
+              "realizes",
+              "verified-by",
+              "depends-on",
+              "related-to"
+            ]
+          },
+          "target": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+          },
+          "required": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "record",
+          "type",
+          "target",
+          "required"
+        ],
+        "additionalProperties": false,
+        "patternProperties": {
+          "^x-[a-z0-9]+(?:-[a-z0-9]+)*$": {}
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "related-to"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "required": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      },
+      "maxItems": 262144
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+            "maxLength": 160
+          },
+          "record": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "assurance-limit",
+              "blueprint-constraint"
+            ]
+          },
+          "target": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+          },
+          "localFact": {
+            "$ref": "#/$defs/entryId"
+          },
+          "targetFact": {
+            "$ref": "#/$defs/entryId"
+          }
+        },
+        "required": [
+          "id",
+          "record",
+          "type",
+          "target",
+          "localFact",
+          "targetFact"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 262144
+    },
+    "sourceUses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+            "maxLength": 160
+          },
+          "record": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+          },
+          "source": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "revision": {
+            "anyOf": [
+              {
+                "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "decision",
+              "research",
+              "policy",
+              "incident",
+              "atlas-context",
+              "external-standard",
+              "repository-reality",
+              "other"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "record",
+          "source",
+          "required",
+          "revision",
+          "role"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 262144
+    },
+    "coverage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+            "maxLength": 160
+          },
+          "record": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+          },
+          "path": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/scopePath"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "file",
+              "tree"
+            ]
+          },
+          "role": {
+            "const": "primary"
+          },
+          "exclude": {
+            "type": "array",
+            "items": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/path"
+            },
+            "minItems": 0,
+            "maxItems": 4096,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "id",
+          "record",
+          "path",
+          "mode",
+          "role"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "mode": {
+                  "const": "file"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "path": {
+                  "$ref": "urn:intent:schema:common:v1#/$defs/path"
+                }
+              },
+              "not": {
+                "required": [
+                  "exclude"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "maxItems": 262144
+    },
+    "checkSelections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+            "maxLength": 160
+          },
+          "record": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/subject"
+            },
+            "minItems": 1,
+            "maxItems": 4096
+          },
+          "evidenceKinds": {
+            "type": "array",
+            "items": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/evidenceKind"
+            },
+            "minItems": 1,
+            "maxItems": 6,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "id",
+          "record",
+          "subjects",
+          "evidenceKinds"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 65536
+    }
+  },
+  "required": [
+    "schema",
+    "relationships",
+    "conflicts",
+    "sourceUses",
+    "coverage",
+    "checkSelections"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "entryId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+      "maxLength": 160
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "complete": false,
+  "valid": false,
+  "diagnostics": [
+    {
+      "code": "intent.source.missing",
+      "severity": "error",
+      "stage": "discipline",
+      "path": "pack.json",
+      "message": "Explicit fixture represents unavailable input."
+    }
+  ],
+  "profile": "discipline-pack-validation-v1",
+  "sourceIdentity": "independent-structural-fixture",
+  "coherence": "incomplete",
+  "definition": null,
+  "definitionBytes": {
+    "encoding": "base64",
+    "data": "Zg==",
+    "extra": true
+  },
+  "records": [],
+  "recordBytes": {},
+  "suppliedManifest": null,
+  "suppliedManifestBytes": null,
+  "candidateManifest": null,
+  "context": null,
+  "catalogBytes": null,
+  "connectionsBytes": null
+}

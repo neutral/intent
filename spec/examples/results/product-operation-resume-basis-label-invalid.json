@@ -1,0 +1,31 @@
+{
+  "operationId": "fixture-original",
+  "fileProposal": {
+    "schema": "intent.file-proposal.v1",
+    "id": "fixture-operation",
+    "sourceBasis": "ambient-reader-label",
+    "proposedBasis": null,
+    "changes": [
+      {
+        "path": "intent/blueprint/example.md",
+        "before": "Earlier text\n",
+        "after": "Proposed text\n"
+      }
+    ],
+    "digest": "sha256:62495a8fde21d47e13ce6f57db05dc844fd09b310c90e599d86c529bcdb81204"
+  },
+  "files": [
+    {
+      "path": "intent/blueprint/example.md",
+      "state": "original",
+      "actualDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "remainingPaths": [
+    "intent/blueprint/example.md"
+  ],
+  "complete": true,
+  "limitations": [
+    "Independently authored structural fixture; no completed execution, source correspondence, application or adoption is established."
+  ]
+}

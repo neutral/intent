@@ -1,0 +1,23 @@
+{
+  "basis": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "roots": [
+    "unknown request"
+  ],
+  "records": [],
+  "reasons": [
+    {
+      "id": "unknown request",
+      "reason": "root",
+      "from": null,
+      "relationship": null
+    }
+  ],
+  "unresolved": [
+    "unknown request"
+  ],
+  "complete": false,
+  "limit": 10,
+  "diagnostics": [],
+  "maxWork": 8388608,
+  "workPerformed": 0
+}

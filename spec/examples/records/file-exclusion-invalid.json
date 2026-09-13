@@ -1,0 +1,21 @@
+{
+  "schema": "intent.knowledge-record.v2",
+  "kind": "description",
+  "id": "description.example",
+  "status": "current",
+  "owners": [
+    "example-owner"
+  ],
+  "sources": [],
+  "relationships": [],
+  "conflicts": [],
+  "tags": [],
+  "coverage": [
+    {
+      "path": "app/[id]/page#draft%.tsx",
+      "mode": "file",
+      "role": "primary",
+      "exclude": []
+    }
+  ]
+}

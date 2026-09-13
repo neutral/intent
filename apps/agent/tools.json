@@ -1,0 +1,703 @@
+{
+  "schema": "intent.agent-tools.v1",
+  "protocolVersion": "2025-11-25",
+  "tools": [
+    {
+      "name": "intent_guidance",
+      "description": "Discover supplied shared, kind and optional family guidance, or read one complete Markdown guide by its discovered path. Read relevant guidance before authoring; choose families for the actual question. No family filename is required.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          }
+        },
+        "required": []
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read"
+      }
+    },
+    {
+      "name": "intent_inspect",
+      "description": "Read Intent files and retain an immutable session. Set reconcileImplementation:true for joint code/Knowledge coverage and comparison. Does not retrieve external URLs.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resolveSources": {
+            "type": "boolean"
+          },
+          "reconcileImplementation": {
+            "type": "boolean",
+            "description": "Explicitly include implementation inventory, coverage and exact code bytes. Default false reads Intent files only."
+          }
+        },
+        "required": []
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read"
+      }
+    },
+    {
+      "name": "intent_query",
+      "description": "Query a retained session, returning record summaries and a session-bound cursor.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "session": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "kinds": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "behavior",
+                "assurance",
+                "blueprint",
+                "description",
+                "check",
+                "discipline"
+              ]
+            },
+            "maxItems": 6
+          },
+          "statuses": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "draft",
+                "current",
+                "superseded",
+                "retired"
+              ]
+            },
+            "maxItems": 4
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            },
+            "maxItems": 32
+          },
+          "owners": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            },
+            "maxItems": 32
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "cursor": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8192
+          }
+        },
+        "required": [
+          "session"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read"
+      }
+    },
+    {
+      "name": "intent_read",
+      "description": "Read exact retained examined bytes by path, including Knowledge, implementation and configuration. Byte chunks are base64; unexamined paths are unavailable and no mutable file is re-read.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "session": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4194304
+          },
+          "maxBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65536
+          }
+        },
+        "required": [
+          "session",
+          "path"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read"
+      }
+    },
+    {
+      "name": "intent_read_check",
+      "description": "Read one complete Check definition and its directly supported current Knowledge as readable JSON in one response, with an advisory review guide asking what unacceptable implementation could still pass. Requires a retained session. Defaults to the unique current Check by ID; path selects an exact parsed occurrence, including a draft. Includes Markdown criteria, subjects, evidence, limits, falsifiers, full bodies, relationship scope and observation diagnostics. No decoding, execution, external retrieval or writes. Oversized definitions fail explicitly; use Library/CLI reading or exact source chunks.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "session": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "session",
+          "id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read"
+      }
+    },
+    {
+      "name": "intent_diagnostics",
+      "description": "Page ordered diagnostics from the same retained session.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "session": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "session"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read"
+      }
+    },
+    {
+      "name": "intent_coverage",
+      "description": "Page implementation coverage from the same retained session; ownership does not establish prose adequacy.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "session": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "session"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read"
+      }
+    },
+    {
+      "name": "intent_select",
+      "description": "Select bounded current Knowledge through Library relationship rules. Detailed result is retained for chunked retrieval.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "session": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "roots": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            },
+            "maxItems": 64
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "includeRealizations": {
+            "type": "boolean"
+          },
+          "includeOptional": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "session",
+          "roots"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read"
+      }
+    },
+    {
+      "name": "intent_compare",
+      "description": "Compare two retained observations of the launch-selected root; never opens an arbitrary other root.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "before": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "after": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        "required": [
+          "before",
+          "after"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read"
+      }
+    },
+    {
+      "name": "intent_result",
+      "description": "Read bytes of one retained generated JSON result for exact review; base64 chunks are bounded.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "result": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 67108864
+          },
+          "maxBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65536
+          }
+        },
+        "required": [
+          "result"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read"
+      }
+    },
+    {
+      "name": "intent_release",
+      "description": "Release one retained session or result explicitly; old cursors then become unavailable.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read"
+      }
+    },
+    {
+      "name": "intent_prepare",
+      "description": "Prepare an exact FileProposal from explicit before/after bytes. Returns a retained proposal token for review; writes nothing.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "session": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "changes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "before": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 262144
+                },
+                "after": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 262144
+                }
+              },
+              "required": [
+                "path",
+                "before",
+                "after"
+              ]
+            },
+            "maxItems": 64
+          }
+        },
+        "required": [
+          "session",
+          "changes"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read",
+        "io.neutral.intent/preparesEffect": "write"
+      }
+    },
+    {
+      "name": "intent_prepare_edit",
+      "description": "Prepare replacement of one existing UTF-8 Intent file. Original bytes come from the retained session. Stage the replacement under tmp/intent-agent/edits/ in the launch-selected repository and pass replacementPath plus its exact sha256: digest. Reads at most 1048576 replacement bytes (1 MiB), verifies the digest, and retains exact before/after bytes in a FileProposal for review and separate intent_apply. Later staging changes cannot alter the proposal. The tool writes no files and does not delete staging files. Shared authoring path rules and the 3000000-byte serialized proposal limit still apply. For larger files, use a fresh Library observation/proposal and Library apply with identical options; CLI application requires a fresh observation using CLI-compatible default limits. Unexamined originals, symlinks and paths outside staging are refused.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "session": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "replacementPath": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "replacementDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "session",
+          "path",
+          "replacementPath",
+          "replacementDigest"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read",
+        "io.neutral.intent/preparesEffect": "write"
+      }
+    },
+    {
+      "name": "intent_prepare_change",
+      "description": "Prepare a coordinated current Knowledge change without writes. Supply a retained session, exact record path and edit, set-status, move or remove operation. Inline sourceText is limited to 262144 characters within the 1 MiB frame. Optional context replaces this record registration, used sources and connections. Read the full result token with intent_result, including original/proposed workspace, impact and exact fileProposal. Pass that token to intent_apply only when applicable is true and all changes have been reviewed. Changed source basis refuses preparation or application.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "session": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "operation": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "edit"
+                  },
+                  "sourceText": {
+                    "type": "string",
+                    "maxLength": 262144
+                  },
+                  "context": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "catalog",
+                      "connections"
+                    ],
+                    "properties": {
+                      "catalog": {
+                        "type": "object"
+                      },
+                      "connections": {
+                        "type": "object"
+                      }
+                    },
+                    "description": "Complete one-record context. The Library validates its catalog, connections, source definitions and selected coordinate; do not supply unrelated records."
+                  }
+                },
+                "required": [
+                  "kind",
+                  "sourceText"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "set-status"
+                  },
+                  "status": {
+                    "enum": [
+                      "draft",
+                      "current",
+                      "superseded",
+                      "retired"
+                    ]
+                  }
+                },
+                "required": [
+                  "kind",
+                  "status"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "move"
+                  },
+                  "targetPath": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  }
+                },
+                "required": [
+                  "kind",
+                  "targetPath"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "remove"
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              }
+            ]
+          }
+        },
+        "required": [
+          "session",
+          "path",
+          "operation"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "read",
+        "io.neutral.intent/preparesEffect": "write"
+      }
+    },
+    {
+      "name": "intent_apply",
+      "description": "Apply a previously prepared FileProposal or applicable record-change result token to the selected root, after exact source-basis and per-file precondition checks. Returns actual written paths and journal.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "proposal": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        "required": [
+          "proposal"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "io.neutral.intent/effect": "write"
+      }
+    }
+  ]
+}

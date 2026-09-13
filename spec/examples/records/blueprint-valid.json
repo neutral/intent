@@ -1,0 +1,6 @@
+{
+  "schema": "intent.knowledge-record.v2",
+  "kind": "blueprint",
+  "id": "blueprint.example",
+  "status": "current"
+}

@@ -1,0 +1,95 @@
+{
+  "schema": "intent.workspace-review.v1",
+  "comparison": {
+    "before": {
+      "kind": "export",
+      "id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "reader": "explicit-fixture"
+    },
+    "after": {
+      "kind": "export",
+      "id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "reader": "explicit-fixture"
+    },
+    "changes": [
+      {
+        "path": "src/old.ts",
+        "change": "deleted",
+        "before": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "after": null
+      }
+    ],
+    "affectedIds": [
+      "description.module"
+    ],
+    "complete": false,
+    "interpretation": "Impact identifies candidates for examination; it does not decide whether prose must change.",
+    "records": [
+      {
+        "id": "description.module",
+        "changed": true,
+        "before": [],
+        "after": []
+      }
+    ],
+    "recordTotal": 1,
+    "recordLimit": 256,
+    "context": {
+      "before": {
+        "config": null,
+        "coverage": null,
+        "diagnostics": [],
+        "complete": false,
+        "valid": false
+      },
+      "after": {
+        "config": null,
+        "coverage": null,
+        "diagnostics": [],
+        "complete": false,
+        "valid": false
+      }
+    },
+    "limitations": [
+      "Explicit structural fixture; it does not establish source correspondence."
+    ],
+    "recordByteLimit": 8388608,
+    "recordBytes": 0
+  },
+  "code": [
+    {
+      "path": "src/old.ts",
+      "beforeOwners": [
+        "description.module"
+      ],
+      "afterOwners": [],
+      "before": {
+        "sourceDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "sizeBytes": 4,
+        "text": "old\n",
+        "status": "binary",
+        "truncated": false,
+        "message": null
+      },
+      "after": {
+        "sourceDigest": null,
+        "sizeBytes": null,
+        "text": null,
+        "status": "outside-observation",
+        "truncated": false,
+        "message": "No source bytes were observed on the later side."
+      }
+    }
+  ],
+  "codeTotal": 1,
+  "limits": {
+    "maxFiles": 128,
+    "maxFileBytes": 4194304,
+    "maxTotalBytes": 16777216,
+    "maxPreviewBytes": 32768
+  },
+  "complete": false,
+  "limitations": [
+    "Structural fixture only; synthetic fingerprints are not evidence of performed source reads."
+  ]
+}

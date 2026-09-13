@@ -1,0 +1,20 @@
+{
+  "schema": "intent.knowledge-record.v2",
+  "kind": "behavior",
+  "id": "behavior.example",
+  "status": "current",
+  "owners": [
+    "example-owner"
+  ],
+  "sources": [],
+  "relationships": [
+    {
+      "type": "related-to",
+      "target": "behavior.other",
+      "required": false,
+      "scope": "Meaning belongs in the relationship Markdown entry."
+    }
+  ],
+  "conflicts": [],
+  "tags": []
+}

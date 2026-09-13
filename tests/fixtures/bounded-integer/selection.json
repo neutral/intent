@@ -1,0 +1,10 @@
+{
+  "recordIds": [
+    "behavior.integer-token",
+    "assurance.integer-rejection",
+    "blueprint.integer-parser",
+    "description.integer-parser",
+    "description.integer-oracle",
+    "check.integer-boundaries"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "intent.discipline-registry.v1",
+  "packs": [
+    {
+      "id": "example-practices",
+      "version": "1.0.0",
+      "source": "./packs/example",
+      "revision": "source-one"
+    },
+    {
+      "id": "example-practices",
+      "version": "2.0.0",
+      "source": "./packs/example",
+      "revision": "source-two"
+    }
+  ],
+  "adoptions": [
+    {
+      "id": "discipline.example",
+      "packId": "example-practices",
+      "packVersion": "1.0.0",
+      "path": "intent/disciplines/example.md",
+      "sourceDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "semanticDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  ],
+  "workTypes": [],
+  "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+}

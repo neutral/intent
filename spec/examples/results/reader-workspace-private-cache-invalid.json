@@ -1,0 +1,79 @@
+{
+  "profile": "workspace-v1",
+  "processor": "intent.processing.v2",
+  "sourceBasis": {
+    "kind": "export",
+    "id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "reader": "explicit-fixture"
+  },
+  "config": null,
+  "limits": {
+    "maxRecords": 65536,
+    "maxRecordBytes": 4194304,
+    "maxFrontMatterBytes": 524288,
+    "maxTotalRecordBytes": 268435456,
+    "maxJsonDepth": 64,
+    "maxJsonNodes": 65536,
+    "maxGraphEdges": 262144,
+    "maxSources": 262144,
+    "maxSourceBytes": 4194304,
+    "maxTotalSourceBytes": 268435456,
+    "maxPathBytes": 4096,
+    "maxGraphDegree": 4096,
+    "maxGraphWork": 8388608,
+    "maxGraphDiagnostics": 4096
+  },
+  "records": [],
+  "inspections": [],
+  "graph": {
+    "edges": [],
+    "components": [],
+    "diagnostics": [],
+    "complete": true,
+    "limits": {
+      "maxRecords": 65536,
+      "maxRecordBytes": 4194304,
+      "maxFrontMatterBytes": 524288,
+      "maxTotalRecordBytes": 268435456,
+      "maxJsonDepth": 64,
+      "maxJsonNodes": 65536,
+      "maxGraphEdges": 262144,
+      "maxSources": 262144,
+      "maxSourceBytes": 4194304,
+      "maxTotalSourceBytes": 268435456,
+      "maxPathBytes": 4096,
+      "maxGraphDegree": 4096,
+      "maxGraphWork": 8388608,
+      "maxGraphDiagnostics": 4096
+    },
+    "workPerformed": 0
+  },
+  "coverage": null,
+  "disciplines": null,
+  "sources": [],
+  "inventory": [],
+  "stages": [
+    {
+      "name": "configuration",
+      "complete": false,
+      "valid": false
+    }
+  ],
+  "diagnostics": [
+    {
+      "code": "intent.source.missing",
+      "severity": "error",
+      "stage": "configuration",
+      "message": "Knowledge must start with an exact delimiter.",
+      "path": "intent/project.json",
+      "line": 1
+    }
+  ],
+  "complete": false,
+  "valid": false,
+  "cacheTables": {
+    "records": []
+  },
+  "context": null,
+  "mode": "knowledge"
+}

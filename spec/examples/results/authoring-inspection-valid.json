@@ -1,0 +1,26 @@
+{
+  "id": "fixture-operation",
+  "status": "interrupted",
+  "files": [
+    {
+      "path": "intent/blueprint/example.md",
+      "state": "changed-externally",
+      "actualDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "proposal": {
+    "schema": "intent.file-proposal.v1",
+    "id": "fixture-operation",
+    "sourceBasis": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "proposedBasis": null,
+    "changes": [
+      {
+        "path": "intent/blueprint/example.md",
+        "before": "Earlier text\n",
+        "after": "Proposed text\n"
+      }
+    ],
+    "digest": "sha256:036578d72b16db72ff803289d1ded85722ecc1b4592c9d0d0c9726e934c29c3d"
+  },
+  "journalDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+}

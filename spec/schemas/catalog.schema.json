@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:catalog:v1",
+  "title": "Intent catalog v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "intent.catalog.v1"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "format": "uri-reference"
+          }
+        },
+        "required": [
+          "id",
+          "reference"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 262144
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "record": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+          },
+          "owners": {
+            "type": "array",
+            "items": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+            },
+            "minItems": 0,
+            "maxItems": 4096,
+            "uniqueItems": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+            },
+            "minItems": 0,
+            "maxItems": 4096,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "record",
+          "owners",
+          "tags"
+        ],
+        "additionalProperties": false,
+        "patternProperties": {
+          "^x-[a-z0-9]+(?:-[a-z0-9]+)*$": {}
+        }
+      },
+      "maxItems": 65536
+    }
+  },
+  "required": [
+    "schema",
+    "sources",
+    "records"
+  ],
+  "additionalProperties": false
+}

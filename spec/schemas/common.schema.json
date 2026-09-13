@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:common:v1",
+  "title": "Intent common v1",
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16384,
+      "pattern": "\\S"
+    },
+    "line": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^[^\\r\\n\\u0000]*\\S[^\\r\\n\\u0000]*$"
+    },
+    "opaqueId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[^\\s\\u0000]+$"
+    },
+    "knowledgeId": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160,
+      "pattern": "^(?:behavior|assurance|blueprint|description|check|discipline)\\.[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)*$"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)(?:\\.|\\.\\.)(?:/|$))(?!.*//)(?!.*[\\\\\\u0000-\\u001f\\u007f-\\u009f])[^/]+(?:/[^/]+)*$"
+    },
+    "scopePath": {
+      "anyOf": [
+        {
+          "const": "."
+        },
+        {
+          "$ref": "urn:intent:schema:common:v1#/$defs/path"
+        }
+      ]
+    },
+    "positiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "behavior",
+        "assurance",
+        "blueprint",
+        "description",
+        "check",
+        "discipline"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "current",
+        "superseded",
+        "retired"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "format": "uri-reference"
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "decision",
+            "research",
+            "policy",
+            "incident",
+            "atlas-context",
+            "external-standard",
+            "repository-reality",
+            "other"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "required",
+        "reference",
+        "revision",
+        "role"
+      ],
+      "additionalProperties": false
+    },
+    "subject": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "repository",
+            "file",
+            "tree",
+            "record",
+            "diff",
+            "artifact"
+          ]
+        },
+        "selector": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/line"
+        }
+      },
+      "required": [
+        "kind",
+        "selector"
+      ],
+      "additionalProperties": false
+    },
+    "evidenceKind": {
+      "type": "string",
+      "enum": [
+        "command",
+        "inspection",
+        "artifact",
+        "diff",
+        "analysis",
+        "mixed"
+      ]
+    },
+    "strings": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:intent:schema:common:v1#/$defs/text"
+      },
+      "minItems": 0,
+      "maxItems": 4096
+    },
+    "nonemptyStrings": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:intent:schema:common:v1#/$defs/text"
+      },
+      "minItems": 1,
+      "maxItems": 4096
+    }
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:discipline-registry:v1",
+  "title": "Intent discipline-registry v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "intent.discipline-registry.v1"
+    },
+    "packs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+          },
+          "version": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "format": "uri-reference"
+          },
+          "revision": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "source",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 4096
+    },
+    "adoptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "allOf": [
+              {
+                "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+              },
+              {
+                "pattern": "^discipline\\."
+              }
+            ]
+          },
+          "packId": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+          },
+          "packVersion": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+          },
+          "path": {
+            "allOf": [
+              {
+                "$ref": "urn:intent:schema:common:v1#/$defs/path"
+              },
+              {
+                "pattern": "^intent/disciplines/.+\\.md$"
+              }
+            ]
+          },
+          "sourceDigest": {
+            "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+          },
+          "semanticDigest": {
+            "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+          }
+        },
+        "required": [
+          "id",
+          "packId",
+          "packVersion",
+          "path",
+          "sourceDigest",
+          "semanticDigest"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 65536
+    },
+    "workTypes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+          },
+          "title": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/line"
+          },
+          "description": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/text"
+          },
+          "disciplineIds": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+                },
+                {
+                  "pattern": "^discipline\\."
+                }
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 4096,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "description",
+          "disciplineIds"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 4096
+    }
+  },
+  "required": [
+    "schema",
+    "packs",
+    "adoptions",
+    "workTypes"
+  ],
+  "additionalProperties": false
+}

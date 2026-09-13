@@ -1,0 +1,19 @@
+{
+  "schema": "intent.discipline-pack.v2",
+  "id": "example-practices",
+  "title": "Example practices",
+  "version": "1.0.0",
+  "publisher": "example-owner",
+  "recordSchema": "urn:intent:schema:knowledge-record:v2",
+  "sets": [
+    {
+      "id": "parser-work",
+      "title": "Parser work",
+      "description": "A discovery grouping.",
+      "recordIds": [
+        "discipline.example"
+      ]
+    }
+  ],
+  "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+}

@@ -1,0 +1,112 @@
+{
+  "name": "@neutral/intent",
+  "version": "0.1.0",
+  "description": "Preserve software project Knowledge across conversations, contributors, and coding agents.",
+  "type": "module",
+  "license": "CC0-1.0 OR 0BSD",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neutral/intent.git"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/library/index.d.ts",
+      "import": "./dist/library/index.js"
+    },
+    "./schemas/*": "./spec/schemas/*",
+    "./editor": {
+      "types": "./dist/apps/editor/server.d.ts",
+      "import": "./dist/apps/editor/server.js"
+    },
+    "./processing": {
+      "types": "./dist/library/foundation.d.ts",
+      "import": "./dist/library/foundation.js"
+    },
+    "./portal": {
+      "types": "./dist/apps/portal/build.d.ts",
+      "import": "./dist/apps/portal/build.js"
+    },
+    "./library": {
+      "types": "./dist/library/index.d.ts",
+      "import": "./dist/library/index.js"
+    },
+    "./cli": {
+      "types": "./dist/apps/cli/cli.d.ts",
+      "import": "./dist/apps/cli/cli.js"
+    },
+    "./agent": {
+      "types": "./dist/apps/agent/agent.d.ts",
+      "import": "./dist/apps/agent/agent.js"
+    }
+  },
+  "bin": {
+    "intent": "./apps/cli/intent.mjs",
+    "intent-agent": "./apps/agent/intent-agent.mjs",
+    "intent-editor": "./apps/editor/intent-editor.mjs",
+    "intent-portal": "./apps/portal/portal-cli.mjs"
+  },
+  "files": [
+    "dist/library",
+    "dist/apps",
+    "apps/cli/intent.mjs",
+    "apps/agent/intent-agent.mjs",
+    "apps/agent/README.md",
+    "apps/agent/tools.json",
+    "apps/editor/assets",
+    "apps/portal/assets",
+    "apps/portal/portal-cli.mjs",
+    "spec/SPEC.md",
+    "spec/GLOSSARY.md",
+    "spec/OPERATING.md",
+    "spec/GUIDANCE.md",
+    "spec/guidance",
+    "spec/families",
+    "spec/spec",
+    "spec/schemas",
+    "README.md",
+    "CHANGELOG.md",
+    "THIRD_PARTY.md",
+    "LICENSE",
+    "LICENSE.CC0-1.0",
+    "LICENSE.0BSD",
+    "VERSION",
+    "library/README.md",
+    "apps/README.md",
+    "apps/cli/README.md",
+    "apps/editor/README.md",
+    "apps/portal/README.md",
+    "spec/README.md",
+    "apps/editor/intent-editor.mjs",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "distribution/README.md",
+    "docs"
+  ],
+  "scripts": {
+    "build": "node distribution/build.mjs",
+    "test": "npm run build && node spec/tools/check-schemas.mjs && node --test tests/*.test.mjs",
+    "check": "tsc -p tsconfig.json --noEmit && node distribution/check-docs.mjs",
+    "prepack": "npm run build",
+    "release:check": "node distribution/release-check.mjs",
+    "native:assemble": "npm run build && node distribution/assemble.mjs --native",
+    "payload:assemble": "npm run build && node distribution/assemble.mjs --payload",
+    "native:check": "node distribution/check-native.mjs",
+    "container:check": "node tests/qualification/container-journeys.mjs"
+  },
+  "dependencies": {
+    "ajv": "8.18.0",
+    "ajv-formats": "3.0.1",
+    "commonmark": "0.31.2"
+  },
+  "devDependencies": {
+    "@types/commonmark": "0.27.10",
+    "@types/node": "24.10.0",
+    "typescript": "5.8.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

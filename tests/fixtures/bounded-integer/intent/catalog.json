@@ -1,0 +1,48 @@
+{
+  "schema": "intent.catalog.v1",
+  "sources": [],
+  "records": [
+    {
+      "record": "assurance.integer-rejection",
+      "owners": [
+        "example-maintainer"
+      ],
+      "tags": []
+    },
+    {
+      "record": "behavior.integer-token",
+      "owners": [
+        "example-maintainer"
+      ],
+      "tags": []
+    },
+    {
+      "record": "blueprint.integer-parser",
+      "owners": [
+        "example-maintainer"
+      ],
+      "tags": []
+    },
+    {
+      "record": "check.integer-boundaries",
+      "owners": [
+        "example-maintainer"
+      ],
+      "tags": []
+    },
+    {
+      "record": "description.integer-oracle",
+      "owners": [
+        "example-maintainer"
+      ],
+      "tags": []
+    },
+    {
+      "record": "description.integer-parser",
+      "owners": [
+        "example-maintainer"
+      ],
+      "tags": []
+    }
+  ]
+}

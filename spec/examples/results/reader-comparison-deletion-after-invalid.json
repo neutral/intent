@@ -1,0 +1,56 @@
+{
+  "before": {
+    "kind": "export",
+    "id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "reader": "explicit-fixture"
+  },
+  "after": {
+    "kind": "export",
+    "id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "reader": "explicit-fixture"
+  },
+  "changes": [
+    {
+      "path": "src/old.ts",
+      "change": "deleted",
+      "before": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "after": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "affectedIds": [
+    "description.module"
+  ],
+  "complete": false,
+  "interpretation": "Impact identifies candidates for examination; it does not decide whether prose must change.",
+  "records": [
+    {
+      "id": "description.module",
+      "changed": true,
+      "before": [],
+      "after": []
+    }
+  ],
+  "recordTotal": 1,
+  "recordLimit": 256,
+  "context": {
+    "before": {
+      "config": null,
+      "coverage": null,
+      "diagnostics": [],
+      "complete": false,
+      "valid": false
+    },
+    "after": {
+      "config": null,
+      "coverage": null,
+      "diagnostics": [],
+      "complete": false,
+      "valid": false
+    }
+  },
+  "limitations": [
+    "Explicit structural fixture; it does not establish source correspondence."
+  ],
+  "recordByteLimit": 8388608,
+  "recordBytes": 0
+}

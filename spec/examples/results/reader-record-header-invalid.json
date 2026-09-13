@@ -1,0 +1,50 @@
+{
+  "path": "intent/blueprint/example.md",
+  "header": {
+    "schema": "intent.knowledge-record.v2",
+    "kind": "policy",
+    "id": "blueprint.example",
+    "status": "current",
+    "owners": [
+      "example-owner"
+    ],
+    "sources": [],
+    "relationships": [],
+    "conflicts": [],
+    "tags": []
+  },
+  "sourceText": "Synthetic structural carrier; not hash or Markdown evidence.\n",
+  "sourceDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "semanticDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "title": "Example blueprint",
+  "summary": "A structural fixture, not a product claim.",
+  "authoredHeader": {
+    "schema": "intent.knowledge-record.v2",
+    "kind": "policy",
+    "id": "blueprint.example",
+    "status": "current"
+  },
+  "context": {
+    "catalog": {
+      "schema": "intent.catalog.v1",
+      "sources": [],
+      "records": [
+        {
+          "record": "blueprint.example",
+          "owners": [
+            "example-owner"
+          ],
+          "tags": []
+        }
+      ]
+    },
+    "connections": {
+      "schema": "intent.connections.v1",
+      "relationships": [],
+      "conflicts": [],
+      "sourceUses": [],
+      "coverage": [],
+      "checkSelections": []
+    }
+  }
+}

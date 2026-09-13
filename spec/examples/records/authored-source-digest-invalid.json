@@ -1,0 +1,22 @@
+{
+  "schema": "intent.knowledge-record.v2",
+  "kind": "behavior",
+  "id": "behavior.example",
+  "status": "current",
+  "owners": [
+    "example-owner"
+  ],
+  "sources": [
+    {
+      "id": "source",
+      "required": false,
+      "reference": "docs/source.md",
+      "revision": null,
+      "role": "research",
+      "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "relationships": [],
+  "conflicts": [],
+  "tags": []
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "intent.knowledge-record.v2",
+  "kind": "discipline",
+  "id": "discipline.example",
+  "status": "current",
+  "owners": [
+    "one",
+    "two"
+  ],
+  "sources": [],
+  "relationships": [],
+  "conflicts": [],
+  "tags": []
+}

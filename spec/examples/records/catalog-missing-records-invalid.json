@@ -1,0 +1,9 @@
+{
+  "schema": "intent.catalog.v1",
+  "sources": [
+    {
+      "id": "manual",
+      "reference": "docs/manual.md"
+    }
+  ]
+}

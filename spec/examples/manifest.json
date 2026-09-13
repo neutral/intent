@@ -1,0 +1,997 @@
+{
+  "schema": "intent.fixture-manifest.v1",
+  "fixtures": [
+    {
+      "id": "behavior-valid",
+      "path": "records/behavior-valid.json",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "profile": "schema",
+      "valid": true,
+      "description": "Complete behavior header shape only; no graph, coverage, adoption, or execution claim."
+    },
+    {
+      "id": "assurance-valid",
+      "path": "records/assurance-valid.json",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "profile": "schema",
+      "valid": true,
+      "description": "Complete assurance header shape only; no graph, coverage, adoption, or execution claim."
+    },
+    {
+      "id": "blueprint-valid",
+      "path": "records/blueprint-valid.json",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "profile": "schema",
+      "valid": true,
+      "description": "Complete blueprint header shape only; no graph, coverage, adoption, or execution claim."
+    },
+    {
+      "id": "description-valid",
+      "path": "records/description-valid.json",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "profile": "schema",
+      "valid": true,
+      "description": "A minimal Description local header; coverage belongs to global connections."
+    },
+    {
+      "id": "check-valid",
+      "path": "records/check-valid.json",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "profile": "schema",
+      "valid": true,
+      "description": "A minimal Check local header; selectors belong to global connections."
+    },
+    {
+      "id": "discipline-valid",
+      "path": "records/discipline-valid.json",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "profile": "schema",
+      "valid": true,
+      "description": "Complete discipline header shape only; no graph, coverage, adoption, or execution claim."
+    },
+    {
+      "id": "authored-digest-invalid",
+      "path": "records/authored-digest-invalid.json",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "A digest is not a standard authored header field."
+    },
+    {
+      "id": "authored-source-digest-invalid",
+      "path": "records/authored-source-digest-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Source fingerprints belong in generated observations."
+    },
+    {
+      "id": "discipline-required-source-invalid",
+      "path": "records/discipline-required-source-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Advisory provenance cannot create source completeness obligations."
+    },
+    {
+      "id": "discipline-authority-edge-invalid",
+      "path": "records/discipline-authority-edge-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Discipline cannot create verification obligations."
+    },
+    {
+      "id": "discipline-multiple-publishers-invalid",
+      "path": "records/discipline-multiple-publishers-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Discipline retains one publisher owner."
+    },
+    {
+      "id": "wrong-kind-id-invalid",
+      "path": "records/wrong-kind-id-invalid.json",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "The ID prefix must match its kind."
+    },
+    {
+      "id": "current-owner-missing-invalid",
+      "path": "records/current-owner-missing-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Current records require an owner."
+    },
+    {
+      "id": "required-meaning-missing-invalid",
+      "path": "records/required-meaning-missing-invalid.json",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "An authored spec object is rejected; required prose sections are validated from the document."
+    },
+    {
+      "id": "file-exclusion-invalid",
+      "path": "records/file-exclusion-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Only a tree selector can carry exclusions."
+    },
+    {
+      "id": "parent-path-invalid",
+      "path": "records/parent-path-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Repository selectors cannot escape through parent segments."
+    },
+    {
+      "id": "project-empty-valid",
+      "path": "records/project-empty-valid.json",
+      "schema": "urn:intent:schema:project:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "An empty declared implementation scope is structurally valid."
+    },
+    {
+      "id": "project-literal-path-valid",
+      "path": "records/project-literal-path-valid.json",
+      "schema": "urn:intent:schema:project:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Root scope and literal bracket names are supported without pattern expansion."
+    },
+    {
+      "id": "project-limit-invalid",
+      "path": "records/project-limit-invalid.json",
+      "schema": "urn:intent:schema:project:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Configured limits cannot exceed the v1 ceiling."
+    },
+    {
+      "id": "project-drive-path-invalid",
+      "path": "records/project-drive-path-invalid.json",
+      "schema": "urn:intent:schema:project:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A drive-prefixed path is not a repository-relative selector."
+    },
+    {
+      "id": "pack-authored-valid",
+      "path": "records/pack-authored-valid.json",
+      "schema": "urn:intent:schema:discipline-pack:v2",
+      "profile": "schema",
+      "valid": true,
+      "description": "Authored Pack choices contain no duplicate manual record inventory or hashes."
+    },
+    {
+      "id": "pack-authored-digest-invalid",
+      "path": "records/pack-authored-digest-invalid.json",
+      "schema": "urn:intent:schema:discipline-pack:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Pack integrity lives in the generated companion."
+    },
+    {
+      "id": "registry-two-releases-valid",
+      "path": "records/registry-two-releases-valid.json",
+      "schema": "urn:intent:schema:discipline-registry:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Pack identity includes version; choosing one record does not update the whole Pack."
+    },
+    {
+      "id": "registry-authored-digest-invalid",
+      "path": "records/registry-authored-digest-invalid.json",
+      "schema": "urn:intent:schema:discipline-registry:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A registry-wide digest is not a selection field; exact-copy digests belong to each selected record."
+    },
+    {
+      "id": "reader-diagnostic-valid",
+      "path": "results/reader-diagnostic-valid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Located framing failure is a diagnostic, not an evaluation result."
+    },
+    {
+      "id": "reader-diagnostic-severity-invalid",
+      "path": "results/reader-diagnostic-severity-invalid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A proposition outcome cannot be used as diagnostic severity."
+    },
+    {
+      "id": "reader-record-valid",
+      "path": "results/reader-record-valid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Parsed-record shape references the complete authored header schema; synthetic source/digests assert structure only."
+    },
+    {
+      "id": "reader-record-header-invalid",
+      "path": "results/reader-record-header-invalid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Generated parsed records do not introduce a seventh Knowledge kind."
+    },
+    {
+      "id": "reader-inspection-invalid-source-valid",
+      "path": "results/reader-inspection-invalid-source-valid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "An observed invalid source is a complete inspection with raw text retained."
+    },
+    {
+      "id": "reader-inspection-valid-incomplete-invalid",
+      "path": "results/reader-inspection-valid-incomplete-invalid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A valid record inspection cannot claim unavailable required processing."
+    },
+    {
+      "id": "reader-workspace-incomplete-valid",
+      "path": "results/reader-workspace-incomplete-valid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Unavailable configuration remains explicit while other observation fields are structurally inspectable."
+    },
+    {
+      "id": "reader-workspace-private-cache-invalid",
+      "path": "results/reader-workspace-private-cache-invalid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Private cache table shapes are not public workspace result fields."
+    },
+    {
+      "id": "reader-coverage-missing-owner-valid",
+      "path": "results/reader-coverage-missing-owner-valid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "A complete coverage traversal may report an observed missing owner; literal bracket paths remain literal."
+    },
+    {
+      "id": "reader-coverage-owner-duplicate-invalid",
+      "path": "results/reader-coverage-owner-duplicate-invalid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Owner identity is deduplicated; overlap is not represented as duplicate owner entries."
+    },
+    {
+      "id": "reader-query-empty-valid",
+      "path": "results/reader-query-empty-valid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "An empty complete page has an explicit null continuation."
+    },
+    {
+      "id": "reader-query-negative-total-invalid",
+      "path": "results/reader-query-negative-total-invalid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A query count cannot be negative."
+    },
+    {
+      "id": "reader-selection-unresolved-valid",
+      "path": "results/reader-selection-unresolved-valid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "An unresolved original request token is retained without inventing a valid Knowledge identity."
+    },
+    {
+      "id": "reader-selection-root-provenance-invalid",
+      "path": "results/reader-selection-root-provenance-invalid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Root selection cannot pretend to be a traversed dependency reason."
+    },
+    {
+      "id": "reader-comparison-deletion-valid",
+      "path": "results/reader-comparison-deletion-valid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Deletion retains the old digest and a null after side; impact remains a candidate set."
+    },
+    {
+      "id": "reader-comparison-deletion-after-invalid",
+      "path": "results/reader-comparison-deletion-after-invalid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A deletion cannot claim retained after bytes."
+    },
+    {
+      "id": "authoring-proposal-valid",
+      "path": "results/authoring-proposal-valid.json",
+      "schema": "urn:intent:schema:authoring-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "A reviewable authored change retains both exact text sides; synthetic digest is shape-only."
+    },
+    {
+      "id": "authoring-proposal-absent-delete-invalid",
+      "path": "results/authoring-proposal-absent-delete-invalid.json",
+      "schema": "urn:intent:schema:authoring-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A proposal cannot delete an absent file."
+    },
+    {
+      "id": "authoring-operation-refused-valid",
+      "path": "results/authoring-operation-refused-valid.json",
+      "schema": "urn:intent:schema:authoring-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "A refusal before application reports no journal or written files."
+    },
+    {
+      "id": "authoring-operation-refused-journal-invalid",
+      "path": "results/authoring-operation-refused-journal-invalid.json",
+      "schema": "urn:intent:schema:authoring-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A refusal cannot advertise an operation journal."
+    },
+    {
+      "id": "authoring-operation-refused-written-invalid",
+      "path": "results/authoring-operation-refused-written-invalid.json",
+      "schema": "urn:intent:schema:authoring-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A refusal cannot claim proposed file writes."
+    },
+    {
+      "id": "authoring-operation-refused-error-invalid",
+      "path": "results/authoring-operation-refused-error-invalid.json",
+      "schema": "urn:intent:schema:authoring-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A refusal requires an explanatory error."
+    },
+    {
+      "id": "authoring-operation-interrupted-journal-invalid",
+      "path": "results/authoring-operation-interrupted-journal-invalid.json",
+      "schema": "urn:intent:schema:authoring-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "An interrupted operation requires its retained journal locator."
+    },
+    {
+      "id": "authoring-operation-interrupted-valid",
+      "path": "results/authoring-operation-interrupted-valid.json",
+      "schema": "urn:intent:schema:authoring-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Partial writes and interruption remain distinguishable from completion."
+    },
+    {
+      "id": "authoring-operation-completed-error-invalid",
+      "path": "results/authoring-operation-completed-error-invalid.json",
+      "schema": "urn:intent:schema:authoring-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Completed operations cannot retain an error outcome."
+    },
+    {
+      "id": "authoring-journal-valid",
+      "path": "results/authoring-journal-valid.json",
+      "schema": "urn:intent:schema:authoring-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "A durable journal binds its proposal and actual partial apply result."
+    },
+    {
+      "id": "authoring-inspection-valid",
+      "path": "results/authoring-inspection-valid.json",
+      "schema": "urn:intent:schema:authoring-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Recovery inspection distinguishes external changes from original and applied content."
+    },
+    {
+      "id": "portal-manifest-valid",
+      "path": "results/portal-manifest-valid.json",
+      "schema": "urn:intent:schema:portal-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "An explicitly empty selection still declares the static public reader assets; synthetic fingerprints establish syntax only."
+    },
+    {
+      "id": "portal-manifest-reader-root-invalid",
+      "path": "results/portal-manifest-reader-root-invalid.json",
+      "schema": "urn:intent:schema:portal-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Portal metadata excludes the local reader identity and absolute repository root."
+    },
+    {
+      "id": "portal-manifest-recursive-output-invalid",
+      "path": "results/portal-manifest-recursive-output-invalid.json",
+      "schema": "urn:intent:schema:portal-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Manifest output inventory excludes its own raw file to avoid recursive file hashing."
+    },
+    {
+      "id": "portal-build-wire-valid",
+      "path": "results/portal-build-wire-valid.json",
+      "schema": "urn:intent:schema:portal-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "JSON build plans use the explicit toWire byte carrier; source integrity is checked separately."
+    },
+    {
+      "id": "portal-build-native-bytes-invalid",
+      "path": "results/portal-build-native-bytes-invalid.json",
+      "schema": "urn:intent:schema:portal-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A native byte array is not the declared portable JSON byte representation."
+    },
+    {
+      "id": "portal-build-failed-output-invalid",
+      "path": "results/portal-build-failed-output-invalid.json",
+      "schema": "urn:intent:schema:portal-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A refused Portal build cannot return partial publishable files or a manifest."
+    },
+    {
+      "id": "product-pack-unavailable-valid",
+      "path": "results/product-pack-unavailable-valid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Unavailable Pack observations retain null interpreted carriers and diagnostics."
+    },
+    {
+      "id": "product-adoption-unavailable-valid",
+      "path": "results/product-adoption-unavailable-valid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "A failed adoption proposal has no proposed copy effects or adoption observation."
+    },
+    {
+      "id": "product-repository-adoption-failed-valid",
+      "path": "results/product-repository-adoption-failed-valid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Repository adoption preserves the original workspace when its selected Pack cannot be read."
+    },
+    {
+      "id": "product-discipline-removal-valid",
+      "path": "results/product-discipline-removal-valid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Closed removal proposal shape; diff-to-selected-ID correspondence remains a semantic check."
+    },
+    {
+      "id": "product-record-change-failed-valid",
+      "path": "results/product-record-change-failed-valid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Failed record-change preparation retains original observation without inventing a baseline."
+    },
+    {
+      "id": "product-initialization-failed-valid",
+      "path": "results/product-initialization-failed-valid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Failed initialization may preserve an invalid caller-supplied root token for diagnosis."
+    },
+    {
+      "id": "product-record-creation-failed-valid",
+      "path": "results/product-record-creation-failed-valid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Failed draft creation retains original workspace and explicit absent proposal."
+    },
+    {
+      "id": "product-operation-resume-valid",
+      "path": "results/product-operation-resume-valid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Completed recovery preparation with one pending original file is not an applied operation."
+    },
+    {
+      "id": "product-lock-inspection-valid",
+      "path": "results/product-lock-inspection-valid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Unknown process liveness is an observation, not permission to release a lock."
+    },
+    {
+      "id": "product-lock-absent-valid",
+      "path": "results/product-lock-absent-valid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "The lock-inspection API explicitly returns null when no lock exists."
+    },
+    {
+      "id": "product-lock-release-valid",
+      "path": "results/product-lock-release-valid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Closed release result shape; process state and exact lock correspondence require explicit recovery checks."
+    },
+    {
+      "id": "product-pack-wire-extra-invalid",
+      "path": "results/product-pack-wire-extra-invalid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Portable byte fields reject unknown fields."
+    },
+    {
+      "id": "product-pack-false-coherence-invalid",
+      "path": "results/product-pack-false-coherence-invalid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Incomplete Pack observation cannot claim a coherent immutable inspection."
+    },
+    {
+      "id": "product-adoption-applied-invalid",
+      "path": "results/product-adoption-applied-invalid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "An adoption proposal cannot claim its copy effects were applied."
+    },
+    {
+      "id": "product-repository-adoption-nested-private-invalid",
+      "path": "results/product-repository-adoption-nested-private-invalid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Nested workspaces retain the closed public reader contract."
+    },
+    {
+      "id": "product-discipline-removal-wrong-kind-invalid",
+      "path": "results/product-discipline-removal-wrong-kind-invalid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Discipline removal IDs cannot name Product Knowledge."
+    },
+    {
+      "id": "product-record-change-operation-invalid",
+      "path": "results/product-record-change-operation-invalid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Record change results preserve the explicit supported operation kind."
+    },
+    {
+      "id": "product-initialization-incomplete-success-invalid",
+      "path": "results/product-initialization-incomplete-success-invalid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Complete initialization requires proposed files and a proposed workspace."
+    },
+    {
+      "id": "product-record-creation-missing-original-invalid",
+      "path": "results/product-record-creation-missing-original-invalid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Draft creation retains its original observation even on diagnostic failure."
+    },
+    {
+      "id": "product-operation-resume-pending-null-invalid",
+      "path": "results/product-operation-resume-pending-null-invalid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Pending recovery paths require a new reviewed FileProposal."
+    },
+    {
+      "id": "product-operation-resume-basis-label-invalid",
+      "path": "results/product-operation-resume-basis-label-invalid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "FileProposal sourceBasis is an exact SHA-256 observation fingerprint."
+    },
+    {
+      "id": "product-lock-inspection-process-invalid",
+      "path": "results/product-lock-inspection-process-invalid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Lock inspection cannot infer a deletion authorization."
+    },
+    {
+      "id": "product-lock-release-extra-invalid",
+      "path": "results/product-lock-release-extra-invalid.json",
+      "schema": "urn:intent:schema:product-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "Lock release cannot claim extra history deletion effects."
+    },
+    {
+      "id": "reader-workspace-review-valid",
+      "path": "results/reader-workspace-review-valid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": true,
+      "description": "Bounded original/proposed code, governing context and explicit outside-observation state."
+    },
+    {
+      "id": "reader-workspace-review-binary-text-invalid",
+      "path": "results/reader-workspace-review-binary-text-invalid.json",
+      "schema": "urn:intent:schema:reader-results:v1",
+      "profile": "schema",
+      "valid": false,
+      "description": "A binary input cannot claim a decoded text preview."
+    },
+    {
+      "id": "check-executable-binding-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/check-executable-binding-invalid.json",
+      "valid": false,
+      "description": "Current authored Checks reject removed executable binding requirements."
+    },
+    {
+      "id": "check-execution-freshness-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/check-execution-freshness-invalid.json",
+      "valid": false,
+      "description": "Current authored Checks reject removed operational freshness configuration."
+    },
+    {
+      "id": "check-future-implementation-valid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "path": "records/check-future-implementation-valid.json",
+      "valid": true,
+      "description": "A Check subject is a prospective definition; structural validity requires no implementation file."
+    },
+    {
+      "id": "portal-code-selection-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:portal-results:v1",
+      "path": "results/portal-code-selection-invalid.json",
+      "valid": false,
+      "description": "Knowledge publication rejects a code attachment selector, even an empty one."
+    },
+    {
+      "id": "portal-evidence-selection-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:portal-results:v1",
+      "path": "results/portal-evidence-selection-invalid.json",
+      "valid": false,
+      "description": "Knowledge publication rejects an operational-evidence selector, even an empty one."
+    },
+    {
+      "id": "authored-title-invalid",
+      "path": "records/authored-title-invalid.json",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Authored title is derived from the H1 and cannot occur in JSON."
+    },
+    {
+      "id": "authored-summary-invalid",
+      "path": "records/authored-summary-invalid.json",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Authored summary is derived from the opening paragraph and cannot occur in JSON."
+    },
+    {
+      "id": "authored-spec-invalid",
+      "path": "records/authored-spec-invalid.json",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Authored spec is rejected even when empty."
+    },
+    {
+      "id": "behavior-coverage-invalid",
+      "path": "records/behavior-coverage-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Description coverage cannot occur on another Knowledge kind."
+    },
+    {
+      "id": "behavior-subjects-invalid",
+      "path": "records/behavior-subjects-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Check subjects cannot occur on another Knowledge kind."
+    },
+    {
+      "id": "behavior-evidence-kinds-invalid",
+      "path": "records/behavior-evidence-kinds-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Check evidence kinds cannot occur on another Knowledge kind."
+    },
+    {
+      "id": "description-coverage-missing-invalid",
+      "path": "records/description-coverage-missing-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Description requires assembled coverage selectors."
+    },
+    {
+      "id": "check-subjects-missing-invalid",
+      "path": "records/check-subjects-missing-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Check requires assembled subject selectors."
+    },
+    {
+      "id": "check-evidence-kinds-missing-invalid",
+      "path": "records/check-evidence-kinds-missing-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Check requires assembled evidence-kind identifiers."
+    },
+    {
+      "id": "relationship-scope-prose-invalid",
+      "path": "records/relationship-scope-prose-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Relationship scope prose cannot occur in JSON."
+    },
+    {
+      "id": "relationship-rationale-prose-invalid",
+      "path": "records/relationship-rationale-prose-invalid.json",
+      "schema": "urn:intent:schema:assembled-header:v2",
+      "profile": "schema",
+      "valid": false,
+      "description": "Relationship rationale prose cannot occur in JSON."
+    },
+    {
+      "id": "local-owners-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/local-owners-invalid.json",
+      "valid": false,
+      "description": "Local headers reject owners; authored metadata has an explicit global owner."
+    },
+    {
+      "id": "local-sources-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/local-sources-invalid.json",
+      "valid": false,
+      "description": "Local headers reject sources; authored metadata has an explicit global owner."
+    },
+    {
+      "id": "local-relationships-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/local-relationships-invalid.json",
+      "valid": false,
+      "description": "Local headers reject relationships; authored metadata has an explicit global owner."
+    },
+    {
+      "id": "local-conflicts-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/local-conflicts-invalid.json",
+      "valid": false,
+      "description": "Local headers reject conflicts; authored metadata has an explicit global owner."
+    },
+    {
+      "id": "local-tags-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/local-tags-invalid.json",
+      "valid": false,
+      "description": "Local headers reject tags; authored metadata has an explicit global owner."
+    },
+    {
+      "id": "local-coverage-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/local-coverage-invalid.json",
+      "valid": false,
+      "description": "Local headers reject coverage; authored metadata has an explicit global owner."
+    },
+    {
+      "id": "local-subjects-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/local-subjects-invalid.json",
+      "valid": false,
+      "description": "Local headers reject subjects; authored metadata has an explicit global owner."
+    },
+    {
+      "id": "local-evidenceKinds-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/local-evidenceKinds-invalid.json",
+      "valid": false,
+      "description": "Local headers reject evidenceKinds; authored metadata has an explicit global owner."
+    },
+    {
+      "id": "local-x-extra-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/local-x-extra-invalid.json",
+      "valid": false,
+      "description": "Local headers reject x-extra; authored metadata has an explicit global owner."
+    },
+    {
+      "id": "local-old-format-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/local-old-format-invalid.json",
+      "valid": false,
+      "description": "Current authored inspection refuses the prior schema identifier explicitly."
+    },
+    {
+      "id": "catalog-valid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:catalog:v1",
+      "path": "records/catalog-valid.json",
+      "valid": true,
+      "description": "Shared source definitions and record identity assignments have no authored state or path inventory."
+    },
+    {
+      "id": "catalog-state-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:catalog:v1",
+      "path": "records/catalog-state-invalid.json",
+      "valid": false,
+      "description": "The global catalog rejects misplaced or incomplete authored metadata."
+    },
+    {
+      "id": "catalog-path-inventory-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:catalog:v1",
+      "path": "records/catalog-path-inventory-invalid.json",
+      "valid": false,
+      "description": "The global catalog rejects misplaced or incomplete authored metadata."
+    },
+    {
+      "id": "catalog-source-prose-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:catalog:v1",
+      "path": "records/catalog-source-prose-invalid.json",
+      "valid": false,
+      "description": "The global catalog rejects misplaced or incomplete authored metadata."
+    },
+    {
+      "id": "catalog-missing-records-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:catalog:v1",
+      "path": "records/catalog-missing-records-invalid.json",
+      "valid": false,
+      "description": "The global catalog rejects misplaced or incomplete authored metadata."
+    },
+    {
+      "id": "connections-valid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:connections:v1",
+      "path": "records/connections-valid.json",
+      "valid": true,
+      "description": "Identified connections preserve record identities, role, requiredness and literal selections."
+    },
+    {
+      "id": "connections-prose-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:connections:v1",
+      "path": "records/connections-prose-invalid.json",
+      "valid": false,
+      "description": "Connection carriers reject misplaced prose, invalid paths, missing selections or generated authored fingerprints."
+    },
+    {
+      "id": "connections-owner-path-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:connections:v1",
+      "path": "records/connections-owner-path-invalid.json",
+      "valid": false,
+      "description": "Connection carriers reject misplaced prose, invalid paths, missing selections or generated authored fingerprints."
+    },
+    {
+      "id": "connections-source-digest-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:connections:v1",
+      "path": "records/connections-source-digest-invalid.json",
+      "valid": false,
+      "description": "Connection carriers reject misplaced prose, invalid paths, missing selections or generated authored fingerprints."
+    },
+    {
+      "id": "connections-file-exclusion-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:connections:v1",
+      "path": "records/connections-file-exclusion-invalid.json",
+      "valid": false,
+      "description": "Connection carriers reject misplaced prose, invalid paths, missing selections or generated authored fingerprints."
+    },
+    {
+      "id": "connections-parent-path-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:connections:v1",
+      "path": "records/connections-parent-path-invalid.json",
+      "valid": false,
+      "description": "Connection carriers reject misplaced prose, invalid paths, missing selections or generated authored fingerprints."
+    },
+    {
+      "id": "connections-missing-collection-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:connections:v1",
+      "path": "records/connections-missing-collection-invalid.json",
+      "valid": false,
+      "description": "Connection carriers reject misplaced prose, invalid paths, missing selections or generated authored fingerprints."
+    },
+    {
+      "id": "connections-selection-subjects-missing-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:connections:v1",
+      "path": "records/connections-selection-subjects-missing-invalid.json",
+      "valid": false,
+      "description": "Connection carriers reject misplaced prose, invalid paths, missing selections or generated authored fingerprints."
+    },
+    {
+      "id": "connections-selection-evidence-missing-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:connections:v1",
+      "path": "records/connections-selection-evidence-missing-invalid.json",
+      "valid": false,
+      "description": "Connection carriers reject misplaced prose, invalid paths, missing selections or generated authored fingerprints."
+    },
+    {
+      "id": "local-revision-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/local-revision-invalid.json",
+      "valid": false,
+      "description": "Current authored headers reject the unsupported revision field."
+    },
+    {
+      "id": "local-supersedes-invalid",
+      "profile": "schema",
+      "schema": "urn:intent:schema:knowledge-record:v2",
+      "path": "records/local-supersedes-invalid.json",
+      "valid": false,
+      "description": "Current authored headers reject the unsupported supersedes field."
+    }
+  ]
+}

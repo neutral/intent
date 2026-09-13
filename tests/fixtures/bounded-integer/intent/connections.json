@@ -1,0 +1,94 @@
+{
+  "schema": "intent.connections.v1",
+  "relationships": [
+    {
+      "id": "verified-by-check.integer-boundaries",
+      "record": "assurance.integer-rejection",
+      "type": "verified-by",
+      "target": "check.integer-boundaries",
+      "required": true
+    },
+    {
+      "id": "constrains-description.integer-parser",
+      "record": "assurance.integer-rejection",
+      "type": "constrains",
+      "target": "description.integer-parser",
+      "required": true
+    },
+    {
+      "id": "verified-by-check.integer-boundaries",
+      "record": "behavior.integer-token",
+      "type": "verified-by",
+      "target": "check.integer-boundaries",
+      "required": true
+    },
+    {
+      "id": "realizes-behavior.integer-token",
+      "record": "blueprint.integer-parser",
+      "type": "realizes",
+      "target": "behavior.integer-token",
+      "required": true
+    },
+    {
+      "id": "realizes-assurance.integer-rejection",
+      "record": "blueprint.integer-parser",
+      "type": "realizes",
+      "target": "assurance.integer-rejection",
+      "required": true
+    },
+    {
+      "id": "related-to-check.integer-boundaries",
+      "record": "description.integer-oracle",
+      "type": "related-to",
+      "target": "check.integer-boundaries",
+      "required": false
+    },
+    {
+      "id": "realizes-blueprint.integer-parser",
+      "record": "description.integer-parser",
+      "type": "realizes",
+      "target": "blueprint.integer-parser",
+      "required": true
+    },
+    {
+      "id": "verified-by-check.integer-boundaries",
+      "record": "description.integer-parser",
+      "type": "verified-by",
+      "target": "check.integer-boundaries",
+      "required": true
+    }
+  ],
+  "conflicts": [],
+  "sourceUses": [],
+  "coverage": [
+    {
+      "id": "coverage-1",
+      "record": "description.integer-oracle",
+      "path": "checks/boundaries.mjs",
+      "mode": "file",
+      "role": "primary"
+    },
+    {
+      "id": "coverage-1",
+      "record": "description.integer-parser",
+      "path": "src/parse-integer.mjs",
+      "mode": "file",
+      "role": "primary"
+    }
+  ],
+  "checkSelections": [
+    {
+      "id": "check-selection",
+      "record": "check.integer-boundaries",
+      "subjects": [
+        {
+          "kind": "file",
+          "selector": "src/parse-integer.mjs"
+        }
+      ],
+      "evidenceKinds": [
+        "command"
+      ]
+    }
+  ]
+}

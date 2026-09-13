@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:discipline-pack:v2",
+  "title": "Intent discipline-pack v2",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "intent.discipline-pack.v2"
+    },
+    "id": {
+      "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+    },
+    "title": {
+      "$ref": "urn:intent:schema:common:v1#/$defs/line"
+    },
+    "version": {
+      "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+    },
+    "publisher": {
+      "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+    },
+    "recordSchema": {
+      "const": "urn:intent:schema:knowledge-record:v2"
+    },
+    "sets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+          },
+          "title": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/line"
+          },
+          "description": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/text"
+          },
+          "recordIds": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+                },
+                {
+                  "pattern": "^discipline\\."
+                }
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 4096,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "description",
+          "recordIds"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 4096
+    }
+  },
+  "required": [
+    "schema",
+    "id",
+    "title",
+    "version",
+    "publisher",
+    "recordSchema",
+    "sets"
+  ],
+  "additionalProperties": false
+}

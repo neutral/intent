@@ -1,0 +1,14 @@
+{
+  "schema": "intent.file-proposal.v1",
+  "id": "fixture-operation",
+  "sourceBasis": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "proposedBasis": null,
+  "changes": [
+    {
+      "path": "intent/blueprint/example.md",
+      "before": null,
+      "after": null
+    }
+  ],
+  "digest": "sha256:e7034fcd789c3a59e575730fa5c15e92802c30a3a6f67160ae0f05fff4fadaa8"
+}

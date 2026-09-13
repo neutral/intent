@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:discipline-pack-manifest:v2",
+  "title": "Intent discipline-pack-manifest v2",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "intent.discipline-pack-manifest.v2"
+    },
+    "pack": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+        },
+        "version": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+        },
+        "publisher": {
+          "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+        },
+        "sourceDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "catalogDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "connectionsDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "publisher",
+        "sourceDigest",
+        "catalogDigest",
+        "connectionsDigest"
+      ],
+      "additionalProperties": false
+    },
+    "processing": {
+      "type": "object",
+      "properties": {
+        "contract": {
+          "const": "intent.processing.v2"
+        },
+        "knowledgeRecordSchema": {
+          "const": "urn:intent:schema:knowledge-record:v2"
+        }
+      },
+      "required": [
+        "contract",
+        "knowledgeRecordSchema"
+      ],
+      "additionalProperties": false
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "allOf": [
+              {
+                "$ref": "urn:intent:schema:common:v1#/$defs/knowledgeId"
+              },
+              {
+                "pattern": "^discipline\\."
+              }
+            ]
+          },
+          "path": {
+            "allOf": [
+              {
+                "$ref": "urn:intent:schema:common:v1#/$defs/path"
+              },
+              {
+                "pattern": "^records/.+\\.md$"
+              }
+            ]
+          },
+          "sourceDigest": {
+            "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+          },
+          "semanticDigest": {
+            "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+          }
+        },
+        "required": [
+          "id",
+          "path",
+          "sourceDigest",
+          "semanticDigest"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 65536
+    },
+    "digest": {
+      "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+    }
+  },
+  "required": [
+    "schema",
+    "pack",
+    "processing",
+    "records",
+    "digest"
+  ],
+  "additionalProperties": false
+}

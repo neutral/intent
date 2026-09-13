@@ -1,0 +1,20 @@
+{
+  "artifacts": [
+    {
+      "path": "src/[id]/index.ts",
+      "owners": []
+    }
+  ],
+  "exemptions": [],
+  "diagnostics": [
+    {
+      "code": "intent.coverage.missing",
+      "severity": "error",
+      "stage": "coverage",
+      "message": "Knowledge must start with an exact delimiter.",
+      "path": "src/[id]/index.ts",
+      "line": 1
+    }
+  ],
+  "complete": true
+}

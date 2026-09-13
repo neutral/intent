@@ -1,0 +1,19 @@
+{
+  "schema": "intent.record-creation-proposal.v1",
+  "fileProposal": null,
+  "proposed": null,
+  "diagnostics": [
+    {
+      "code": "intent.source.missing",
+      "severity": "error",
+      "stage": "configuration",
+      "message": "Knowledge must start with an exact delimiter.",
+      "path": "intent/project.json",
+      "line": 1
+    }
+  ],
+  "complete": false,
+  "limitations": [
+    "Independently authored structural fixture; no completed execution, source correspondence, application or adoption is established."
+  ]
+}

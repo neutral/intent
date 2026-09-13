@@ -1,0 +1,9 @@
+{
+  "name": "intent-example-bounded-integer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "CC0-1.0 OR 0BSD",
+  "engines": { "node": ">=24.0.0" },
+  "description": "A copied standalone Intent example; install explicitly selected public Intent artifacts."
+}

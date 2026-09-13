@@ -1,0 +1,85 @@
+{
+  "fileProposal": {
+    "schema": "intent.file-proposal.v1",
+    "id": "fixture-operation",
+    "sourceBasis": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "proposedBasis": null,
+    "changes": [
+      {
+        "path": "intent/blueprint/example.md",
+        "before": "Earlier text\n",
+        "after": "Proposed text\n"
+      }
+    ],
+    "digest": "sha256:036578d72b16db72ff803289d1ded85722ecc1b4592c9d0d0c9726e934c29c3d"
+  },
+  "original": {
+    "sourceBasis": {
+      "kind": "export",
+      "id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "reader": "explicit-fixture"
+    },
+    "config": null,
+    "records": [],
+    "coverage": null,
+    "stages": [
+      {
+        "name": "configuration",
+        "complete": false,
+        "valid": false
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "intent.source.missing",
+        "severity": "error",
+        "stage": "configuration",
+        "message": "Knowledge must start with an exact delimiter.",
+        "path": "intent/project.json",
+        "line": 1
+      }
+    ],
+    "complete": false,
+    "valid": false,
+    "mode": "knowledge",
+    "disciplines": null
+  },
+  "proposed": {
+    "sourceBasis": {
+      "kind": "export",
+      "id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "reader": "explicit-fixture"
+    },
+    "config": null,
+    "records": [],
+    "coverage": null,
+    "stages": [
+      {
+        "name": "configuration",
+        "complete": false,
+        "valid": false
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "intent.source.missing",
+        "severity": "error",
+        "stage": "configuration",
+        "message": "Knowledge must start with an exact delimiter.",
+        "path": "intent/project.json",
+        "line": 1
+      }
+    ],
+    "complete": false,
+    "valid": false,
+    "mode": "knowledge",
+    "disciplines": null
+  },
+  "removedIds": [
+    "blueprint.example"
+  ],
+  "affectedWorkTypes": [],
+  "limitations": [
+    "Independently authored structural fixture; no completed execution, source correspondence, application or adoption is established."
+  ]
+}

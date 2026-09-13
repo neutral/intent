@@ -1,0 +1,44 @@
+{
+  "schema": "intent.connections.v1",
+  "relationships": [
+    {
+      "id": "verified-by-boundary",
+      "record": "behavior.example",
+      "type": "verified-by",
+      "target": "check.example",
+      "required": true
+    }
+  ],
+  "conflicts": [],
+  "sourceUses": [
+    {
+      "id": "manual-use",
+      "record": "behavior.example",
+      "source": "manual",
+      "required": false,
+      "revision": null,
+      "role": "research"
+    }
+  ],
+  "coverage": [
+    {
+      "id": "module",
+      "record": "description.example",
+      "path": "src/module.js",
+      "mode": "file",
+      "role": "primary"
+    }
+  ],
+  "checkSelections": [
+    {
+      "id": "definition",
+      "record": "check.example",
+      "subjects": [
+        {
+          "kind": "file",
+          "selector": "future/module.js"
+        }
+      ]
+    }
+  ]
+}

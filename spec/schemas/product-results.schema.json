@@ -1,0 +1,980 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intent:schema:product-results:v1",
+  "title": "Intent Product preparation and Discipline results v1",
+  "description": "Closed structural results after the portable toWire projection. Preparation is not application, complete preparation is not complete Product meaning, and fingerprints do not establish authenticity.",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/disciplinePackInspection"
+    },
+    {
+      "$ref": "#/$defs/disciplineAdoptionProposal"
+    },
+    {
+      "$ref": "#/$defs/repositoryAdoptionProposal"
+    },
+    {
+      "$ref": "#/$defs/repositoryDisciplineRemovalProposal"
+    },
+    {
+      "$ref": "#/$defs/recordChangeProposal"
+    },
+    {
+      "$ref": "#/$defs/initializationProposal"
+    },
+    {
+      "$ref": "#/$defs/recordCreationProposal"
+    },
+    {
+      "$ref": "#/$defs/operationResumeProposal"
+    },
+    {
+      "$ref": "#/$defs/authoringLockInspection"
+    },
+    {
+      "$ref": "#/$defs/abandonedLockRelease"
+    }
+  ],
+  "$defs": {
+    "disciplinePackInspection": {
+      "type": "object",
+      "properties": {
+        "complete": {
+          "type": "boolean"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/diagnostics"
+        },
+        "profile": {
+          "enum": [
+            "discipline-pack-build-v1",
+            "discipline-pack-validation-v1"
+          ]
+        },
+        "sourceIdentity": {
+          "type": "string"
+        },
+        "coherence": {
+          "enum": [
+            "immutable",
+            "rechecked",
+            "incomplete"
+          ]
+        },
+        "definition": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:discipline-pack:v2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "definitionBytes": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:reader-results:v1#/$defs/wireBytes"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:reader-results:v1#/$defs/record"
+          },
+          "maxItems": 65536
+        },
+        "recordBytes": {
+          "type": "object",
+          "propertyNames": {
+            "allOf": [
+              {
+                "$ref": "urn:intent:schema:common:v1#/$defs/path"
+              },
+              {
+                "pattern": "^records/.+\\.md$"
+              }
+            ]
+          },
+          "additionalProperties": {
+            "$ref": "urn:intent:schema:reader-results:v1#/$defs/wireBytes"
+          },
+          "maxProperties": 65536
+        },
+        "suppliedManifest": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:discipline-pack-manifest:v2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "suppliedManifestBytes": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:reader-results:v1#/$defs/wireBytes"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "candidateManifest": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:discipline-pack-manifest:v2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "context": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:reader-results:v1#/$defs/recordContext"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "catalogBytes": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:reader-results:v1#/$defs/wireBytes"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "connectionsBytes": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:reader-results:v1#/$defs/wireBytes"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "complete",
+        "valid",
+        "diagnostics",
+        "profile",
+        "sourceIdentity",
+        "coherence",
+        "definition",
+        "definitionBytes",
+        "records",
+        "recordBytes",
+        "suppliedManifest",
+        "suppliedManifestBytes",
+        "candidateManifest",
+        "context",
+        "catalogBytes",
+        "connectionsBytes"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "valid": {
+                "const": true
+              }
+            },
+            "required": [
+              "valid"
+            ]
+          },
+          "then": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "complete": {
+                "const": false
+              }
+            },
+            "required": [
+              "complete"
+            ]
+          },
+          "then": {
+            "properties": {
+              "coherence": {
+                "const": "incomplete"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "valid": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "context": {
+                "$ref": "urn:intent:schema:reader-results:v1#/$defs/recordContext"
+              },
+              "catalogBytes": {
+                "$ref": "urn:intent:schema:reader-results:v1#/$defs/wireBytes"
+              },
+              "connectionsBytes": {
+                "$ref": "urn:intent:schema:reader-results:v1#/$defs/wireBytes"
+              }
+            }
+          }
+        }
+      ],
+      "$comment": "Invalid inspections may retain parsed records and raw bytes, including non-current or misplaced records. Supplied and candidate manifests stay distinct. The recordBytes dictionary is the string-keyed Map projection; exact correspondence is checked semantically."
+    },
+    "disciplineProposalFile": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "allOf": [
+            {
+              "$ref": "urn:intent:schema:common:v1#/$defs/path"
+            },
+            {
+              "pattern": "^intent/"
+            }
+          ]
+        },
+        "bytes": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/wireBytes"
+        }
+      },
+      "required": [
+        "path",
+        "bytes"
+      ],
+      "additionalProperties": false
+    },
+    "disciplineAdoptionProposal": {
+      "type": "object",
+      "properties": {
+        "complete": {
+          "type": "boolean"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/diagnostics"
+        },
+        "profile": {
+          "const": "discipline-adoption-proposal-v1"
+        },
+        "pack": {
+          "$ref": "#/$defs/disciplinePackInspection"
+        },
+        "packChoice": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:discipline-registry:v1#/properties/packs/items"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "choices": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:discipline-registry:v1#/properties/adoptions/items"
+          },
+          "maxItems": 65536
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/disciplineProposalFile"
+          },
+          "maxItems": 131075
+        },
+        "applied": {
+          "const": false
+        },
+        "context": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/recordContext"
+        }
+      },
+      "required": [
+        "complete",
+        "valid",
+        "diagnostics",
+        "profile",
+        "pack",
+        "packChoice",
+        "choices",
+        "files",
+        "applied",
+        "context"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "valid": {
+                "const": true
+              }
+            },
+            "required": [
+              "valid"
+            ]
+          },
+          "then": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "valid": {
+                "const": true
+              }
+            },
+            "required": [
+              "valid"
+            ]
+          },
+          "then": {
+            "properties": {
+              "packChoice": {
+                "$ref": "urn:intent:schema:discipline-registry:v1#/properties/packs/items"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "packChoice": {
+                "type": "null"
+              },
+              "choices": {
+                "maxItems": 0
+              },
+              "files": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "repositoryAdoptionProposal": {
+      "type": "object",
+      "properties": {
+        "adoption": {
+          "$ref": "#/$defs/disciplineAdoptionProposal"
+        },
+        "fileProposal": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:authoring-results:v1#/$defs/fileProposal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+        },
+        "proposed": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "adoption",
+        "fileProposal",
+        "original",
+        "proposed"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "fileProposal": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "fileProposal"
+            ]
+          },
+          "then": {
+            "properties": {
+              "proposed": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "proposed": {
+                "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+              },
+              "adoption": {
+                "properties": {
+                  "valid": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "repositoryDisciplineRemovalProposal": {
+      "type": "object",
+      "properties": {
+        "fileProposal": {
+          "$ref": "urn:intent:schema:authoring-results:v1#/$defs/fileProposal"
+        },
+        "original": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+        },
+        "proposed": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+        },
+        "removedIds": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:discipline-registry:v1#/properties/adoptions/items/properties/id"
+          },
+          "minItems": 1,
+          "maxItems": 4096,
+          "uniqueItems": true
+        },
+        "affectedWorkTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/opaqueId"
+          },
+          "maxItems": 4096,
+          "uniqueItems": true
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "fileProposal",
+        "original",
+        "proposed",
+        "removedIds",
+        "affectedWorkTypes",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "recordChangeProposal": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "intent.record-change-proposal.v1"
+        },
+        "operation": {
+          "enum": [
+            "edit",
+            "set-status",
+            "move",
+            "remove"
+          ]
+        },
+        "fileProposal": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:authoring-results:v1#/$defs/fileProposal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+        },
+        "proposed": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "impact": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:reader-results:v1#/$defs/comparison"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "diagnostics": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/diagnostics"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "operation",
+        "fileProposal",
+        "original",
+        "proposed",
+        "impact",
+        "diagnostics",
+        "complete",
+        "limitations"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            },
+            "required": [
+              "complete"
+            ]
+          },
+          "then": {
+            "properties": {
+              "fileProposal": {
+                "$ref": "urn:intent:schema:authoring-results:v1#/$defs/fileProposal"
+              },
+              "proposed": {
+                "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+              },
+              "impact": {
+                "$ref": "urn:intent:schema:reader-results:v1#/$defs/comparison"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "fileProposal": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "initializationProposal": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "intent.initialization-proposal.v1"
+        },
+        "fileProposal": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:authoring-results:v1#/$defs/fileProposal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "proposed": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "diagnostics": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/diagnostics"
+        },
+        "scope": {
+          "type": "object",
+          "properties": {
+            "implementationRoots": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "$comment": "Failed preparation preserves caller-selected root tokens for diagnosis; only a completed preparation asserts normalized project roots."
+            },
+            "governedArtifacts": {
+              "anyOf": [
+                {
+                  "$ref": "urn:intent:schema:reader-results:v1#/$defs/nonNegativeInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "claim": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "implementationRoots",
+            "governedArtifacts",
+            "claim"
+          ],
+          "additionalProperties": false
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "fileProposal",
+        "proposed",
+        "diagnostics",
+        "scope",
+        "complete",
+        "limitations"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            },
+            "required": [
+              "complete"
+            ]
+          },
+          "then": {
+            "properties": {
+              "fileProposal": {
+                "$ref": "urn:intent:schema:authoring-results:v1#/$defs/fileProposal"
+              },
+              "proposed": {
+                "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+              },
+              "scope": {
+                "properties": {
+                  "implementationRoots": {
+                    "$ref": "urn:intent:schema:project:v1#/properties/implementationRoots"
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "fileProposal": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "recordCreationProposal": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "intent.record-creation-proposal.v1"
+        },
+        "fileProposal": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:authoring-results:v1#/$defs/fileProposal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+        },
+        "proposed": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "diagnostics": {
+          "$ref": "urn:intent:schema:reader-results:v1#/$defs/diagnostics"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "fileProposal",
+        "original",
+        "proposed",
+        "diagnostics",
+        "complete",
+        "limitations"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            },
+            "required": [
+              "complete"
+            ]
+          },
+          "then": {
+            "properties": {
+              "fileProposal": {
+                "$ref": "urn:intent:schema:authoring-results:v1#/$defs/fileProposal"
+              },
+              "proposed": {
+                "$ref": "urn:intent:schema:reader-results:v1#/$defs/workspaceSummary"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "fileProposal": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "operationResumeProposal": {
+      "type": "object",
+      "properties": {
+        "operationId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-]{1,100}$"
+        },
+        "fileProposal": {
+          "anyOf": [
+            {
+              "$ref": "urn:intent:schema:authoring-results:v1#/$defs/fileProposal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "files": {
+          "$ref": "urn:intent:schema:authoring-results:v1#/$defs/operationInspection/properties/files"
+        },
+        "remainingPaths": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:intent:schema:common:v1#/$defs/path"
+          },
+          "maxItems": 4096,
+          "uniqueItems": true
+        },
+        "complete": {
+          "const": true
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "operationId",
+        "fileProposal",
+        "files",
+        "remainingPaths",
+        "complete",
+        "limitations"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "remainingPaths": {
+                "maxItems": 0
+              }
+            },
+            "required": [
+              "remainingPaths"
+            ]
+          },
+          "then": {
+            "properties": {
+              "fileProposal": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "fileProposal": {
+                "$ref": "urn:intent:schema:authoring-results:v1#/$defs/fileProposal"
+              }
+            }
+          }
+        }
+      ],
+      "$comment": "The existing operation file states are retained for review. Complete means preparation completed, not that pending changes were applied. Ordering, exact before-byte correspondence, and remaining-path/proposal equality are semantic checks."
+    },
+    "authoringLock": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-]{1,100}$"
+        },
+        "pid": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "journal": {
+          "$ref": "urn:intent:schema:authoring-results:v1#/$defs/operationJournal/properties/journal"
+        },
+        "sourceDigest": {
+          "$ref": "urn:intent:schema:integrity:v1#/$defs/sha256"
+        },
+        "processState": {
+          "enum": [
+            "running",
+            "not-running",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "pid",
+        "journal",
+        "sourceDigest",
+        "processState"
+      ],
+      "additionalProperties": false
+    },
+    "authoringLockInspection": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/authoringLock"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "abandonedLockRelease": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-]{1,100}$"
+        },
+        "released": {
+          "const": true
+        }
+      },
+      "required": [
+        "id",
+        "released"
+      ],
+      "additionalProperties": false
+    },
+    "operationDiscardResult": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-]{1,100}$"
+        },
+        "discarded": {
+          "const": true
+        }
+      },
+      "required": [
+        "id",
+        "discarded"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

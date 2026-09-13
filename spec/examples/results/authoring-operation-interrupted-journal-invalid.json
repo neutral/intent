@@ -1,0 +1,7 @@
+{
+  "id": "fixture-operation",
+  "status": "interrupted",
+  "journal": null,
+  "written": [],
+  "error": "Source changed since proposal: intent/blueprint/example.md"
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "intent.project.v1",
+  "name": "Bounded integer parser",
+  "description": "A standalone example governing the parser and its fixed command oracle. Setup support and documentation are outside this bounded implementation scope.",
+  "owners": ["example-maintainer"],
+  "implementationRoots": ["src", "checks"],
+  "exemptions": []
+}
