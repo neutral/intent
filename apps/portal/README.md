@@ -39,10 +39,19 @@ omissions and bounds.
 ## Develop and verify
 
 `build.ts` implements the public builder; `export.ts` owns the shared destination
-writer and local preview; `assets/` contains the static reader. The unified command
-owns installed launch behavior. From a source checkout,
-`npm run build` produces the builder and `node --test tests/portal.test.mjs`
-exercises it. `npm run release:check` also compares the installed CLI and API
-outputs and serves the result over local HTTP.
+writer and local preview. `ui/` holds the static reader: React with React Aria
+Components on the shared sheet in `../sheet/`. `build.ts` prerenders every page
+with React at export time, so each page reads in full without scripts; the
+reader's script hydrates the same markup and adds search. `npm run build` compiles
+the reader into `dist/apps/portal/assets/` (`reader.js`, `style.css` and
+`third-party-licenses.txt`, copied into every export's `assets/`) and the
+export-time prerenderer into `dist/apps/portal/render.js`. The installed command
+owns launch behavior.
+
+From a source checkout, `npm run build` produces the builder and
+`node --test tests/portal.test.mjs` exercises it. `npm run test:browser` reads an
+export in headless Chromium: without scripts, hydrated, searched from the keyboard
+and checked with axe at 1440px and 375px. `npm run release:check` also compares
+the installed CLI and API outputs and serves the result over local HTTP.
 
 Original source uses the repository's CC0-1.0 OR 0BSD license choice.

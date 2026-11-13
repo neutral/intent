@@ -53,6 +53,8 @@ test('one package preserves compiled imports, ships every interface and recursiv
     assert.ok(artifact.files.every(path=>!path.startsWith('atlas/')&&!path.startsWith('tests/')&&!path.startsWith('workflows/')));
     assert.ok(artifact.files.every(path=>!/^dist\/library\/cache\./.test(path)), 'Removed cache modules, declarations and maps must not ship');
     for(const path of Object.values(manifest.bin))assert.ok(artifact.files.includes(path.replace(/^\.\//,'')));
+    for(const path of ['dist/apps/editor/assets/index.html','dist/apps/editor/assets/app.js','dist/apps/editor/assets/style.css','dist/apps/editor/assets/third-party-licenses.txt','dist/apps/portal/assets/reader.js','dist/apps/portal/assets/style.css','dist/apps/portal/assets/third-party-licenses.txt','dist/apps/portal/render.js','dist/apps/portal/render-licenses.txt'])assert.ok(artifact.files.includes(path),`Built browser asset ships: ${path}`);
+    assert.ok(artifact.files.every(path=>!/^apps\/(?:editor|portal|sheet)\/ui\//.test(path)&&!path.startsWith('apps/sheet/')),'Browser sources stay out of the package; their built assets ship');
     await assert.rejects(run(process.execPath,[join(source,'distribution/assemble.mjs'),destination]),/Refusing to replace/);
   }finally{await rm(temporary,{recursive:true,force:true});}
 });
@@ -65,6 +67,7 @@ test('the build workflow discards stale generated modules before compiling the s
     await mkdir(join(temporary,'library'),{recursive:true});
     await mkdir(join(temporary,'dist/library'),{recursive:true});
     await cp(join(root,'distribution/build.mjs'),join(temporary,'distribution/build.mjs'));
+    for(const path of ['apps/sheet','apps/editor/ui','apps/portal/ui','apps/portal/page-data.ts'])await cp(join(root,path),join(temporary,path),{recursive:true});
     await symlink(join(root,'node_modules'),join(temporary,'node_modules'));
     await writeFile(join(temporary,'package.json'),JSON.stringify({type:'module'}));
     await writeFile(join(temporary,'tsconfig.json'),JSON.stringify({compilerOptions:{target:'ES2022',module:'NodeNext',moduleResolution:'NodeNext',outDir:'dist',rootDir:'.',declaration:true,sourceMap:true,declarationMap:true,types:[]},include:['library/**/*.ts']}));
@@ -73,7 +76,8 @@ test('the build workflow discards stale generated modules before compiling the s
     await run(process.execPath,[join(temporary,'distribution/build.mjs')],{maxBuffer:2_000_000});
     const outputs=await filesAt(join(temporary,'dist'));
     assert.ok(outputs.every(path=>!path.startsWith('library/cache.')));
-    assert.deepEqual(outputs,['library/current.d.ts','library/current.d.ts.map','library/current.js','library/current.js.map']);
+    assert.deepEqual(outputs.filter(path=>path.startsWith('library/')),['library/current.d.ts','library/current.d.ts.map','library/current.js','library/current.js.map']);
+    assert.deepEqual(outputs.filter(path=>!path.startsWith('library/')),['apps/editor/assets/app.js','apps/editor/assets/index.html','apps/editor/assets/style.css','apps/editor/assets/third-party-licenses.txt','apps/portal/assets/reader.js','apps/portal/assets/style.css','apps/portal/assets/third-party-licenses.txt','apps/portal/render-licenses.txt','apps/portal/render.js']);
     assert.match(await readFile(join(temporary,'dist/library/current.js'),'utf8'),/export const current = true/);
   }finally{await rm(temporary,{recursive:true,force:true});}
 });

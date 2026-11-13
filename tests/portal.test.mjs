@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { createServer } from "node:http";
 import test from "node:test";
-import vm from "node:vm";
 import { MemorySource, readWorkspace } from "../dist/library/index.js";
 import { buildPortal } from "../dist/apps/portal/build.js";
 import { document, header, location, fixtureFiles } from "./fixtures.mjs";
@@ -129,21 +128,36 @@ test("mutable selected files are rechecked and file/count/output budgets fail cl
   assert.equal(recordLimit.diagnostics[0].code, "intent.limit.portal-record-bytes");
 });
 
-test("classic static search uses safe DOM text, reports matches, and supports keyboard form reset", async () => {
+test("pages are prerendered with labelled search, a live status, one lead and the data they hydrate from", async () => {
   const { source, workspace } = await fixture();
   const result = await buildPortal(workspace, source, { ...EMPTY, recordIds: ["description.store", "check.store"] });
-  const handlers = {}, formHandlers = {};
-  const input = { value: "description", focus() { this.focused = true; }, addEventListener: (name, fn) => { handlers[name] = fn; }, form: { addEventListener: (name, fn) => { formHandlers[name] = fn; } } };
-  const cards = [{ dataset: { record: "0" }, hidden: false }, { dataset: { record: "1" }, hidden: false }];
-  const status = { textContent: "" }, empty = { hidden: true };
   const html = content(result, "index.html");
-  const data = { textContent: html.match(/<script type="application\/json" id="search-data">([\s\S]*?)<\/script>/)[1] };
-  vm.runInNewContext(content(result, "assets/reader.js"), { document: { getElementById: id => ({ search: input, "search-data": data, "search-status": status, "no-results": empty })[id], querySelectorAll: () => cards } });
-  handlers.input(); assert.equal(cards.filter(card => !card.hidden).length, 1); assert.match(status.textContent, /1 of 2/);
-  input.value = "no match at all"; handlers.input(); assert.equal(empty.hidden, false);
-  formHandlers.reset(); assert.equal(input.focused, true); assert.ok(cards.every(card => !card.hidden));
-  let prevented = false; formHandlers.submit({ preventDefault() { prevented = true; } }); assert.equal(prevented, true);
-  assert.match(html, /<label for="search">/); assert.match(html, /aria-live="polite"/);
+  const withoutData = page => page.replace(/<script type="application\/json" id="portal-data">[\s\S]*?<\/script>/, "");
+  // Search is labelled and reports through a polite live region; the reader filters in the browser (tests/browser).
+  const label = html.match(/<label[^>]*\bfor="([^"]+)"[^>]*>Search selected Knowledge<\/label>/);
+  assert.ok(label, "search has a visible label tied to its input");
+  assert.match(html, new RegExp(`<input[^>]*\\bid="${label[1]}"[^>]*>`));
+  assert.match(html, /<p id="search-status"[^>]*role="status"[^>]*aria-live="polite"/);
+  const data = JSON.parse(html.match(/<script type="application\/json" id="portal-data">([\s\S]*?)<\/script>/)[1]);
+  assert.equal(data.page, "index");
+  assert.deepEqual(data.records.map(record => record.id), ["check.store", "description.store"]);
+  assert.equal(data.search.length, 2);
+  data.records.forEach((record, index) => assert.ok(data.search[index].startsWith(`${record.id}\n`)));
+  // The page reads before any script runs, and carries no inline style for style-src 'self' to block.
+  for (const record of data.records) { assert.ok(withoutData(html).includes(record.title)); assert.ok(withoutData(html).includes(`href="${record.href}"`)); }
+  for (const file of result.files.filter(file => file.path.endsWith(".html"))) {
+    const page = Buffer.from(file.bytes).toString("utf8");
+    assert.doesNotMatch(page, /\sstyle="/, file.path);
+    assert.match(page, /<link id="react-aria-pressable-style" rel="stylesheet" href="assets\/style\.css">/, file.path);
+    assert.match(page, /<div id="root"><a class="skip"[^>]*href="#main"/, file.path);
+  }
+  // A record's opening paragraph is its lead, said once; entry headings are marked as references.
+  const record = withoutData(content(result, data.records[1].href));
+  assert.equal(record.split("An independently authored test record").length - 1, 1);
+  assert.match(record, /<p id="lead" class="lead summary">An independently authored test record<\/p>/);
+  assert.match(record, /<h3 class="entry">entry:[a-z0-9.-]+<\/h3>/);
+  const recordData = JSON.parse(content(result, data.records[1].href).match(/<script type="application\/json" id="portal-data">([\s\S]*?)<\/script>/)[1]);
+  assert.equal(recordData.record.prose, ""); assert.equal(recordData.record.lead, "");
 });
 
 test("a generic static host serves the publication under a prefix with every local link present", async () => {

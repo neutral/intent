@@ -1,12 +1,13 @@
 import { readRecordDocument } from "../../library/records.js";
 import { readFile } from "node:fs/promises";
-import { Parser } from "commonmark";
+import { Parser, type Node } from "commonmark";
 import { canonicalJson, compareText, diagnostic, digest, digestJson, IntentError, limitsFor, normalizedPath, orderedDiagnostics, scalarString } from "../../library/foundation.js";
 import { inspectRecord } from "../../library/records.js";
 import { canonicalContext, inspectGlobalContext, indexRecordContexts } from "../../library/globals.js";
 import { readJsonBytes } from "../../library/workspace.js";
 import type { Diagnostic, Digest, Json, KnowledgeRecord, SourceReader, RecordContext } from "../../library/types.js";
 import type { WorkspaceInspection } from "../../library/workspace.js";
+import type { PortalPage, PortalCard } from "./page-data.js";
 
 export interface PortalSelection { recordIds: string[] }
 export interface PortalFile { path: string; bytes: Uint8Array; mediaType: string; sourceDigest: Digest }
@@ -31,33 +32,53 @@ const json = (value: unknown) => `${JSON.stringify(value, null, 2)}\n`;
 const inertJson = (value: unknown) => JSON.stringify(value).replace(/</g, "\\u003c").replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
 
 /** Render selected prose as text and basic CommonMark. Authored HTML, links,
- * images, and media never become active content or network requests. */
-function prose(body: string): string {
+ * images, and media never become active content or network requests. The opening
+ * paragraph after the title becomes the page's lead, so the reader reads it once;
+ * a top-level `entry:<id>` heading is marked as the reference it is. */
+function prose(body: string): { lead: string; body: string } {
   const walker = new Parser({ smart: false }).parse(body).walker();
-  const output: string[] = [];
-  let sourceTitle = false;
+  const output: string[] = [], lead: string[] = [];
+  let target = output, sourceTitle = false, leadTaken = false;
   for (let event = walker.next(); event; event = walker.next()) {
     const node = event.node, opening = event.entering;
     if (node.type === "heading" && node.level === 1) { sourceTitle = opening; continue; }
     if (sourceTitle) continue;
+    if (node.type === "paragraph" && node.parent?.type === "document" && (opening ? !leadTaken : target === lead)) {
+      if (opening) { leadTaken = true; target = lead; } else target = output;
+      continue;
+    }
     const tag = node.type === "paragraph" ? "p" : node.type === "emph" ? "em" : node.type === "strong" ? "strong"
       : node.type === "block_quote" ? "blockquote" : node.type === "item" ? "li" : node.type === "list" ? (node.listType === "ordered" ? "ol" : "ul")
       : node.type === "heading" ? `h${node.level}` : null;
-    if (tag) output.push(opening ? `<${tag}>` : `</${tag}>`);
-    else if (opening && node.type === "text") output.push(escape(node.literal ?? ""));
-    else if (opening && node.type === "softbreak") output.push("\n");
-    else if (opening && node.type === "linebreak") output.push("<br>");
-    else if (opening && node.type === "thematic_break") output.push("<hr>");
-    else if (opening && node.type === "code") output.push(`<code>${escape(node.literal ?? "")}</code>`);
-    else if (opening && (node.type === "code_block" || node.type === "html_block")) output.push(`<pre><code>${escape(node.literal ?? "")}</code></pre>`);
-    else if (opening && node.type === "html_inline") output.push(`<code>${escape(node.literal ?? "")}</code>`);
-    else if (node.type === "link" || node.type === "image") output.push(opening ? `<span class="authored-reference">${node.type === "image" ? "Image reference: " : ""}` : ` <span class="reference-location">(${escape(node.destination ?? "")}; reference only)</span></span>`);
+    if (tag) target.push(opening ? `<${tag}${node.type === "heading" && node.level === 3 && node.parent?.type === "document" && entryHeading(node) ? ' class="entry"' : ""}>` : `</${tag}>`);
+    else if (opening && node.type === "text") target.push(escape(node.literal ?? ""));
+    else if (opening && node.type === "softbreak") target.push("\n");
+    else if (opening && node.type === "linebreak") target.push("<br>");
+    else if (opening && node.type === "thematic_break") target.push("<hr>");
+    else if (opening && node.type === "code") target.push(`<code>${escape(node.literal ?? "")}</code>`);
+    else if (opening && (node.type === "code_block" || node.type === "html_block")) target.push(`<pre><code>${escape(node.literal ?? "")}</code></pre>`);
+    else if (opening && node.type === "html_inline") target.push(`<code>${escape(node.literal ?? "")}</code>`);
+    else if (node.type === "link" || node.type === "image") target.push(opening ? `<span class="authored-reference">${node.type === "image" ? "Image reference: " : ""}` : ` <span class="reference-location">(${escape(node.destination ?? "")}; reference only)</span></span>`);
   }
-  return output.join("");
+  return { lead: lead.join(""), body: output.join("") };
 }
-function page(title: string, publication: string, main: string, extra = ""): string {
-  return `<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'"><title>${escape(title)} · Intent Portal</title><link rel="stylesheet" href="assets/style.css"><script src="assets/reader.js" defer></script></head><body><a class="skip" href="#main">Skip to content</a><header class="topbar"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">i</span>Intent <span>Portal</span></a><nav aria-label="Publication"><a href="index.html">Browse</a><a href="sources.html">Selected sources</a><a href="manifest.json">Manifest</a></nav></header><div class="publication">${escape(publication)} <span>Selected static publication</span></div><main id="main" tabindex="-1">${main}</main><footer>Intent Portal · Read-only publication. Currentness is authored; publication is not adoption or examination.</footer>${extra}</body></html>\n`;
+function entryHeading(heading: Node): boolean {
+  let text = "";
+  const walker = heading.walker();
+  for (let event = walker.next(); event; event = walker.next()) if (event.entering && (event.node.type === "text" || event.node.type === "code")) text += event.node.literal ?? "";
+  return /^entry:[a-z0-9]+(?:[.-][a-z0-9]+)*$/.test(text);
 }
+const policy = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'";
+/** One static page: the prerendered reader in #root and the data it hydrates from. */
+function page(title: string, view: PortalPage, body: string): string {
+  const data: PortalPage = view.page === "record" ? { ...view, record: { ...view.record, lead: "", prose: "" } } : view;
+  return `<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="${policy}"><title>${escape(title)} · Intent Portal</title><link id="react-aria-pressable-style" rel="stylesheet" href="assets/style.css"><script src="assets/reader.js" defer></script></head><body><div id="root">${body}</div><script type="application/json" id="portal-data">${inertJson(data)}</script></body></html>\n`;
+}
+type RenderPage = (page: PortalPage) => Promise<string>;
+let renderer: Promise<RenderPage> | undefined;
+/** The reader's prerenderer, bundled with React by the build beside this module. */
+const renderPage = (view: PortalPage): Promise<string> => (renderer ??= import(new URL("./render.js", import.meta.url).href).then((module: { renderPage: RenderPage }) => module.renderPage))
+  .then(render => render(view));
 function normalizeSelection(value: PortalSelection, maximum: number): PortalSelection {
   if (!value || Object.keys(value).some(key => key !== "recordIds") || !Array.isArray(value.recordIds) || value.recordIds.some(id => typeof id !== "string")) throw new IntentError("intent.portal.selection", "Use only an explicit recordIds array in a Portal selection");
   if (new Set(value.recordIds).size !== value.recordIds.length) throw new IntentError("intent.portal.selection", "Selection recordIds repeats an entry");
@@ -139,25 +160,30 @@ export async function buildPortal(workspace: Input, source: SourceReader, reques
     }
     const recordLinks = new Map(records.map(record => [record.id, record.page]));
     const fileLinks = new Map(records.map(record => [record.path, record.page]));
-    const referenceLink = (recordId: string, relation: string, target: string, required: boolean, link: string | undefined) => {
-      if (link) return `<a href="${link}">${escape(target)}</a>`;
+    const reference = (recordId: string, relation: string, target: string, required: boolean, link: string | undefined): string | null => {
+      if (link) return link;
       omissions.push({ recordId, relation, target, required, reason: "not-selected" });
-      return `<span class="omitted">${escape(target)} <span>${required ? "Required reference" : "Reference"} omitted from this publication</span></span>`;
+      return null;
     };
+    const cards: PortalCard[] = [];
     for (const [index, record] of selected.entries()) {
-      const published = records[index]!;
-      const relations = record.header.relationships.map(edge => `<li><span class="relation-type">${escape(edge.type)}</span>${referenceLink(published.id, edge.type, edge.target, edge.required, recordLinks.get(edge.target))}</li>`);
-      const sources = record.header.sources.map(ref => `<li>${referenceLink(published.id, "source", ref.reference, ref.required, fileLinks.get(ref.reference))}<span class="meta">${escape(ref.role)} · ${escape(ref.id)}</span></li>`);
+      const published = records[index]!, document = readRecordDocument(record), rendered = prose(document.body);
+      const relations = record.header.relationships.map(edge => ({ relation: edge.type, target: edge.target, href: reference(published.id, edge.type, edge.target, edge.required, recordLinks.get(edge.target)), required: edge.required }));
+      const sources = record.header.sources.map(ref => ({ reference: ref.reference, href: reference(published.id, "source", ref.reference, ref.required, fileLinks.get(ref.reference)), required: ref.required, role: ref.role, id: ref.id }));
       const note = record.header.kind === "description" ? "This Description explains implementation responsibilities; implementation files remain outside this Knowledge publication." : record.header.kind === "check" ? "This Check defines verification requirements. Performing verification and reporting satisfaction belong to the implementation area." : record.header.kind === "discipline" ? "Advisory Discipline. Publication does not establish adoption or publisher authenticity." : "Relationships express authored intent; this selected view is not a complete governing set.";
-      const main = `<a class="back" href="index.html">← All selected Knowledge</a><div class="eyebrow">${escape(record.header.kind)}</div><h1>${escape(record.title)}</h1><p class="record-id">${escape(published.id)} <span class="status">Current</span></p><p class="lead">${escape(record.summary)}</p><aside class="scope-note">${note}</aside><div class="record-layout"><article class="prose">${prose(readRecordDocument(record).body)}</article><aside class="record-aside"><section><h2>Relationships</h2>${relations.length ? `<ul class="references">${relations.join("")}</ul>` : "<p>No authored relationships.</p>"}</section><section><h2>Sources</h2>${sources.length ? `<ul class="references">${sources.join("")}</ul>` : "<p>No authored source references.</p>"}<a href="${published.source}" download>Download exact Markdown source</a> · <a href="${published.contextSource}" download>Download selected metadata</a></section></aside></div><details><summary>Structured Knowledge and technical identity</summary><p class="meta">${escape(published.path)}</p><dl><dt>Source fingerprint</dt><dd><code>${published.sourceDigest}</code></dd><dt>Semantic fingerprint</dt><dd><code>${published.semanticDigest}</code></dd></dl><pre>${escape(json({header:record.authoredHeader,context:record.context}))}</pre></details>`;
-      addFile(published.page, page(record.title, title, main), "text/html; charset=utf-8");
+      const view: PortalPage = { page: "record", publication: title, record: {
+        kind: record.header.kind, title: record.title, id: published.id, path: published.path, lead: rendered.lead, prose: rendered.body, note, relations, sources,
+        source: published.source, context: published.contextSource, sourceDigest: published.sourceDigest, semanticDigest: published.semanticDigest,
+        structured: json({ header: record.authoredHeader, context: record.context }).trimEnd() } };
+      addFile(published.page, page(record.title, view, await renderPage(view)), "text/html; charset=utf-8");
+      cards.push({ kind: record.header.kind, title: record.title, summary: rendered.lead, id: record.header.id, href: published.page });
     }
-    const cards = selected.map((record, index) => `<li class="record-card" data-record="${index}"><a href="${records[index]!.page}"><span class="eyebrow">${escape(record.header.kind)}</span><h2>${escape(record.title)}</h2><p>${escape(record.summary)}</p><span class="card-id">${escape(record.header.id)}</span></a></li>`).join("");
     const search = selected.map(record => `${record.header.id}\n${record.header.kind}\n${record.title}\n${record.summary}\n${readRecordDocument(record).body}\n${JSON.stringify(readRecordDocument(record).spec)}`);
-    addFile("index.html", page(title, title, `<div class="eyebrow">Intent Library / selected publication</div><h1>${escape(title)}</h1><p class="lead">Explore the meaning, design, and explanations selected for this publication.</p><div class="summary-bar"><span><strong>${records.length}</strong> Knowledge records</span><a href="sources.html"><strong>${records.length * 2}</strong> selected files</a><span>Read-only · Portable</span></div><section aria-labelledby="browse-title"><div class="browse-heading"><h2 id="browse-title">Browse Knowledge</h2><form class="search" role="search"><label for="search">Search selected Knowledge</label><input id="search" type="search" placeholder="Find a decision, responsibility, or ID" autocomplete="off" aria-describedby="search-status"><button type="reset">Clear</button></form></div><p id="search-status" role="status" aria-live="polite">${records.length} selected records</p><p id="no-results" hidden>No selected Knowledge matches this search.</p><ul class="record-grid">${cards}</ul>${records.length ? "" : "<p>No Knowledge records were selected.</p>"}</section><aside class="scope-note">Publication scope is explicit. Only selected current Knowledge is included. Omitted references remain visible.</aside>`, `<script type="application/json" id="search-data">${inertJson(search)}</script>`), "text/html; charset=utf-8");
-    const recordSources = records.map(record => `<li><a href="${record.page}">${escape(record.id)}</a><span class="meta">${escape(record.path)}</span><a href="${record.source}" download>Exact Markdown</a> · <a href="${record.contextSource}" download>Selected metadata</a></li>`).join("");
-    addFile("sources.html", page("Selected sources", title, `<div class="eyebrow">Publication boundary</div><h1>Selected sources</h1><p class="lead">Every included source is listed here. Nothing is fetched from the originating repository.</p><h2>Knowledge</h2><ul class="source-list">${recordSources}</ul><details><summary>Selection and source identity</summary><pre>${escape(json({ sourceBasis, selection }))}</pre><p><a href="manifest.json">Inspect the complete publication manifest</a></p></details>`), "text/html; charset=utf-8");
-    for (const name of ["reader.js", "style.css"]) addFile(`assets/${name}`, await readFile(new URL(`../../../apps/portal/assets/${name}`, import.meta.url)), name.endsWith(".js") ? "text/javascript; charset=utf-8" : "text/css; charset=utf-8");
+    const browse: PortalPage = { page: "index", publication: title, records: cards, files: records.length * 2, search };
+    addFile("index.html", page(title, browse, await renderPage(browse)), "text/html; charset=utf-8");
+    const listed: PortalPage = { page: "sources", publication: title, records: records.map(record => ({ id: record.id, href: record.page, path: record.path, source: record.source, context: record.contextSource })), identity: json({ sourceBasis, selection }).trimEnd() };
+    addFile("sources.html", page("Selected sources", listed, await renderPage(listed)), "text/html; charset=utf-8");
+    for (const [name, mediaType] of [["reader.js", "text/javascript; charset=utf-8"], ["style.css", "text/css; charset=utf-8"], ["third-party-licenses.txt", "text/plain; charset=utf-8"]] as const) addFile(`assets/${name}`, await readFile(new URL(`./assets/${name}`, import.meta.url)), mediaType);
     omissions.sort((a, b) => compareText(a.recordId, b.recordId) || compareText(a.relation, b.relation) || compareText(a.target, b.target));
     const inputs = { sourceBasis, selection, records };
     const body = { schema: "intent.portal-manifest.v1" as const, processor: "intent.processing.v2" as const, title, sourceBasis, selection,

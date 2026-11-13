@@ -1,5 +1,9 @@
 # Changes
 
+## 0.1.1
+
+- Editor and Portal rebuild.
+
 ## 0.1.0
 
 Initial release of Intent as the `@neutral/intent` npm package.

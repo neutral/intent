@@ -75,7 +75,7 @@ After building, choose a new output directory and install the resulting archive:
 
 ```sh
 node distribution/assemble.mjs /tmp/intent-npm-build
-npm install --global /tmp/intent-npm-build/neutral-intent-0.1.0.tgz
+npm install --global /tmp/intent-npm-build/neutral-intent-0.1.1.tgz
 intent --help
 ```
 

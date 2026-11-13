@@ -81,14 +81,24 @@ npm run build
 node apps/cli/intent.mjs open /path/to/repository
 ```
 
-`server.ts` owns the local service; `assets/` holds its browser files. Tests live
-in `tests/editor.test.mjs`, `tests/editor-workflows.test.mjs`,
-`tests/editor-refresh.test.mjs` and `tests/editor-experience.test.mjs`. The refresh
-tests exercise the real service and the browser script with a small DOM harness; they do not qualify visual layout
-or accessibility.
-`node tests/qualification/editor-fixture.mjs` starts a disposable repository and
-external Pack for browser checks. Use its printed URL to exercise reading, reviewed
-authoring, refresh conflicts and adoption. Examine keyboard navigation, control
-labels and narrow layouts separately; starting the fixture establishes no result.
+`server.ts` owns the local service and `recovery.ts` the durable drafts. `ui/` holds
+the browser application: React with React Aria Components, drawn on the shared
+sheet in `../sheet/`. `npm run build` compiles it with Vite into
+`dist/apps/editor/assets/` as `index.html`, `app.js` and `style.css`, the files the
+service serves at `/`, `/app.js` and `/style.css`, with `third-party-licenses.txt`
+beside them. The application renders in the browser from the service's live data;
+its view and selected record stay in the URL fragment, so back, forward and reload
+restore them.
+
+Service tests live in `tests/editor.test.mjs`, `tests/editor-workflows.test.mjs`,
+`tests/editor-refresh.test.mjs` and `tests/editor-experience.test.mjs`.
+`tests/browser/editor.browser.spec.mjs` drives the built application in headless
+Chromium against the real service: refresh, conflict and recovery paths, the
+keyboard paths, and axe rules at 1440px and 375px. Run it with
+`npm run test:browser` after `npm run build`. `tests/ui-assets.test.mjs` holds the
+script to its size budget. These checks establish the exercised paths, not human
+usefulness. `node tests/qualification/editor-fixture.mjs` starts a disposable
+repository and external Pack for manual browser observation; starting it
+establishes no result.
 
 Original source uses the repository's CC0-1.0 OR 0BSD license choice.

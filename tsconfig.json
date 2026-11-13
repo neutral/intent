@@ -10,10 +10,18 @@
     "exactOptionalPropertyTypes": true,
     "declaration": true,
     "sourceMap": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "library/**/*.ts",
     "apps/**/*.ts"
+  ],
+  "exclude": [
+    "apps/sheet",
+    "apps/editor/ui",
+    "apps/portal/ui"
   ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "@neutral/intent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Preserve software project Knowledge across conversations, contributors, and coding agents.",
   "type": "module",
   "license": "CC0-1.0 OR 0BSD",
@@ -55,8 +55,6 @@
     "apps/agent/intent-agent.mjs",
     "apps/agent/README.md",
     "apps/agent/tools.json",
-    "apps/editor/assets",
-    "apps/portal/assets",
     "apps/portal/portal-cli.mjs",
     "spec/SPEC.md",
     "spec/GLOSSARY.md",
@@ -88,7 +86,8 @@
   "scripts": {
     "build": "node distribution/build.mjs",
     "test": "npm run build && node spec/tools/check-schemas.mjs && node --test tests/*.test.mjs",
-    "check": "tsc -p tsconfig.json --noEmit && node distribution/check-docs.mjs",
+    "check": "tsc -p tsconfig.json --noEmit && tsc -p apps/tsconfig.ui.json && node distribution/check-docs.mjs",
+    "test:browser": "playwright test --config tests/browser/playwright.config.mjs",
     "prepack": "npm run build",
     "release:check": "node distribution/release-check.mjs",
     "native:assemble": "npm run build && node distribution/assemble.mjs --native",
@@ -102,9 +101,18 @@
     "commonmark": "0.31.2"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.65.0",
     "@types/commonmark": "0.27.10",
     "@types/node": "24.10.0",
-    "typescript": "5.8.3"
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "react": "19.3.1",
+    "react-aria-components": "1.22.1",
+    "react-dom": "19.3.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.8"
   },
   "publishConfig": {
     "access": "public"

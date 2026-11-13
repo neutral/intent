@@ -37,7 +37,10 @@ do not broaden the selected project or local source grants.
 ## Read and navigate
 
 The sidebar searches source/meaning and filters all six kinds. Invalid records
-remain visible by path for repair. Selecting a record opens these views:
+remain visible by path for repair. The URL fragment holds the open view and the
+selected record, so back, forward and reload restore them; the session's access
+URL and its query are unchanged. Navigation that would discard unsaved text is
+refused with its reason. Selecting a record opens these views:
 
 - **Meaning**: Request a rendered view of the full Markdown body, including optional
   narrative and entry anchors. Raw HTML/unsafe links are disabled and images become text.
@@ -209,9 +212,12 @@ is optional regardless of current/adopted status.
 
 ## Qualification boundary
 
-The implementation has automated real-file/service tests. These tests do not
-establish human usefulness, complete fresh-agent workflows, keyboard and focus
-behavior, accessibility or responsive layout. Browser qualification must exercise
-the exact build and report its scope under [Conformance](CONFORMANCE.md).
+The implementation has automated real-file/service tests and browser tests that
+drive the built application in headless Chromium against the real service. The
+browser tests exercise selected refresh, conflict and recovery paths, keyboard
+paths and automated accessibility rules at two widths. Neither establishes human
+usefulness, complete fresh-agent workflows, complete keyboard and assistive
+technology behavior or every responsive layout. Browser qualification must
+exercise the exact build and report its scope under [Conformance](CONFORMANCE.md).
 Intent Portal has its own [static publication contract](PORTAL.md), without this
 local service or any editing controls.

@@ -49,9 +49,12 @@ network requests. Fixed assets use local relative paths, so an ordinary static
 host can serve the publication under a prefix. The host owns MIME handling,
 access controls and deployment.
 
-Provide labeled search, visible keyboard focus, a skip link, readable headings,
-selected source downloads and omitted-reference explanations. These structural
-features do not by themselves establish accessible or useful reading.
+Every page is static HTML that reads in full without scripts. The fixed local
+script hydrates that markup and adds search; before it runs, the search field is
+disabled. Fixed assets include the license notices of the code bundled into that
+script. Provide labeled search, visible keyboard focus, a skip link, readable
+headings, selected source downloads and omitted-reference explanations. These
+structural features do not by themselves establish accessible or useful reading.
 
 `intent export PROJECT SELECTION.json DESTINATION` takes a project, explicit
 selection JSON and an absent output directory. The browser's **Export site** uses

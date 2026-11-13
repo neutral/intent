@@ -1,0 +1,315 @@
+/* The drawing sheet shared by Intent Editor and Intent Portal
+   (handbook/practices/sheet.md). White paper, two inks, two faces and a red pencil.
+   Black proportional type is what a person wrote: record prose, titles and summaries,
+   and the text they type. Blue fixed-width type is everything Intent draws or says:
+   names, kinds, statuses, paths, references, counts, labels, controls, lines and marks.
+   Red is only a difference that needs attention. Lines carry the structure, by weight:
+   1px --blue-7 for structure, --blue-3 hairlines within, 2px down the left of whatever
+   is opened or selected. React Aria components are styled by their data attributes. */
+:root {
+  color-scheme: light;
+  --paper: #ffffff;
+  --ink: #15191e;    /* what a person wrote */
+  --blue-9: #1f3a5a; /* Intent's text */
+  --blue-7: #3d6288; /* structure lines, labels, marks, controls, focus */
+  --blue-5: #5a7a9b; /* the Portal's margin rule; never text */
+  --blue-3: #b9cadb; /* hairlines and link underlines; never text */
+  --blue-1: #edf2f7; /* an opened or selected thing; selection */
+  --blue-0: #f6f8fb; /* code inside prose; an unavailable field */
+  --red: #b0412a;    /* a difference that needs attention */
+  --red-1: #f9ece8;  /* the wash under a conflict */
+  --sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--paper); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  color: var(--blue-9);
+  background: var(--paper);
+  font: 12.5px/1.6 var(--mono);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure { margin: 0; }
+ul, ol { padding: 0; }
+::selection { background: var(--blue-1); }
+[hidden] { display: none !important; }
+button, input, select, textarea { font: inherit; color: inherit; }
+/* React Aria writes this rule into a <style> element unless an element with the id
+   react-aria-pressable-style exists; both pages' stylesheet links carry that id, so
+   the rule lives here and the pages' style-src 'self' policy holds. */
+@layer { [data-react-aria-pressable] { touch-action: pan-x pan-y pinch-zoom; } }
+
+/* Focus: one outline for every control, shown on keyboard focus and never removed.
+   :focus-visible covers prerendered markup before React Aria hydrates it. */
+:focus-visible, [data-focus-visible] { outline: 2px solid var(--blue-7); outline-offset: 2px; }
+main:focus { outline: none; }
+
+/* Links: blue with a hairline underline that darkens under the pointer. */
+a, .link {
+  color: var(--blue-7);
+  text-decoration: underline;
+  text-decoration-color: var(--blue-3);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+a:hover, .link[data-hovered] { text-decoration-color: currentColor; }
+.link[data-pressed] { color: var(--blue-9); }
+
+.skip {
+  position: fixed; top: 0.7rem; left: 0.8rem; z-index: 30;
+  padding: 0.45rem 0.8rem;
+  color: var(--paper); background: var(--blue-9);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip:focus, .skip[data-focus-visible] { transform: none; }
+
+/* Labels and part titles */
+.cap {
+  font-size: 10.5px; line-height: 1.5; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--blue-7);
+}
+/* A part's title: its name in capitals and a rule drawn out to the right. */
+.part {
+  display: flex; align-items: center; gap: 0.7rem;
+  margin: 0 0 0.6rem;
+  font-size: 10.5px; line-height: 1.5; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--blue-7);
+}
+.part::after { content: ""; flex: 1 1 2rem; border-top: 1px solid var(--blue-7); }
+
+/* A status: a mark and a word, never color alone. */
+.state { color: var(--blue-7); white-space: nowrap; }
+.mark { display: inline-block; width: 1.25em; text-align: left; }
+.diff, .state.diff { color: var(--red); }
+
+.note { font-size: 11.5px; line-height: 1.55; color: var(--blue-7); max-width: 44rem; }
+.empty { color: var(--blue-7); }
+
+/* A difference that needs attention: a red line, a red mark, red words. */
+.attention {
+  display: block;
+  margin: 0.6rem 0;
+  padding: 0.1rem 0 0.1rem 0.7rem;
+  border-left: 2px solid var(--red);
+  color: var(--red);
+  max-width: 44rem;
+  overflow-wrap: anywhere;
+}
+
+/* Buttons. One treatment for every button; the primary action carries the heavier
+   line; a destructive action is drawn in red. Disabled is dashed, not faded. */
+.button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+  min-height: 2rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--blue-7);
+  border-radius: 2px;
+  color: var(--blue-7);
+  background: var(--paper);
+  font: 12.5px/1.35 var(--mono);
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.button[data-hovered], .button[data-pressed] { color: var(--paper); background: var(--blue-7); }
+.button.primary {
+  padding: calc(0.3rem - 1px) calc(0.8rem - 1px);
+  border: 2px solid var(--blue-9);
+  color: var(--blue-9);
+  font-weight: 600;
+}
+.button.primary[data-hovered], .button.primary[data-pressed] { color: var(--paper); background: var(--blue-9); }
+.button.danger { border-color: var(--red); color: var(--red); }
+.button.danger[data-hovered], .button.danger[data-pressed] { color: var(--paper); background: var(--red); }
+.button[data-disabled] {
+  border-style: dashed;
+  color: var(--blue-7);
+  background: var(--paper);
+  cursor: not-allowed;
+}
+.button.primary[data-disabled] { color: var(--blue-9); }
+.button.danger[data-disabled] { color: var(--red); }
+.button[data-pending] { cursor: progress; }
+/* A round tool button, such as a dialog's close. */
+.button.round { width: 2rem; min-height: 2rem; padding: 0; border-radius: 50%; font-size: 15px; line-height: 1; }
+
+/* A reference: a name the reader can follow. */
+.ref {
+  display: inline; padding: 0; min-height: 0;
+  border: 0; border-radius: 1px;
+  background: none;
+  color: var(--blue-9);
+  font: inherit;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-color: var(--blue-3);
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+.ref[data-hovered] { text-decoration-color: var(--blue-7); }
+.ref[data-pressed] { color: var(--blue-7); }
+
+/* Fields: a blue label above; the person's text in ink on paper. */
+.field { display: block; margin: 0 0 1rem; max-width: 44rem; }
+.field-label, .field > .react-aria-Label {
+  display: block;
+  margin: 0 0 0.3rem;
+  font-size: 11.5px; line-height: 1.45;
+  color: var(--blue-7);
+}
+.field .description { display: block; margin-top: 0.3rem; font-size: 11.5px; line-height: 1.5; color: var(--blue-7); }
+.input {
+  display: block; width: 100%;
+  min-height: 2.25rem;
+  margin: 0;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--blue-5);
+  border-radius: 2px;
+  color: var(--ink);
+  background: var(--paper);
+  font: 16px/1.45 var(--sans);
+}
+textarea.input { min-height: 4.6rem; resize: vertical; }
+.input::placeholder { color: var(--blue-7); opacity: 1; font: 12.5px var(--mono); }
+.input[data-hovered] { border-color: var(--blue-7); }
+.input[data-focused] { border-color: var(--blue-7); }
+.input[data-disabled] { border-style: dashed; background: var(--blue-0); cursor: not-allowed; }
+.input[data-invalid] { border-color: var(--red); }
+.input::-webkit-search-cancel-button { display: none; }
+/* Source is the person's text in the fixed-width face: indentation and every
+   character must stay exact. */
+textarea.source {
+  min-height: 40vh;
+  padding: 0.7rem 0.9rem;
+  font: 12.5px/1.6 var(--mono);
+  tab-size: 2;
+}
+
+/* Select: a field-shaped button with the chosen value and a mark. */
+.select-button {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.6rem;
+  width: 100%; min-height: 2.25rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--blue-5);
+  border-radius: 2px;
+  color: var(--blue-9);
+  background: var(--paper);
+  font: 12.5px/1.35 var(--mono);
+  text-align: left;
+  cursor: pointer;
+}
+.select-button[data-hovered], .select-button[data-pressed], .select[data-open] .select-button { border-color: var(--blue-7); }
+.select-button[data-disabled] { border-style: dashed; cursor: not-allowed; }
+.select-button .mark { width: auto; color: var(--blue-7); }
+.popover {
+  min-width: var(--trigger-width);
+  max-height: 20rem;
+  overflow: auto;
+  border: 1px solid var(--blue-7);
+  background: var(--paper);
+}
+.options { padding: 0.2rem 0; outline: none; }
+.option {
+  display: flex; align-items: baseline; gap: 0.4rem;
+  padding: 0.35rem 0.7rem 0.35rem 0.5rem;
+  border-left: 2px solid transparent;
+  color: var(--blue-9);
+  cursor: pointer;
+  outline: none;
+}
+.option[data-focused] { background: var(--blue-0); }
+.option[data-focus-visible] { outline: 2px solid var(--blue-7); outline-offset: -2px; }
+.option[data-selected] { border-left-color: var(--blue-7); background: var(--blue-1); }
+
+/* Checkbox: a ruled box that takes a mark. */
+.check { display: flex; align-items: flex-start; gap: 0.55rem; margin: 0.35rem 0; cursor: pointer; color: var(--blue-9); }
+.check .box {
+  flex: none;
+  display: grid; place-items: center;
+  width: 1rem; height: 1rem; margin-top: 0.1rem;
+  border: 1px solid var(--blue-7);
+  border-radius: 2px;
+  color: var(--paper);
+  background: var(--paper);
+  font-size: 11px; line-height: 1;
+}
+.check[data-selected] .box { background: var(--blue-7); }
+.check[data-hovered] .box { border-color: var(--blue-9); }
+.check[data-focus-visible] .box { outline: 2px solid var(--blue-7); outline-offset: 2px; }
+.check[data-disabled] { cursor: not-allowed; }
+.check[data-disabled] .box { border-style: dashed; }
+
+/* A switch of two or more choices: one ruled control, the chosen one filled. */
+.switch { display: inline-flex; flex-wrap: wrap; padding: 0 0 1px 1px; }
+.switch .toggle {
+  margin: 0 0 -1px -1px;
+  padding: 0.3rem 0.8rem;
+  min-height: 2rem;
+  border: 1px solid var(--blue-7);
+  border-radius: 0;
+  color: var(--blue-7);
+  background: var(--paper);
+  font: 12.5px/1.35 var(--mono);
+  cursor: pointer;
+}
+.switch .toggle[data-hovered] { background: var(--blue-1); }
+.switch .toggle[data-selected], .switch .toggle[data-pressed] { color: var(--paper); background: var(--blue-7); }
+.switch .toggle[data-focus-visible] { position: relative; z-index: 1; }
+.switch .toggle[data-disabled] { border-style: dashed; cursor: not-allowed; }
+
+/* Text drawn from files: a file's bytes are the person's (ink); data Intent
+   assembles is Intent's (blue). */
+pre.raw, pre.data {
+  margin: 0.4rem 0;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--blue-3);
+  background: var(--paper);
+  font: 12.5px/1.5 var(--mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: auto;
+  max-height: 65vh;
+}
+pre.raw { color: var(--ink); }
+pre.data { color: var(--blue-9); }
+
+/* What a person wrote, rendered from their Markdown. Section names are the
+   record's structure, drawn in Intent's face; entry IDs are references. */
+.prose { color: var(--ink); font: 16px/1.65 var(--sans); max-width: 42rem; overflow-wrap: anywhere; }
+.prose p, .prose ul, .prose ol, .prose pre, .prose blockquote, .prose table { margin: 0 0 0.85rem; }
+.prose ul, .prose ol { padding-left: 1.4rem; }
+.prose li + li { margin-top: 0.2rem; }
+.prose h2 {
+  display: flex; align-items: center; gap: 0.7rem;
+  margin: 1.8rem 0 0.6rem;
+  color: var(--blue-9);
+  font: 600 12.5px/1.5 var(--mono);
+}
+.prose h2::after { content: ""; flex: 1 1 2rem; border-top: 1px solid var(--blue-3); }
+.prose > h2:first-child { margin-top: 0.4rem; }
+.prose h3, .prose h4, .prose h5, .prose h6 { margin: 1.2rem 0 0.4rem; color: var(--ink); font: 600 16px/1.4 var(--sans); }
+.prose h3.entry { margin: 1rem 0 0.15rem; color: var(--blue-7); font: 400 11.5px/1.5 var(--mono); }
+.prose code { padding: 0.05rem 0.25rem; border-radius: 2px; background: var(--blue-0); font: 0.85em var(--mono); }
+.prose pre { padding: 0.6rem 0.8rem; border: 1px solid var(--blue-3); background: var(--paper); white-space: pre-wrap; overflow-wrap: anywhere; font: 12.5px/1.5 var(--mono); }
+.prose pre code { padding: 0; background: none; font: inherit; }
+.prose blockquote { padding-left: 0.9rem; border-left: 1px solid var(--ink); }
+.prose a { color: inherit; }
+.prose hr { border: 0; border-top: 1px solid var(--blue-3); margin: 1.2rem 0; }
+.prose table { border-collapse: collapse; font-size: 14px; }
+.prose th, .prose td { padding: 0.25rem 0.5rem; border: 1px solid var(--blue-3); text-align: left; vertical-align: top; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (max-width: 48rem) {
+  /* Phones zoom into text fields set smaller than 16px; keep typed text at 16px there.
+     A Select is a button, which phones do not zoom into, so it keeps the controls' size. */
+  textarea.source { font-size: 16px; }
+}

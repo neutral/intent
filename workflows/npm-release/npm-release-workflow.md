@@ -40,8 +40,8 @@ Authenticate, optionally rehearse the command, then upload the selected archive:
 
 ```sh
 npm login
-npm publish /absolute/path/neutral-intent-0.1.0.tgz --dry-run --access public --ignore-scripts
-npm publish /absolute/path/neutral-intent-0.1.0.tgz --access public --ignore-scripts
+npm publish /absolute/path/neutral-intent-0.1.1.tgz --dry-run --access public --ignore-scripts
+npm publish /absolute/path/neutral-intent-0.1.1.tgz --access public --ignore-scripts
 ```
 
 Complete any authentication or second-factor prompt required by the account.
@@ -53,7 +53,7 @@ rerunning package scripts.
 After publication, confirm the selected version is available:
 
 ```sh
-npm view @neutral/intent@0.1.0 version
+npm view @neutral/intent@0.1.1 version
 ```
 
 Retain the package version, source state, artifact hash, qualification report and

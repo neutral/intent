@@ -28,7 +28,7 @@ export async function startEditor(repositoryRoot:string,options:{port?:number;bi
   const recovery=editorRecovery(root,options.stateDirectory);await recovery.read();
   let exportPreview:{id:string;plan:PortalBuild;sourceBasis:string;recordIds:string[];title:string}|null=null;
   let origin="",host="";
-  const assets=new URL("../../../apps/editor/assets/",import.meta.url);
+  const assets=new URL("./assets/",import.meta.url);
   const send=(response:ServerResponse,status:number,value:unknown)=>{response.writeHead(status,{"content-type":"application/json; charset=utf-8","cache-control":"no-store","x-content-type-options":"nosniff"});response.end(JSON.stringify(toWire(value)));};
   const remember=async(value:FileProposal|{fileProposal?:FileProposal|null},response:ServerResponse,expectedRevision?:string)=>{const proposal="fileProposal" in value?value.fileProposal:value as FileProposal;if(proposal){await recovery.update({proposal},expectedRevision);response.setHeader("x-intent-recovery-revision",recovery.revision??"");}};
   const load=()=>readWorkspace(selected,{resolveSources:true});

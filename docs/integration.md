@@ -11,8 +11,8 @@ The runtime-free payload is intended for an environment that explicitly supplies
 a compatible runtime. It never searches `PATH` for Node or npm:
 
 ```sh
-INTENT_NODE="/absolute/path/to/node" "/path/to/intent-0.1.0-application/bin/intent" --help
-INTENT_NODE="/absolute/path/to/node" "/path/to/intent-0.1.0-application/bin/intent" open /path/to/project
+INTENT_NODE="/absolute/path/to/node" "/path/to/intent-0.1.1-application/bin/intent" --help
+INTENT_NODE="/absolute/path/to/node" "/path/to/intent-0.1.1-application/bin/intent" open /path/to/project
 ```
 
 The supplied executable must be Node.js 24 or newer. The launcher refuses a

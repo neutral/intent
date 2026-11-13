@@ -286,7 +286,7 @@ async function worker() {
     const declared=Object.values(metadata.exports).flatMap(exportFiles).filter(name=>!name.includes('*'));
     const required=[...Object.values(metadata.bin),...declared,'README.md','CHANGELOG.md','CONTRIBUTING.md','SECURITY.md','THIRD_PARTY.md','LICENSE','LICENSE.CC0-1.0','LICENSE.0BSD','VERSION','library/README.md','apps/agent/tools.json','docs/install.md','docs/integration.md','distribution/README.md'];
     for(const name of required)assert.ok((await fs.stat(path.join(packageRoot,name))).isFile(),`Required package file: ${name}`);
-    for(const folder of ['apps/editor/assets','apps/portal/assets']) {
+    for(const folder of ['dist/apps/editor/assets','dist/apps/portal/assets']) {
       const files=await pathsIn(path.join(packageRoot,folder));
       assert.ok(files.some(name=>name.endsWith('.js')),`${folder}: browser JavaScript`);
       assert.ok(files.some(name=>name.endsWith('.css')),`${folder}: browser styles`);

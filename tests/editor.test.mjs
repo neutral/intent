@@ -46,7 +46,7 @@ test("Editor inspects an interrupted journal and reviews remaining changes as a 
     const original=proposeFiles(workspace.sourceBasis.id,[{path:"intent/notes.txt",before:null,after:"Reviewed note\n"}]);
     const interrupted=await applyFileProposal(root,original,{signal:AbortSignal.abort(),workspaceOptions:{resolveSources:true}});assert.equal(interrupted.status,"interrupted");
     service=await startEditor(root,{stateDirectory:join(root,'tmp','editor-user-data')});const html=await (await fetch(service.url)).text();
-    assert.match(html,/Operation recovery/);const token=/name="intent-token" content="([a-f0-9]+)"/.exec(html)[1];
+    const token=/name="intent-token" content="([a-f0-9]+)"/.exec(html)[1];
     const headers={"x-intent-token":token,"content-type":"application/json"};
     const observed=await (await fetch(service.url+"/api/workspace",{headers})).json();
     const inspected=await (await fetch(service.url+`/api/operation?id=${interrupted.id}`,{headers})).json();assert.equal(inspected.files[0].state,"original");
@@ -63,7 +63,7 @@ test("Editor initializes an ordinary root and creates reviewed drafts with expli
   try {
     await mkdir(join(root,"src"));await writeFile(join(root,"src/app.js"),"export const app = true;\n");
     service=await startEditor(root,{stateDirectory:join(root,'tmp','editor-user-data')});
-    const html=await (await fetch(service.url)).text();assert.match(html,/New Product draft/);
+    const html=await (await fetch(service.url)).text();assert.match(html,/<div id="root">/);assert.match(html,/<script src="\/app\.js" defer><\/script>/);
     const token=/name="intent-token" content="([a-f0-9]+)"/.exec(html)[1];
     const headers={"x-intent-token":token,"content-type":"application/json"};
     const post=(route,body)=>fetch(service.url+route,{method:"POST",headers,body:JSON.stringify(body)});
