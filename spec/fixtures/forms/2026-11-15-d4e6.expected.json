@@ -1,0 +1,27 @@
+{
+  "project": "project/tiny",
+  "checksNow": [
+    "description:src.scheduler.queue-js:take-marks-nothing",
+    "description:src.scheduler.queue-js:committed-before-resolve",
+    "blueprint:one-stored-queue-holds-every:one-firer",
+    "blueprint:one-stored-queue-holds-every:failure-leaves-unfired",
+    "behavior:reminder-fires-time-once-even:fires-once",
+    "behavior:reminder-fires-time-once-even:on-time",
+    "assurance:reminder-app-accepted-never-lost:survives-kill",
+    "assurance:reminder-app-accepted-never-lost:set-means-saved",
+    "discipline:js-async.await-every-promise:no-floating-promise",
+    "discipline:js-async.timers-within-range:long-delay-split"
+  ],
+  "added": [],
+  "dropped": [],
+  "kept": false,
+  "codeMoved": null,
+  "diagnostics": [
+    {
+      "file": "intent/.reports/2026-11-15-d4e6.md",
+      "line": 2,
+      "code": "FORM_HEADER",
+      "severity": "error"
+    }
+  ]
+}

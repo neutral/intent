@@ -1,0 +1,591 @@
+{
+  "codeFiles": [
+    "src/app.js",
+    "src/lib/util.js"
+  ],
+  "records": [
+    {
+      "id": "assurance:beta",
+      "layer": "assurance",
+      "title": "Beta always holds",
+      "summary": "Beta is never broken.",
+      "meaningHash": "2449588e78aacea6",
+      "checks": [],
+      "relations": [
+        {
+          "verb": "bounds",
+          "target": "behavior:alpha",
+          "line": 10
+        },
+        {
+          "verb": "bounds",
+          "target": "blueprint:gamma",
+          "line": 11
+        }
+      ],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/assurance/b.md",
+      "wholeProduct": false,
+      "sources": [
+        "behavior:alpha",
+        "blueprint:gamma"
+      ],
+      "drift": "never"
+    },
+    {
+      "id": "behavior:alpha",
+      "layer": "behavior",
+      "title": "Alpha works",
+      "summary": "Alpha does its job.",
+      "meaningHash": "fe4042fd2bb4bf18",
+      "checks": [
+        {
+          "id": "behavior:alpha:works",
+          "line": 8,
+          "claim": "Alpha works for the user.",
+          "failsWhen": "The user sees alpha fail.",
+          "holdsWhen": "",
+          "evidence": "",
+          "limits": "",
+          "appliedBy": "test",
+          "hash": "c515a27fa8cf06e7"
+        }
+      ],
+      "relations": [
+        {
+          "verb": "bounded by",
+          "target": "assurance:beta",
+          "line": 15
+        },
+        {
+          "verb": "bounded by",
+          "target": "assurance:missing",
+          "line": 16
+        }
+      ],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/behavior/a.md",
+      "wholeProduct": false,
+      "sources": [
+        "assurance:beta",
+        "assurance:missing"
+      ],
+      "drift": "never"
+    },
+    {
+      "id": "blueprint:gamma",
+      "layer": "blueprint",
+      "title": "Gamma is one module",
+      "summary": "All gamma code lives in one module.",
+      "meaningHash": "73c01c8c2d327f52",
+      "checks": [
+        {
+          "id": "blueprint:gamma:judged",
+          "line": 8,
+          "claim": "Gamma code stays in one module.",
+          "failsWhen": "Gamma code appears in a second module.",
+          "holdsWhen": "",
+          "evidence": "",
+          "limits": "",
+          "appliedBy": "judgment",
+          "hash": "f0b507995aeefd9e"
+        }
+      ],
+      "relations": [
+        {
+          "verb": "serves",
+          "target": "behavior:alpha",
+          "line": 15
+        },
+        {
+          "verb": "serves",
+          "target": "behavior:alpha",
+          "line": 16
+        },
+        {
+          "verb": "practice",
+          "target": "discipline:js-async.await-every-promise",
+          "line": 17
+        }
+      ],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/blueprint/g.md",
+      "wholeProduct": false,
+      "sources": [
+        "behavior:alpha",
+        "discipline:js-async.await-every-promise"
+      ],
+      "drift": "never"
+    },
+    {
+      "id": "behavior:misplaced",
+      "layer": "behavior",
+      "title": "A Behavior in the Blueprint folder",
+      "summary": "It sits in the wrong folder.",
+      "meaningHash": "907c608bcac73fba",
+      "checks": [],
+      "relations": [],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/blueprint/wrong-folder.md",
+      "wholeProduct": false,
+      "sources": [],
+      "drift": "nothing"
+    },
+    {
+      "id": "description:src",
+      "layer": "description",
+      "title": "Source",
+      "summary": "All of it.",
+      "meaningHash": "c057bed0d3c47cce",
+      "checks": [],
+      "relations": [
+        {
+          "verb": "applies",
+          "target": "behavior:alpha:works",
+          "test": "alpha works",
+          "line": 10
+        }
+      ],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/description/src/README.md",
+      "place": "src",
+      "folder": true,
+      "wholeProduct": false,
+      "sources": [
+        "behavior:alpha:works"
+      ],
+      "drift": "never"
+    },
+    {
+      "id": "description:src.app-js",
+      "layer": "description",
+      "title": "The app",
+      "summary": "Starts alpha.",
+      "meaningHash": "dc0cde4ff7b72e16",
+      "checks": [],
+      "relations": [
+        {
+          "verb": "serves",
+          "target": "behavior:alpha",
+          "line": 10
+        },
+        {
+          "verb": "covers",
+          "target": "src/missing.js",
+          "line": 11
+        }
+      ],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/description/src/app.js.md",
+      "place": "src/app.js",
+      "folder": false,
+      "wholeProduct": false,
+      "sources": [
+        "src/app.js",
+        "src/missing.js",
+        "behavior:alpha"
+      ],
+      "drift": "never"
+    },
+    {
+      "id": "description:src.gone-js",
+      "layer": "description",
+      "title": "Gone",
+      "summary": "This code was deleted.",
+      "meaningHash": "30be2bda9695c82b",
+      "checks": [],
+      "relations": [
+        {
+          "verb": "serves",
+          "target": "behavior:alpha",
+          "line": 10
+        }
+      ],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/description/src/gone.js.md",
+      "place": "src/gone.js",
+      "folder": false,
+      "wholeProduct": false,
+      "sources": [
+        "src/gone.js",
+        "behavior:alpha"
+      ],
+      "drift": "never"
+    },
+    {
+      "id": "description:src.lib",
+      "layer": "description",
+      "title": "Library",
+      "summary": "A file Description placed at a folder.",
+      "meaningHash": "50d9f1e9e198d72d",
+      "checks": [],
+      "relations": [
+        {
+          "verb": "serves",
+          "target": "behavior:alpha",
+          "line": 10
+        }
+      ],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/description/src/lib.md",
+      "place": "src/lib",
+      "folder": false,
+      "wholeProduct": false,
+      "sources": [
+        "src/lib",
+        "behavior:alpha"
+      ],
+      "drift": "never"
+    },
+    {
+      "id": "description:tests.app-test-js",
+      "layer": "description",
+      "title": "App tests",
+      "summary": "They test the app.",
+      "meaningHash": "eb0d738446815938",
+      "checks": [],
+      "relations": [
+        {
+          "verb": "applies",
+          "target": "behavior:alpha:works",
+          "test": "no such test here",
+          "line": 10
+        },
+        {
+          "verb": "applies",
+          "target": "behavior:alpha:nope",
+          "test": "alpha works",
+          "line": 11
+        },
+        {
+          "verb": "applies",
+          "target": "blueprint:gamma:judged",
+          "test": "gamma stays in one module",
+          "line": 12
+        }
+      ],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/description/tests/app.test.js.md",
+      "place": "tests/app.test.js",
+      "folder": false,
+      "wholeProduct": false,
+      "sources": [
+        "tests/app.test.js",
+        "behavior:alpha:works",
+        "behavior:alpha:nope",
+        "blueprint:gamma:judged"
+      ],
+      "drift": "never"
+    },
+    {
+      "id": "discipline:js-async.await-every-promise",
+      "layer": "discipline",
+      "title": "Every promise is awaited, returned, or given a handler",
+      "summary": "A promise nobody awaits fails quietly: its error is lost.",
+      "meaningHash": "2e3d4a472b5a35be",
+      "checks": [
+        {
+          "id": "discipline:js-async.await-every-promise:no-floating-promise",
+          "line": 13,
+          "claim": "Every call that returns a promise is awaited, returned, or given a rejection handler.",
+          "failsWhen": "A promise-returning call stands alone as a statement, such as an async function given to `forEach`.",
+          "holdsWhen": "",
+          "evidence": "",
+          "limits": "",
+          "appliedBy": "judgment",
+          "hash": "f8b837fc145491f3"
+        }
+      ],
+      "relations": [],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/discipline/js-async/await-every-promise.md",
+      "wholeProduct": false,
+      "sources": [],
+      "drift": "nothing"
+    },
+    {
+      "id": "discipline:other-pack.thing",
+      "layer": "discipline",
+      "title": "A Discipline of another Pack",
+      "summary": "It sits in the js-async copy.",
+      "meaningHash": "d8713b3c257acd38",
+      "checks": [],
+      "relations": [],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/discipline/js-async/other.md",
+      "wholeProduct": false,
+      "sources": [],
+      "drift": "nothing"
+    },
+    {
+      "id": "discipline:js-async.timers-within-range",
+      "layer": "discipline",
+      "title": "A timer's delay stays within what the runtime can wait",
+      "summary": "JavaScript timers fire at once for any delay over 2,147,483,647 milliseconds, about 24.8 days.",
+      "meaningHash": "572c990ac333e0b8",
+      "checks": [
+        {
+          "id": "discipline:js-async.timers-within-range:long-delay-split",
+          "line": 12,
+          "claim": "No timer is set with a delay that can exceed 2,147,483,647 milliseconds.",
+          "failsWhen": "A delay computed from a date in the future is passed to `setTimeout` or `setInterval` without a bound.",
+          "holdsWhen": "",
+          "evidence": "",
+          "limits": "",
+          "appliedBy": "judgment",
+          "hash": "1088c8f07ea09720"
+        }
+      ],
+      "relations": [],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/discipline/js-async/timers-within-range.md",
+      "wholeProduct": false,
+      "sources": [],
+      "drift": "nothing"
+    },
+    {
+      "id": "discipline:orphan.x",
+      "layer": "discipline",
+      "title": "A copy nobody adopted",
+      "summary": "No adoption names this folder.",
+      "meaningHash": "6283c3a69868fb79",
+      "checks": [],
+      "relations": [],
+      "hasReadAgainst": false,
+      "readAgainst": [],
+      "file": "intent/discipline/orphan/x.md",
+      "wholeProduct": false,
+      "sources": [],
+      "drift": "nothing"
+    }
+  ],
+  "appliesInForce": [
+    {
+      "check": "blueprint:gamma:judged",
+      "path": "tests/app.test.js",
+      "test": "gamma stays in one module",
+      "by": "description:tests.app-test-js"
+    }
+  ],
+  "edges": [
+    {
+      "from": "behavior:alpha",
+      "to": "assurance:beta",
+      "verb": "bounded by"
+    },
+    {
+      "from": "behavior:alpha",
+      "to": "assurance:beta",
+      "verb": "bounded by"
+    },
+    {
+      "from": "blueprint:gamma",
+      "to": "behavior:alpha",
+      "verb": "serves"
+    },
+    {
+      "from": "blueprint:gamma",
+      "to": "behavior:alpha",
+      "verb": "serves"
+    },
+    {
+      "from": "blueprint:gamma",
+      "to": "discipline:js-async.await-every-promise",
+      "verb": "practice"
+    },
+    {
+      "from": "description:src.app-js",
+      "to": "behavior:alpha",
+      "verb": "serves"
+    },
+    {
+      "from": "description:src.gone-js",
+      "to": "behavior:alpha",
+      "verb": "serves"
+    },
+    {
+      "from": "description:src.lib",
+      "to": "behavior:alpha",
+      "verb": "serves"
+    },
+    {
+      "from": "description:tests.app-test-js",
+      "to": "behavior:alpha",
+      "verb": "applies",
+      "check": "behavior:alpha:works"
+    },
+    {
+      "from": "description:tests.app-test-js",
+      "to": "blueprint:gamma",
+      "verb": "applies",
+      "check": "blueprint:gamma:judged"
+    }
+  ],
+  "diagnostics": [
+    {
+      "file": "intent/assurance/b.md",
+      "line": 10,
+      "code": "RELATION_BOTH_SIDES",
+      "severity": "warning"
+    },
+    {
+      "file": "intent/assurance/b.md",
+      "line": 11,
+      "code": "RELATION_TARGET_LAYER",
+      "severity": "error"
+    },
+    {
+      "file": "intent/behavior/a.md",
+      "line": 16,
+      "code": "RELATION_TARGET_MISSING",
+      "severity": "error"
+    },
+    {
+      "file": "intent/behavior/dup.md",
+      "line": 2,
+      "code": "ID_DUPLICATE",
+      "severity": "error"
+    },
+    {
+      "file": "intent/behavior/stray.txt",
+      "line": null,
+      "code": "FILE_UNEXPECTED",
+      "severity": "warning"
+    },
+    {
+      "file": "intent/blueprint/g.md",
+      "line": 16,
+      "code": "RELATION_REPEATED",
+      "severity": "warning"
+    },
+    {
+      "file": "intent/blueprint/wrong-folder.md",
+      "line": 2,
+      "code": "RECORD_FOLDER",
+      "severity": "error"
+    },
+    {
+      "file": "intent/description/src/README.md",
+      "line": 10,
+      "code": "APPLIES_FOLDER",
+      "severity": "error"
+    },
+    {
+      "file": "intent/description/src/app.js.md",
+      "line": 11,
+      "code": "COVERS_MISSING",
+      "severity": "error"
+    },
+    {
+      "file": "intent/description/src/gone.js.md",
+      "line": 2,
+      "code": "DESCRIPTION_CODE_MISSING",
+      "severity": "error"
+    },
+    {
+      "file": "intent/description/src/lib.md",
+      "line": 2,
+      "code": "DESCRIPTION_PLACE",
+      "severity": "error"
+    },
+    {
+      "file": "intent/description/tests/app.test.js.md",
+      "line": 10,
+      "code": "APPLIES_TEST_MISSING",
+      "severity": "error"
+    },
+    {
+      "file": "intent/description/tests/app.test.js.md",
+      "line": 11,
+      "code": "APPLIES_CHECK_MISSING",
+      "severity": "error"
+    },
+    {
+      "file": "intent/description/tests/app.test.js.md",
+      "line": 12,
+      "code": "APPLIES_KIND",
+      "severity": "warning"
+    },
+    {
+      "file": "intent/discipline/js-async/",
+      "line": null,
+      "code": "PACK_COPY_CHANGED",
+      "severity": "error"
+    },
+    {
+      "file": "intent/discipline/js-async/other.md",
+      "line": 2,
+      "code": "DISCIPLINE_ID_PACK",
+      "severity": "error"
+    },
+    {
+      "file": "intent/discipline/orphan/",
+      "line": null,
+      "code": "PACK_NOT_ADOPTED",
+      "severity": "error"
+    },
+    {
+      "file": "intent/intent.json",
+      "line": 5,
+      "code": "CODE_ROOT_MISSING",
+      "severity": "warning"
+    },
+    {
+      "file": "intent/intent.json",
+      "line": 12,
+      "code": "PACK_APPLIES_EMPTY",
+      "severity": "warning"
+    },
+    {
+      "file": "intent/intent.json",
+      "line": 15,
+      "code": "PACK_COPY_MISSING",
+      "severity": "error"
+    },
+    {
+      "file": "intent/notes.txt",
+      "line": null,
+      "code": "FILE_UNEXPECTED",
+      "severity": "warning"
+    },
+    {
+      "file": "src/app.js",
+      "line": 1,
+      "code": "CODE_NAMES_ID",
+      "severity": "error"
+    }
+  ],
+  "gaps": {
+    "codeNobodyExplains": [
+      "src/lib/util.js"
+    ],
+    "codeNobodyExplainsListed": [
+      "src/lib/util.js"
+    ],
+    "recordsWithNoCheck": [
+      "assurance:beta",
+      "behavior:misplaced"
+    ],
+    "checksNothingApplies": [
+      {
+        "id": "behavior:alpha:works",
+        "why": "test, but no test Description applies it"
+      }
+    ],
+    "descriptionsThatRelateToNothing": [
+      "description:src"
+    ]
+  }
+}

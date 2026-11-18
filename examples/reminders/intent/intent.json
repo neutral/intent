@@ -1,0 +1,17 @@
+{
+  "name": "reminders",
+  "code": [
+    "src",
+    "tests"
+  ],
+  "packs": [
+    {
+      "name": "js-async",
+      "version": "1.0.0",
+      "fingerprint": "sha256:baf6175fc12e686e7892d4285a82d06a40afb88622d2fba428a0ed9a0bbc13f1",
+      "applies": [
+        "src/**"
+      ]
+    }
+  ]
+}

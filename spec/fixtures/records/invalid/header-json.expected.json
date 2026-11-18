@@ -1,0 +1,11 @@
+{
+  "record": null,
+  "diagnostics": [
+    {
+      "file": "records/invalid/header-json.md",
+      "line": 2,
+      "code": "HEADER_JSON",
+      "severity": "error"
+    }
+  ]
+}

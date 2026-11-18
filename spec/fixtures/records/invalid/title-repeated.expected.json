@@ -1,0 +1,21 @@
+{
+  "record": {
+    "id": "behavior:example",
+    "layer": "behavior",
+    "title": "Example",
+    "summary": "One paragraph.",
+    "meaningHash": "0a9867f4e6672c73",
+    "checks": [],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/title-repeated.md",
+      "line": 12,
+      "code": "TITLE_REPEATED",
+      "severity": "error"
+    }
+  ]
+}

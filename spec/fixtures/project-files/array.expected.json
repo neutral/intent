@@ -1,0 +1,17 @@
+{
+  "project": {
+    "name": "x-project",
+    "code": [
+      "."
+    ],
+    "packs": []
+  },
+  "diagnostics": [
+    {
+      "file": "intent/intent.json",
+      "line": 1,
+      "code": "PROJECT_OBJECT",
+      "severity": "error"
+    }
+  ]
+}

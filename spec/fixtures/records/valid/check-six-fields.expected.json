@@ -1,0 +1,37 @@
+{
+  "record": {
+    "id": "behavior:example",
+    "layer": "behavior",
+    "title": "Example",
+    "summary": "One paragraph.",
+    "meaningHash": "de7dfab895af7873",
+    "checks": [
+      {
+        "id": "behavior:example:fires-once",
+        "line": 12,
+        "claim": "A reminder that fell due while the app was closed notifies exactly once when the app next starts.",
+        "failsWhen": "None arrives. Two arrive. Or one arrives on every later start.",
+        "holdsWhen": "One notification arrives within a few seconds of the start, and none on the next two starts.",
+        "evidence": "A test that stops the process, moves the clock past the time, starts a fresh process, and counts the notifications across three starts.",
+        "limits": "Says nothing about a phone that stops background work.",
+        "appliedBy": "test",
+        "hash": "31c72c1279a6efaa"
+      },
+      {
+        "id": "behavior:example:store-errors-surface",
+        "line": 31,
+        "claim": "The change adds no store call whose failure is caught and dropped.",
+        "failsWhen": "A new `catch` around a store call logs and continues.",
+        "holdsWhen": "",
+        "evidence": "The diff, read at every new or changed store call.",
+        "limits": "",
+        "appliedBy": "judgment",
+        "hash": "bfa247710c76e934"
+      }
+    ],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": []
+}

@@ -1,6 +1,0 @@
-{
-  "schema": "intent.knowledge-record.v2",
-  "kind": "behavior",
-  "id": "assurance.example",
-  "status": "current"
-}

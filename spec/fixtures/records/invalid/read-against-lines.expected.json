@@ -1,0 +1,68 @@
+{
+  "record": {
+    "id": "description:src.queue-js",
+    "layer": "description",
+    "title": "Queue",
+    "summary": "Keeps entries.",
+    "meaningHash": "96f7e2e7262a454e",
+    "checks": [],
+    "relations": [
+      {
+        "verb": "serves",
+        "target": "behavior:x",
+        "line": 10
+      },
+      {
+        "verb": "keeps",
+        "target": "assurance:y",
+        "line": 22
+      }
+    ],
+    "hasReadAgainst": true,
+    "readAgainst": [
+      {
+        "source": "src/queue.js",
+        "hash": "0123456789abcdef",
+        "line": 14
+      }
+    ]
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/read-against-lines.md",
+      "line": 15,
+      "code": "READ_AGAINST_LINE",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/read-against-lines.md",
+      "line": 16,
+      "code": "READ_AGAINST_LINE",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/read-against-lines.md",
+      "line": 17,
+      "code": "READ_AGAINST_LINE",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/read-against-lines.md",
+      "line": 18,
+      "code": "READ_AGAINST_LINE",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/read-against-lines.md",
+      "line": 20,
+      "code": "READ_AGAINST_NOT_LAST",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/read-against-lines.md",
+      "line": 20,
+      "code": "SECTION_REPEATED",
+      "severity": "error"
+    }
+  ]
+}

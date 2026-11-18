@@ -1,0 +1,137 @@
+{
+  "project": "project/tiny",
+  "checksNow": [
+    "description:src.scheduler.queue-js:take-marks-nothing",
+    "description:src.scheduler.queue-js:committed-before-resolve",
+    "blueprint:one-stored-queue-holds-every:one-firer",
+    "blueprint:one-stored-queue-holds-every:failure-leaves-unfired",
+    "behavior:reminder-fires-time-once-even:fires-once",
+    "behavior:reminder-fires-time-once-even:on-time",
+    "assurance:reminder-app-accepted-never-lost:survives-kill",
+    "assurance:reminder-app-accepted-never-lost:set-means-saved",
+    "discipline:js-async.await-every-promise:no-floating-promise",
+    "discipline:js-async.timers-within-range:long-delay-split"
+  ],
+  "added": [],
+  "dropped": [],
+  "kept": false,
+  "codeMoved": false,
+  "results": [
+    {
+      "check": "description:src.scheduler.queue-js:take-marks-nothing",
+      "result": null
+    },
+    {
+      "check": "description:src.scheduler.queue-js:committed-before-resolve",
+      "result": "not applied"
+    },
+    {
+      "check": "blueprint:one-stored-queue-holds-every:one-firer",
+      "result": "held"
+    },
+    {
+      "check": "blueprint:one-stored-queue-holds-every:failure-leaves-unfired",
+      "result": "not applied"
+    },
+    {
+      "check": "behavior:reminder-fires-time-once-even:fires-once",
+      "result": "not applied"
+    },
+    {
+      "check": "behavior:reminder-fires-time-once-even:on-time",
+      "result": "not applied"
+    },
+    {
+      "check": "assurance:reminder-app-accepted-never-lost:survives-kill",
+      "result": "held"
+    },
+    {
+      "check": "assurance:reminder-app-accepted-never-lost:set-means-saved",
+      "result": "held"
+    },
+    {
+      "check": "discipline:js-async.await-every-promise:no-floating-promise",
+      "result": "held"
+    }
+  ],
+  "handingOn": {
+    "Tests that apply Checks": [
+      "the queue test also applies the claim about adding"
+    ],
+    "Intent that looked missing, wrong or unclear": []
+  },
+  "diagnostics": [
+    {
+      "file": "intent/.reports/2026-11-15-b2c4.md",
+      "line": 21,
+      "code": "FORM_BLOCK_MISSING",
+      "severity": "error"
+    },
+    {
+      "file": "intent/.reports/2026-11-15-b2c4.md",
+      "line": 28,
+      "code": "FORM_RESULT",
+      "severity": "error"
+    },
+    {
+      "file": "intent/.reports/2026-11-15-b2c4.md",
+      "line": 39,
+      "code": "FORM_APPLIED_BY",
+      "severity": "error"
+    },
+    {
+      "file": "intent/.reports/2026-11-15-b2c4.md",
+      "line": 51,
+      "code": "FORM_JUDGED_BY",
+      "severity": "error"
+    },
+    {
+      "file": "intent/.reports/2026-11-15-b2c4.md",
+      "line": 60,
+      "code": "FORM_EVIDENCE",
+      "severity": "error"
+    },
+    {
+      "file": "intent/.reports/2026-11-15-b2c4.md",
+      "line": 63,
+      "code": "FORM_EVIDENCE",
+      "severity": "error"
+    },
+    {
+      "file": "intent/.reports/2026-11-15-b2c4.md",
+      "line": 78,
+      "code": "FORM_FIELD_REPEATED",
+      "severity": "error"
+    },
+    {
+      "file": "intent/.reports/2026-11-15-b2c4.md",
+      "line": 89,
+      "code": "FORM_APPLIED_BY",
+      "severity": "error"
+    },
+    {
+      "file": "intent/.reports/2026-11-15-b2c4.md",
+      "line": 103,
+      "code": "FORM_BLOCK_REPEATED",
+      "severity": "error"
+    },
+    {
+      "file": "intent/.reports/2026-11-15-b2c4.md",
+      "line": 123,
+      "code": "FORM_BLOCK_UNLISTED",
+      "severity": "error"
+    },
+    {
+      "file": "intent/.reports/2026-11-15-b2c4.md",
+      "line": 135,
+      "code": "FORM_HANDING_ON",
+      "severity": "error"
+    },
+    {
+      "file": "intent/.reports/2026-11-15-b2c4.md",
+      "line": 137,
+      "code": "FORM_HANDING_ON",
+      "severity": "error"
+    }
+  ]
+}

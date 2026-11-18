@@ -1,0 +1,29 @@
+{
+  "project": {
+    "name": "x-project",
+    "code": [
+      "src"
+    ],
+    "packs": []
+  },
+  "diagnostics": [
+    {
+      "file": "intent/intent.json",
+      "line": 1,
+      "code": "PROJECT_FIELD_REQUIRED",
+      "severity": "error"
+    },
+    {
+      "file": "intent/intent.json",
+      "line": 2,
+      "code": "PROJECT_NAME",
+      "severity": "error"
+    },
+    {
+      "file": "intent/intent.json",
+      "line": 4,
+      "code": "PROJECT_FIELD_UNKNOWN",
+      "severity": "error"
+    }
+  ]
+}

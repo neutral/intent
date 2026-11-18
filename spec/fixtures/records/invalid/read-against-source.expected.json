@@ -1,0 +1,44 @@
+{
+  "record": {
+    "id": "description:src.a-js",
+    "layer": "description",
+    "title": "The a module",
+    "summary": "Does a.",
+    "meaningHash": "e3290df107c89152",
+    "checks": [],
+    "relations": [
+      {
+        "verb": "serves",
+        "target": "behavior:x",
+        "line": 10
+      }
+    ],
+    "hasReadAgainst": true,
+    "readAgainst": [
+      {
+        "source": "src/a.js",
+        "hash": "0123456789abcdef",
+        "line": 14
+      },
+      {
+        "source": "behavior:x",
+        "hash": "3123456789abcdef",
+        "line": 17
+      }
+    ]
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/read-against-source.md",
+      "line": 15,
+      "code": "READ_AGAINST_LINE",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/read-against-source.md",
+      "line": 16,
+      "code": "READ_AGAINST_LINE",
+      "severity": "error"
+    }
+  ]
+}

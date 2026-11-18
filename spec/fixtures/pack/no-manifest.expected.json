@@ -1,0 +1,20 @@
+{
+  "valid": false,
+  "manifest": null,
+  "fingerprint": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "records": [],
+  "diagnostics": [
+    {
+      "file": "pack.json",
+      "line": 1,
+      "code": "PACK_EMPTY",
+      "severity": "error"
+    },
+    {
+      "file": "pack.json",
+      "line": 1,
+      "code": "PACK_MANIFEST",
+      "severity": "error"
+    }
+  ]
+}

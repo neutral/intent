@@ -1,0 +1,33 @@
+{
+  "record": {
+    "id": "behavior:example",
+    "layer": "behavior",
+    "title": "Example",
+    "summary": "One paragraph.",
+    "meaningHash": "de7dfab895af7873",
+    "checks": [
+      {
+        "id": "behavior:example:same",
+        "line": 12,
+        "claim": "It fires once.",
+        "failsWhen": "It fires twice.",
+        "holdsWhen": "",
+        "evidence": "",
+        "limits": "",
+        "appliedBy": "test",
+        "hash": "35a83775506f0de0"
+      }
+    ],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/check-slug-repeated.md",
+      "line": 17,
+      "code": "CHECK_SLUG_REPEATED",
+      "severity": "error"
+    }
+  ]
+}

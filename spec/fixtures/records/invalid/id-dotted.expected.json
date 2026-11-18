@@ -1,0 +1,11 @@
+{
+  "record": null,
+  "diagnostics": [
+    {
+      "file": "records/invalid/id-dotted.md",
+      "line": 2,
+      "code": "ID_INVALID",
+      "severity": "error"
+    }
+  ]
+}

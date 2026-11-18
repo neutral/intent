@@ -1,7 +1,0 @@
-{
-  "id": "fixture-operation",
-  "status": "refused",
-  "journal": "tmp/intent/operations/fixture-operation.json",
-  "written": [],
-  "error": "Source changed since proposal: intent/blueprint/example.md"
-}

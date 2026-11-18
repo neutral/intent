@@ -1,0 +1,21 @@
+{
+  "record": {
+    "id": "behavior:no-summary",
+    "layer": "behavior",
+    "title": "A title and nothing under it",
+    "summary": "",
+    "meaningHash": "9d53e61156c268cc",
+    "checks": [],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/summary-missing.md",
+      "line": 6,
+      "code": "RECORD_SUMMARY",
+      "severity": "error"
+    }
+  ]
+}

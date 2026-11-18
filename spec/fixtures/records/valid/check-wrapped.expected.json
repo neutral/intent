@@ -1,0 +1,26 @@
+{
+  "record": {
+    "id": "behavior:example",
+    "layer": "behavior",
+    "title": "Example",
+    "summary": "One paragraph.",
+    "meaningHash": "de7dfab895af7873",
+    "checks": [
+      {
+        "id": "behavior:example:fires-once",
+        "line": 12,
+        "claim": "It fires once, whether the app was running or not.",
+        "failsWhen": "It fires twice.",
+        "holdsWhen": "",
+        "evidence": "",
+        "limits": "",
+        "appliedBy": "test",
+        "hash": "00fe9826b59fe4ed"
+      }
+    ],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": []
+}

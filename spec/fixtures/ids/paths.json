@@ -1,0 +1,79 @@
+[
+  {
+    "path": "src/scheduler/queue.js",
+    "taken": [],
+    "id": "description:src.scheduler.queue-js"
+  },
+  {
+    "path": "tests/reminders/firing.test.js",
+    "taken": [],
+    "id": "description:tests.reminders.firing-test-js"
+  },
+  {
+    "path": "server.mjs",
+    "taken": [],
+    "id": "description:server-mjs"
+  },
+  {
+    "path": "src",
+    "taken": [],
+    "id": "description:src"
+  },
+  {
+    "path": ".",
+    "taken": [],
+    "id": "description:root"
+  },
+  {
+    "path": "src/__init__.py",
+    "taken": [],
+    "id": "description:src.__init__-py"
+  },
+  {
+    "path": "__main__.py",
+    "taken": [],
+    "id": "description:__main__-py"
+  },
+  {
+    "path": "Café/Ñu.JS",
+    "taken": [],
+    "id": "description:cafe.nu-js"
+  },
+  {
+    "path": "src/a b.js",
+    "taken": [],
+    "id": "description:src.a-b-js"
+  },
+  {
+    "path": "src/a.b.js",
+    "taken": [
+      "src.a-b-js"
+    ],
+    "id": "description:src.a-b-js-2"
+  },
+  {
+    "path": "src/---.js",
+    "taken": [],
+    "id": "description:src.js"
+  },
+  {
+    "path": "src/日本.ts",
+    "taken": [],
+    "id": "description:src.ts"
+  },
+  {
+    "path": "src/...",
+    "taken": [],
+    "id": "description:src.x"
+  },
+  {
+    "path": "README.md",
+    "taken": [],
+    "id": "description:readme-md"
+  },
+  {
+    "path": "docs/My File (2).MD",
+    "taken": [],
+    "id": "description:docs.my-file-2-md"
+  }
+]

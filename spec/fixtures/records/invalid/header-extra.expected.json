@@ -1,0 +1,21 @@
+{
+  "record": {
+    "id": "behavior:extra",
+    "layer": "behavior",
+    "title": "Extra header members",
+    "summary": "The record is still read.",
+    "meaningHash": "e466663448d812f9",
+    "checks": [],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/header-extra.md",
+      "line": 2,
+      "code": "HEADER_FIELD_UNKNOWN",
+      "severity": "error"
+    }
+  ]
+}

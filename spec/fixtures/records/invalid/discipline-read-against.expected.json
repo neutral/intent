@@ -1,0 +1,33 @@
+{
+  "record": {
+    "id": "discipline:js-async.stamped",
+    "layer": "discipline",
+    "title": "A Discipline with a stamp",
+    "summary": "A Discipline reads against nothing.",
+    "meaningHash": "8a2870408a94792b",
+    "checks": [],
+    "relations": [],
+    "hasReadAgainst": true,
+    "readAgainst": [
+      {
+        "source": "behavior:x",
+        "hash": "0123456789abcdef",
+        "line": 14
+      }
+    ]
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/discipline-read-against.md",
+      "line": 10,
+      "code": "RELATION_LAYER",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/discipline-read-against.md",
+      "line": 12,
+      "code": "DISCIPLINE_READ_AGAINST",
+      "severity": "error"
+    }
+  ]
+}

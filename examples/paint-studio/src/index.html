@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Pigment — a little room to create</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="/" aria-label="Pigment home"
+        ><span class="brand-mark">p</span>Pigment<span class="badge"
+          >STUDIO</span
+        ></a
+      >
+      <div class="document-heading">
+        <input
+          id="document-name"
+          aria-label="Document name"
+          maxlength="80"
+          value="Untitled study"
+        /><span id="save-status" role="status">Ready to paint</span>
+      </div>
+      <nav aria-label="Document actions">
+        <button id="new">New</button><button id="open">Open project</button
+        ><button id="save">Save project</button
+        ><button id="export" class="primary">Export PNG <span>↗</span></button>
+      </nav>
+    </header>
+    <div class="workspace">
+      <aside class="tool-rail" aria-label="Drawing tools">
+        <span class="rail-label">TOOLS</span>
+        <div id="tools"></div>
+        <button
+          id="help"
+          class="help-button"
+          title="Help (?)"
+          aria-label="Help and shortcuts"
+        >
+          ?
+        </button>
+      </aside>
+      <main>
+        <div class="options">
+          <div class="tool-title">
+            <span id="current-tool">Brush</span
+            ><small id="tool-hint">Make your mark.</small>
+          </div>
+          <label for="size"
+            >Size
+            <input id="size" type="range" min="1" max="100" value="12" /><output
+              id="size-value"
+              aria-hidden="true"
+              >12 px</output
+            ></label
+          ><label for="opacity"
+            >Opacity
+            <input
+              id="opacity"
+              type="range"
+              min="1"
+              max="100"
+              value="100"
+            /><output id="opacity-value" aria-hidden="true">100%</output></label
+          >
+          <div class="history-actions">
+            <button id="undo" title="Undo (Ctrl / ⌘ Z)" aria-label="Undo">
+              ↶</button
+            ><button
+              id="redo"
+              title="Redo (Ctrl / ⌘ Shift Z)"
+              aria-label="Redo"
+            >
+              ↷
+            </button>
+          </div>
+        </div>
+        <div class="canvas-area" id="canvas-area">
+          <div class="canvas-caption">
+            <span>A LITTLE ROOM TO CREATE</span><span>960 × 640 px</span>
+          </div>
+          <div id="canvas-scroll">
+            <div id="canvas-wrap">
+              <canvas
+                id="canvas"
+                width="960"
+                height="640"
+                aria-label="Drawing canvas"
+                tabindex="0"
+              ></canvas>
+            </div>
+          </div>
+          <div class="canvas-footer">
+            <span
+              ><i></i> <span id="canvas-layer">Layer 1</span
+              ><span class="paper-label"> · Warm paper</span></span
+            >
+            <div class="zoom-controls">
+              <button id="zoom-out" aria-label="Zoom out" title="Zoom out (-)">
+                −</button
+              ><output id="zoom-value">100%</output
+              ><button id="zoom-in" aria-label="Zoom in" title="Zoom in (+)">
+                +</button
+              ><button id="fit" title="Fit canvas (0)">Fit</button>
+            </div>
+          </div>
+        </div>
+        <div class="message-bar" id="message" role="status">
+          Your next idea starts with a single stroke.
+        </div>
+        <div class="bottom-note">
+          <span>MADE FOR MAKING</span
+          ><button id="example">Try an example <span>↗</span></button>
+        </div>
+      </main>
+      <aside class="inspector">
+        <section>
+          <div class="section-heading">
+            <h2>Color</h2>
+            <span>01</span>
+          </div>
+          <div class="color-current">
+            <input
+              id="color"
+              type="color"
+              value="#315d58"
+              aria-label="Paint color"
+            />
+            <div>
+              <span>Current ink</span
+              ><label class="hex-label"
+                ><input
+                  id="hex"
+                  value="#315d58"
+                  aria-label="Hex color"
+                  maxlength="7"
+              /></label>
+            </div>
+          </div>
+          <div class="palette-label">THE STUDIO PALETTE</div>
+          <div id="swatches" class="swatches"></div>
+        </section>
+        <section class="layers-section">
+          <div class="section-heading">
+            <h2>Layers</h2>
+            <button id="add-layer" aria-label="Add layer" title="Add layer">
+              +
+            </button>
+          </div>
+          <p class="section-note">A place for every part of your idea.</p>
+          <div id="layers"></div>
+          <label for="layer-opacity" class="layer-opacity"
+            >Layer opacity
+            <output id="layer-opacity-value" aria-hidden="true">100%</output
+            ><input
+              id="layer-opacity"
+              type="range"
+              min="0"
+              max="100"
+              value="100"
+          /></label>
+          <div class="layer-actions">
+            <button
+              id="layer-up"
+              aria-label="Move layer up"
+              title="Move layer up"
+            >
+              ↑</button
+            ><button
+              id="layer-down"
+              aria-label="Move layer down"
+              title="Move layer down"
+            >
+              ↓</button
+            ><button id="clear">Clear layer</button
+            ><button
+              id="delete-layer"
+              aria-label="Delete layer"
+              title="Delete layer"
+            >
+              ×
+            </button>
+          </div>
+        </section>
+        <section>
+          <div class="section-heading">
+            <h2>History</h2>
+            <span id="history-count">0 / 40</span>
+          </div>
+          <ol id="history"></ol>
+          <p class="history-note">
+            Room to experiment. Your last 40 edits stay undoable.
+          </p>
+        </section>
+        <div class="inspector-note">
+          <span class="note-spark">✳</span>
+          <p>Take your time.<br />Make something yours.</p>
+          <small>LOCAL FIRST. JUST YOU & THE CANVAS.</small>
+        </div>
+      </aside>
+    </div>
+    <input id="file" type="file" accept=".json,application/json" hidden />
+    <dialog id="help-dialog">
+      <button id="close-help" class="dialog-close" aria-label="Close help">
+        ×</button
+      ><span class="eyebrow">YOUR STUDIO, AT A GLANCE</span>
+      <h2>A few helpful shortcuts</h2>
+      <div class="shortcut-grid">
+        <span>Brush / Eraser</span><kbd>B / E</kbd
+        ><span>Line / Rectangle / Ellipse</span><kbd>L / R / O</kbd
+        ><span>Fill / Eyedropper</span><kbd>F / I</kbd><span>Undo</span
+        ><kbd>Ctrl / ⌘ Z</kbd><span>Redo</span><kbd>Ctrl / ⌘ Shift Z</kbd
+        ><span>Zoom / Fit</span><kbd>+ − / 0</kbd><span>Brush size</span
+        ><kbd>[ / ]</kbd><span>Cancel gesture</span><kbd>Esc</kbd>
+      </div>
+      <p>
+        Shapes are outlines. Fill matches an exact contiguous color on the
+        selected layer. The eyedropper samples the visible artwork, including
+        warm paper.
+      </p>
+      <p>
+        Autosave stays in this browser. <strong>Save project</strong> keeps an
+        editable backup; PNG exports your visible composition.
+      </p>
+      <p class="limits">
+        960 × 640 · 8 layers · 1,200 marks · 60,000 points · 2 MiB project · 40
+        undo steps. No image import.
+      </p>
+    </dialog>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "record": {
+    "id": "behavior:example",
+    "layer": "behavior",
+    "title": "Example",
+    "summary": "One paragraph.",
+    "meaningHash": "de7dfab895af7873",
+    "checks": [],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/check-heading-level.md",
+      "line": 12,
+      "code": "CHECK_HEADING",
+      "severity": "error"
+    }
+  ]
+}

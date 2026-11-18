@@ -1,0 +1,26 @@
+{
+  "record": {
+    "id": "discipline:js-async.await-every-promise",
+    "layer": "discipline",
+    "title": "Every promise is awaited, returned, or given a handler",
+    "summary": "A promise nobody awaits fails silently: its error is lost.",
+    "meaningHash": "ac15dd907ac21985",
+    "checks": [
+      {
+        "id": "discipline:js-async.await-every-promise:no-floating-promise",
+        "line": 13,
+        "claim": "Every call that returns a promise is awaited, returned, or given a rejection handler.",
+        "failsWhen": "A promise-returning call stands alone as a statement, such as an async function given to `forEach`.",
+        "holdsWhen": "",
+        "evidence": "",
+        "limits": "",
+        "appliedBy": "judgment",
+        "hash": "f8b837fc145491f3"
+      }
+    ],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": []
+}

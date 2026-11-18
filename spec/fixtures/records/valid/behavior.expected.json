@@ -1,0 +1,49 @@
+{
+  "record": {
+    "id": "behavior:reminder-fires-time-once-even",
+    "layer": "behavior",
+    "title": "A reminder fires at its time, once, even if the app was closed",
+    "summary": "A user who sets a reminder on a todo gets one notification at that time.",
+    "meaningHash": "3028dbce13c34580",
+    "checks": [
+      {
+        "id": "behavior:reminder-fires-time-once-even:fires-once",
+        "line": 20,
+        "claim": "Each reminder gives the user exactly one notification, whether the app was running at its time or was closed and started again.",
+        "failsWhen": "The user gets two notifications for one reminder, for example after a restart, or gets none.",
+        "holdsWhen": "",
+        "evidence": "",
+        "limits": "",
+        "appliedBy": "test",
+        "hash": "f1ca56309eab7c7a"
+      },
+      {
+        "id": "behavior:reminder-fires-time-once-even:on-time",
+        "line": 25,
+        "claim": "A reminder notifies at the moment it was set for, or as soon as the app next starts if it was closed at that moment.",
+        "failsWhen": "It notifies before that moment, or more than a few seconds after it while the app runs.",
+        "holdsWhen": "A reminder that fell due while the app was closed notifies within a few seconds of the next start, marked \"late\".",
+        "evidence": "",
+        "limits": "",
+        "appliedBy": "test",
+        "hash": "ed3dd1c61f153f58"
+      }
+    ],
+    "relations": [
+      {
+        "verb": "bounded by",
+        "target": "assurance:reminder-app-accepted-never-lost",
+        "line": 33
+      }
+    ],
+    "hasReadAgainst": true,
+    "readAgainst": [
+      {
+        "source": "assurance:reminder-app-accepted-never-lost",
+        "hash": "0123456789abcdef",
+        "line": 37
+      }
+    ]
+  },
+  "diagnostics": []
+}

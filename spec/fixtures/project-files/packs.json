@@ -1,0 +1,21 @@
+{
+  "name": "x",
+  "code": ["src"],
+  "packs": [
+    {"name": "a", "version": "1.0.0", "fingerprint": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+    {"name": "b", "version": "1.0.0", "fingerprint": "sha256:ABC", "applies": ["src/**"]},
+    {"name": "c", "version": "1.0.0", "fingerprint": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "applies": ["src/**/*.js"]},
+    {"name": "c", "version": "2.0.0", "fingerprint": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "applies": ["src/**/*.js"]},
+    {
+      "name": "d",
+      "version": "1.0.0",
+      "fingerprint": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "applies": [
+        "src/**.js",
+        "/abs/*.js",
+        "src/*.js"
+      ]
+    },
+    {"name": "e", "version": "1.0.0", "fingerprint": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "applies": []}
+  ]
+}

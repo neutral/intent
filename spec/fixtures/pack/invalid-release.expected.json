@@ -1,0 +1,49 @@
+{
+  "valid": false,
+  "manifest": {
+    "name": "bad-pack",
+    "version": "0.1.0",
+    "title": "A Pack with faults"
+  },
+  "fingerprint": "sha256:a224962d8944565511cdd06d105ee7118b11eab2ba47ee8b10978f960a4a748c",
+  "records": [
+    {
+      "file": "has-relations.md",
+      "id": "discipline:bad-pack.has-relations",
+      "meaning": "5799a354c2039ffd",
+      "checks": []
+    },
+    {
+      "file": "stamped.md",
+      "id": "discipline:bad-pack.stamped",
+      "meaning": "6b27b8fa7e2954be",
+      "checks": []
+    },
+    {
+      "file": "wrong-pack.md",
+      "id": "discipline:other.wrong",
+      "meaning": "a4990cd21bbe7e2b",
+      "checks": []
+    }
+  ],
+  "diagnostics": [
+    {
+      "file": "has-relations.md",
+      "line": 10,
+      "code": "RELATION_LAYER",
+      "severity": "error"
+    },
+    {
+      "file": "stamped.md",
+      "line": 8,
+      "code": "DISCIPLINE_READ_AGAINST",
+      "severity": "error"
+    },
+    {
+      "file": "wrong-pack.md",
+      "line": 2,
+      "code": "DISCIPLINE_ID_PACK",
+      "severity": "error"
+    }
+  ]
+}

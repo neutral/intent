@@ -1,55 +1,89 @@
 # Intent
 
-Software development spans conversations, contributors, and coding agents,
-each carrying only part of the context. Intent preserves the project Knowledge
-they need to continue the work: its intended behavior, constraints, design
-rationale, implementation explanations, and verification criteria.
+A coding agent starts each task with the task and the code. What the software
+is meant to do for the people who use it, what it must never do, what was
+agreed about its design: none of that is in front of it. So it writes a change
+that runs, passes the tests that exist, and breaks a promise nobody told it
+about.
 
-One installation supplies the command, browser Editor, site export and MCP
-connection. The package also exposes an independent TypeScript Library.
+Intent keeps a project's intent where its agents can use it. In the project's
+own repository it holds five layers of plain Markdown records: Behaviors (what
+the software does), Assurances (how well and how safely it must do it),
+Blueprints (the design that was agreed), Descriptions (how the code actually
+works) and Disciplines (how to build well, adopted from Packs). Inside the
+records are Checks: claims about the software, each saying what would show it
+false.
 
-## Install and use
+Before an agent writes code, Intent gives it what its change must keep, with
+the reason each item is there. After, it gives the Checks that bear on what
+the agent changed. The agent applies them and reports what held. Intent runs
+no test and never says that a Check passes: it keeps the record and finds
+exactly what bears on a change.
 
-Use Node.js 24 or newer and npm:
+An agent that uses a project's intent to do its own work reads
+[spec/USING.md](spec/USING.md) first. An agent that writes and keeps the
+intent reads [spec/OPERATING.md](spec/OPERATING.md). `intent guide using` and
+`intent guide` print them.
 
-```sh
-npx @neutral/intent --help
-npx @neutral/intent open /path/to/project
-```
-
-The package includes the command, built browser assets, schemas and authoring
-guides. To use the shorter `intent` command, run
-`npm install --global @neutral/intent` and keep npm's global command directory on
-`PATH`. The [installation guide](docs/install.md) covers updates, removal and
-source builds. Start with [daily use](docs/use.md) and the
-[documentation index](docs/README.md).
-
-Intent maintains Check definitions. The implementation project performs the
-assessment and records its findings. Current files carry current meaning;
-Git retains committed versions.
-
-## Build from source
+## Install
 
 ```sh
-npm ci
-npm run build
-node apps/cli/intent.mjs --help
-npm test
-npm run check
-npm run release:check
+npm install --global @neutral/intent
 ```
 
-The [source build instructions](docs/install.md#build-from-source) also cover npm
-archives, native bundles and the runtime-free payload.
+Node.js 22.23.2 or later. The package has no runtime dependencies. See
+[docs/how-to/install.md](docs/how-to/install.md), including how to connect an
+MCP host with `intent mcp`.
 
-- [library/](library/README.md): Shared Knowledge processing and public API.
-- [apps/](apps/README.md): CLI, MCP, Editor and Portal adapters.
-- [spec/](spec/README.md): Canonical contracts, schemas and authoring guidance.
-- [docs/](docs/README.md): Installation, use, reference and integration guides.
-- [examples/](examples/README.md): Runnable consumer and conformance examples.
-- [tests/](tests/README.md): Regression, independent-reader and installed checks.
-- [distribution/](distribution/README.md): Build, packaging and release procedures.
+## Use
 
-[Contributing](CONTRIBUTING.md) states the contact and submission policy. [Security](SECURITY.md)
-explains trust boundaries; [third-party notices](THIRD_PARTY.md) describe bundled
-dependencies. Original material uses [CC0-1.0 or 0BSD](LICENSE).
+An agent writing code:
+
+```sh
+intent fetch snooze src/reminders/snooze.js         # the intent bearing on the task
+intent checks                                         # after the change: the Checks to apply, and a report form
+intent report <form>                                  # the filled form, checked and kept
+```
+
+A person reading the intent, or judging a change an agent made to it:
+
+```sh
+intent portal                                         # the project's intent as pages, on this machine; it writes nothing
+```
+
+An agent working on intent:
+
+```sh
+intent start
+intent create behavior "A reminder fires at its time, once, even if the app was closed"
+intent validate
+intent gaps
+intent drift
+```
+
+`intent` alone prints the code-work flow; `intent --help` lists every command.
+
+## Read more
+
+- [docs/](docs/README.md): how-to guides, how Intent works, and the reference.
+- [base/](base/README.md): what agents lean on to write a project's intent
+  well: the principles, a page for each layer, deriving and judging Checks,
+  and keeping intent true.
+- [spec/SPEC.md](spec/SPEC.md): the model, and the contracts that spell it
+  out, each for one subject: [project](spec/project.md),
+  [records](spec/records.md), [checks](spec/checks.md),
+  [relations](spec/relations.md), [reports](spec/reports.md),
+  [currency](spec/currency.md), [packs](spec/packs.md) and
+  [presentation](spec/presentation.md).
+- [examples/reminders/](examples/reminders/README.md): the small app these
+  pages take their examples from, with its code, its tests and its intent. [examples/paint-studio/](examples/paint-studio/README.md): a larger
+  one.
+
+## License and policies
+
+[CC0-1.0 OR 0BSD](LICENSE), at your option. The full texts are in
+[LICENSE.CC0-1.0](LICENSE.CC0-1.0) and [LICENSE.0BSD](LICENSE.0BSD).
+[Third-party material](THIRD_PARTY.md) keeps its own terms.
+[CONTRIBUTING.md](CONTRIBUTING.md) says how to send questions and feedback,
+and [SECURITY.md](SECURITY.md) says what Intent reads, writes and runs, and
+how to report a problem.

@@ -1,0 +1,46 @@
+{
+  "record": {
+    "id": "behavior:example",
+    "layer": "behavior",
+    "title": "Example",
+    "summary": "One paragraph.",
+    "meaningHash": "de7dfab895af7873",
+    "checks": [
+      {
+        "id": "behavior:example:fires-once",
+        "line": 12,
+        "claim": "",
+        "failsWhen": "",
+        "holdsWhen": "",
+        "evidence": "",
+        "limits": "",
+        "appliedBy": "test",
+        "hash": "75a11da44c802486"
+      }
+    ],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/check-unknown-two-missing.md",
+      "line": 12,
+      "code": "CHECK_FIELD_MISSING",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/check-unknown-two-missing.md",
+      "line": 12,
+      "code": "CHECK_FIELD_MISSING",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/check-unknown-two-missing.md",
+      "line": 13,
+      "code": "CHECK_FIELD_UNKNOWN",
+      "severity": "error",
+      "standsFor": null
+    }
+  ]
+}

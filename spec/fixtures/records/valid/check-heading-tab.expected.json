@@ -1,0 +1,26 @@
+{
+  "record": {
+    "id": "behavior:example",
+    "layer": "behavior",
+    "title": "Example",
+    "summary": "One paragraph.",
+    "meaningHash": "78123b51c46462e7",
+    "checks": [
+      {
+        "id": "behavior:example:fires-once",
+        "line": 8,
+        "claim": "It fires once.",
+        "failsWhen": "It fires twice.",
+        "holdsWhen": "",
+        "evidence": "",
+        "limits": "",
+        "appliedBy": "test",
+        "hash": "35a83775506f0de0"
+      }
+    ],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": []
+}

@@ -1,0 +1,36 @@
+{
+  "record": {
+    "id": "assurance:reminder-app-accepted-never-lost",
+    "layer": "assurance",
+    "title": "A reminder the app accepted is never lost",
+    "summary": "Once the app shows \"Reminder set\", the reminder fires or the user removes it.",
+    "meaningHash": "83588edaadc16c65",
+    "checks": [
+      {
+        "id": "assurance:reminder-app-accepted-never-lost:survives-kill",
+        "line": 12,
+        "claim": "A reminder shown as set still fires after the app is killed at any step.",
+        "failsWhen": "After a kill and a restart, a reminder shown as set never notifies.",
+        "holdsWhen": "",
+        "evidence": "",
+        "limits": "",
+        "appliedBy": "test",
+        "hash": "fa3bd4ecbe7a31b6"
+      }
+    ],
+    "relations": [
+      {
+        "verb": "bounds the whole product",
+        "line": 19
+      },
+      {
+        "verb": "bounds",
+        "target": "behavior:snooze-delays-reminder-ten",
+        "line": 20
+      }
+    ],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": []
+}

@@ -1,0 +1,267 @@
+/* The portal's sheet: white paper inside a single border, two inks, two faces and one red.
+   Ink and the proportional face are what a record's writer wrote. Blue and the fixed-width face are what Intent says:
+   kinds, labels, relation words, IDs, paths, counts and marks. Red is what the reader must attend to, and always comes
+   with its words. An underlined name goes to its page; a name after ▸ opens in place. The only bordered controls
+   are Outline, ?, Close and the search field. */
+:root {
+  color-scheme: light;
+  --paper: #ffffff; --ink: #15191e;
+  --blue-9: #1f3a5a; --blue-7: #3d6288; --blue-5: #4f6e8f; --blue-3: #b9cadb; --blue-1: #edf2f7; --blue-0: #f6f8fb;
+  --red: #b0412a; --red-1: #f9ece8;
+  --sans: -apple-system, BlinkMacSystemFont, Inter, 'Segoe UI', system-ui, sans-serif;
+  --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+  --gutter: 2.2rem; --measure: 43rem;
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-padding-top: 1rem; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16.5px/1.65 var(--sans); -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+.sheet { display: flex; flex-direction: column; margin: 12px; min-height: calc(100vh - 24px); border: 1px solid var(--blue-7); }
+h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, pre, blockquote, figure { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--blue-5); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--blue-9); }
+:focus-visible { outline: 2px solid var(--blue-7); outline-offset: 2px; }
+::selection { background: var(--blue-1); }
+code, pre { font-family: var(--mono); }
+summary { cursor: pointer; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: '▸ '; content: '▸ ' / ''; }
+[open] > summary::before { content: '▾ '; content: '▾ ' / ''; }
+
+/* What Intent says: the fixed-width face, in blue. Labels are small capitals. */
+.says { font: 12.5px/1.6 var(--mono); color: var(--blue-9); }
+.cap { font: 500 10.5px/1.6 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-7); }
+.red { font: 500 11.5px/1.5 var(--mono); letter-spacing: 0.02em; color: var(--red); }
+.blue { font: 500 11.5px/1.5 var(--mono); letter-spacing: 0.02em; color: var(--blue-7); }
+.cap.red { color: var(--red); font-size: 10.5px; letter-spacing: 0.08em; }
+.path { font: 12.5px/1.6 var(--mono); color: var(--blue-9); overflow-wrap: anywhere; }
+.none { color: var(--blue-5); }
+.select { user-select: all; -webkit-user-select: all; cursor: text; }
+.id { margin: 0 0 0.7rem; }
+.id code { font: 12px/1.5 var(--mono); color: var(--blue-7); overflow-wrap: anywhere; }
+.out::after { content: ' ↗'; content: ' ↗' / ''; font-family: var(--mono); font-size: 0.8em; color: var(--blue-7); }
+.gone { text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: 1px; }
+.control, .close { display: inline-flex; flex: none; align-items: center; height: 28px; padding: 0 0.6rem; font: 12px/1 var(--mono); color: var(--blue-7); text-decoration: none; border: 1px solid var(--blue-7); border-radius: 3px; background: var(--paper); }
+.control:hover, .close:hover { color: var(--paper); background: var(--blue-7); }
+.close { height: 22px; margin-left: auto; padding: 0 0.45rem; font-size: 11.5px; }
+
+/* The strip: the project's name, the pages beside the intent, and the reader's tools at the right. */
+.strip { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 1.2rem; min-height: 52px; padding: 0.4rem var(--gutter); border-bottom: 1px solid var(--blue-7); }
+.strip a.title { flex: 0 1 auto; min-width: 3rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 13px/1.6 var(--mono); letter-spacing: 0.02em; color: var(--blue-9); text-decoration-color: var(--blue-3); }
+.places { display: flex; flex-wrap: wrap; gap: 0.2rem 1rem; }
+.places a { font: 13px/1.6 var(--mono); color: var(--blue-9); text-decoration-color: var(--blue-3); padding: 0 0.15rem; }
+.places a[aria-current="page"] { font-weight: 600; background: var(--blue-1); box-shadow: 0 0 0 3px var(--blue-1); }
+.tools { display: flex; align-items: center; gap: 1rem; flex: 1 1 18rem; justify-content: flex-end; margin-left: auto; min-width: 0; }
+.tools .help { justify-content: center; width: 28px; padding: 0; }
+.ask { position: relative; flex: 1 1 8rem; max-width: 24rem; min-width: 0; }
+.ask input { display: block; width: 100%; height: 32px; padding: 0 0.6rem; font: 13px var(--mono); color: var(--ink); background: var(--paper); border: 1px solid var(--blue-5); border-radius: 0; appearance: none; }
+.ask input::placeholder { color: var(--blue-7); opacity: 1; }
+.ask input:focus-visible { border-color: var(--blue-7); }
+.results { position: absolute; right: 0; top: 40px; z-index: 5; width: min(44rem, calc(100vw - 24px - var(--gutter) * 2)); max-height: 70vh; overflow: auto; background: var(--paper); border: 1px solid var(--blue-7); box-shadow: 0 8px 24px rgba(31, 58, 90, 0.18); }
+.results li { border-bottom: 1px solid var(--blue-3); }
+.results li:last-child { border-bottom: 0; }
+.results a, .results .item { display: block; padding: 0.55rem 0.8rem; text-decoration: none; }
+.results a:hover, .results a:focus-visible, .results a[aria-selected="true"] { background: var(--blue-0); outline-offset: -2px; }
+.results .kind { display: block; }
+.results .kind .says { font-size: 11.5px; color: var(--blue-7); }
+.results .claim { display: block; font: 14px/1.4 var(--sans); color: var(--ink); text-decoration: underline; text-decoration-color: var(--blue-5); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.results .excerpt { display: -webkit-box; margin-top: 0.15rem; overflow: hidden; font: 13px/1.45 var(--sans); color: var(--ink); -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; }
+.results .checks { margin-top: 0.15rem; font: 11.5px/1.5 var(--mono); color: var(--blue-7); }
+.results .more { padding: 0.5rem 0.8rem; font: 11.5px/1.5 var(--mono); color: var(--blue-7); }
+
+/* The main part of a page, and the foot that says when the files were read and what was not checked. */
+.page { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+/* The notice: what Validate finds, over every page, in red with its words, going to its list on Gaps. */
+.notice { margin: 0; padding: 0.5rem var(--gutter); font: 500 12.5px/1.5 var(--mono); color: var(--red); background: var(--red-1); border-bottom: 1px solid var(--red); }
+.notice a { color: var(--red); font-weight: 600; text-decoration-color: var(--red); }
+.foot { padding: 0.8rem var(--gutter) 1rem; border-top: 1px solid var(--blue-3); }
+.foot .cap { margin-top: 0.5rem; }
+.foot ul { margin: 0.1rem 0 0; }
+.foot li::before { content: '· '; color: var(--blue-5); }
+
+/* A record and, beside it behind a ruled line with a tick, its margin: the map of its relations. */
+.row { display: grid; flex: 1; grid-template-columns: minmax(0, calc(var(--measure) + var(--gutter) * 2)) minmax(0, 1fr); }
+.record { position: relative; min-width: 0; padding: 1.5rem var(--gutter) 2.4rem; }
+.row > .record { border-right: 1px solid var(--blue-7); }
+.row > .record::after { content: ''; position: absolute; right: -7px; top: 2.2rem; width: 13px; border-top: 1px solid var(--blue-7); transform: rotate(-35deg); }
+.kind { max-width: var(--measure); margin: 0 0 0.35rem; line-height: 1.4; }
+.kind .says { font-size: 12px; color: var(--blue-7); overflow-wrap: anywhere; }
+.record h1 { max-width: var(--measure); margin: 0 0 0.35rem; font: 600 24px/1.25 var(--sans); letter-spacing: -0.01em; }
+.marks { max-width: var(--measure); margin: 0 0 0.8rem; padding-left: 0.7rem; border-left: 2px solid var(--red); }
+.marks ul { overflow-wrap: anywhere; }
+.summary { max-width: var(--measure); margin: 0 0 1.1rem; font-size: 17.5px; line-height: 1.55; }
+.summary code { padding: 0.05em 0.25em; font-size: 0.82em; background: var(--blue-0); }
+.body { max-width: var(--measure); overflow-wrap: break-word; }
+.body > * + * { margin-top: 0.9rem; }
+.body h2 { margin-top: 1.7rem; padding-top: 0.6rem; font: 600 18px/1.35 var(--sans); border-top: 1px solid var(--blue-3); }
+.body h3, .body h4, .body h5, .body h6 { margin-top: 1.3rem; font: 600 15.5px/1.4 var(--sans); }
+.body ul, .body ol { padding-left: 1.3rem; }
+.body ul { list-style: disc; }
+.body ol { list-style: decimal; }
+.body li { margin: 0.3rem 0; }
+.body li > ul, .body li > ol { margin-top: 0.2rem; }
+.body code { padding: 0.05em 0.25em; font-size: 0.86em; background: var(--blue-0); }
+.body a code { background: none; padding: 0; }
+.body pre { padding: 0.5rem 0.75rem; overflow-x: auto; font: 13px/1.55 var(--mono); border: 1px solid var(--blue-3); }
+.body pre code { padding: 0; font: inherit; background: none; }
+.body .table { overflow-x: auto; }
+.body table { border-collapse: collapse; font-size: 0.9em; line-height: 1.5; }
+.body th { padding: 0.3rem 0.8rem 0.3rem 0; text-align: left; font: 500 10.5px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-7); border-bottom: 1px solid var(--blue-7); }
+.body td { padding: 0.4rem 0.8rem 0.4rem 0; vertical-align: top; border-bottom: 1px solid var(--blue-3); }
+.body .center { text-align: center; } .body .right { text-align: right; }
+.body blockquote { padding-left: 0.8rem; border-left: 1px solid var(--ink); }
+.body hr { border: 0; border-top: 1px solid var(--blue-3); }
+.body .image { font: 0.8em var(--mono); color: var(--blue-7); }
+
+/* A Check, where it is written: its slug and ID, its parts, and how it is applied. */
+.check { margin: 1.1rem 0 0.4rem; padding: 0.7rem 0 0.75rem 0.9rem; border-left: 2px solid var(--blue-7); background: linear-gradient(var(--blue-0), var(--blue-0)) no-repeat 0 0 / 100% 100%; scroll-margin-top: 1rem; }
+.body > .check { margin-top: 1.1rem; }
+.check:target { background: var(--blue-1); }
+.check-head { margin: 0 0 0.1rem; font: 600 14px/1.5 var(--mono); color: var(--blue-9); }
+.check-head .cap { margin-right: 0.35rem; }
+.check .id { margin: 0 0 0.5rem; }
+.parts { display: grid; grid-template-columns: 6.6rem minmax(0, 1fr); gap: 0.35rem 0.9rem; padding-right: 0.8rem; }
+.parts dt { padding-top: 0.25rem; font: 500 10.5px/1.6 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-7); }
+.parts dd { font-size: 15.5px; line-height: 1.55; }
+.parts dd code { font-size: 0.86em; }
+.tie { margin-top: 0.15rem; overflow-wrap: anywhere; }
+.unread { margin: 0.9rem 0; padding-left: 0.7rem; border-left: 2px solid var(--red); }
+.unread pre { margin-top: 0.3rem; padding: 0.4rem 0.6rem; overflow-x: auto; font: 12.5px/1.5 var(--mono); white-space: pre-wrap; border: 1px solid var(--blue-3); }
+.check .unread { margin-right: 0.8rem; }
+
+/* The margin: the record's relations, one group for each layer, always in the same order. */
+.margin { position: sticky; top: 0; align-self: start; min-width: 0; max-height: 100vh; overflow-y: auto; padding: 1.5rem var(--gutter) 2rem 1.4rem; }
+.group { margin: 0 0 1.15rem; }
+.group > .cap { display: block; margin: 0 0 0.2rem; padding-bottom: 0.15rem; border-bottom: 1px solid var(--blue-3); }
+.phrase { margin: 0.4rem 0 0.1rem; font-size: 11.5px; color: var(--blue-7); }
+.here { margin: 0.25rem 0 0; color: var(--blue-7); }
+.group > .none { margin: 0.25rem 0 0; font-size: 11.5px; }
+.group ul { margin: 0; }
+.group li { margin: 0.12rem 0; font: 14px/1.45 var(--sans); }
+.opens { display: block; padding: 0.05rem 0.3rem 0.05rem 1.05rem; text-indent: -1.05rem; text-decoration: none; overflow-wrap: anywhere; }
+.opens::before { content: '▸ '; content: '▸ ' / ''; font: 11px var(--mono); color: var(--blue-7); }
+.opens.mono { font: 12.5px/1.6 var(--mono); color: var(--blue-9); }
+.opens:hover { background: var(--blue-0); }
+.opens[aria-expanded="true"] { font-weight: 600; background: var(--blue-1); box-shadow: -2px 0 0 var(--blue-7); }
+.opens[aria-expanded="true"]::before { content: '▾ '; content: '▾ ' / ''; }
+.ties { margin: 0 0 0.2rem 1.05rem !important; font: 11.5px/1.5 var(--mono); color: var(--blue-9); }
+.ties li { font: inherit; }
+.ties .slug { font-weight: 600; }
+.group code { font: 12px/1.5 var(--mono); color: var(--blue-9); overflow-wrap: anywhere; }
+
+/* A panel: a record a margin name opens, under the record whose margin named it, shifted in and laid over what follows,
+   with its own margin and its own Close. Panels nest, each shifted in from the one that holds it. */
+.doc { display: flex; flex: 1; flex-direction: column; }
+.doc > .row { flex: 1; }
+.panel { margin: 0 0 0 var(--gutter); scroll-margin-top: 12px; background: var(--blue-0); border-top: 1px solid var(--blue-7); border-left: 2px solid var(--blue-7); }
+.panel .panel { margin-left: 1.5rem; }
+.panel > .row > .record { padding-top: 0.9rem; padding-left: 1.3rem; }
+.panel > .row > .record::after { top: 1.6rem; }
+.panel > .row > .margin { padding-top: 0.9rem; }
+.panel .kind { display: flex; flex-wrap: wrap; align-items: center; gap: 0 0.5rem; }
+.panel .kind .close { margin-left: auto; }
+.panel .record h2.title { max-width: var(--measure); margin: 0 0 0.35rem; font: 600 22px/1.3 var(--sans); letter-spacing: -0.01em; }
+.panel .record h2.title a { text-decoration-color: var(--blue-3); }
+.panel .body code, .panel .summary code { background: var(--paper); }
+.panel .check { background: var(--paper); }
+.panel .group > h3.cap { display: block; margin: 0 0 0.2rem; padding-bottom: 0.15rem; border-bottom: 1px solid var(--blue-3); }
+
+/* Home, Gaps, Review, Reports and Help: ruled schedules, a label in a column and its list beside it. */
+.home { width: 100%; max-width: 70rem; padding: 2rem var(--gutter) 3rem; }
+.home > h1 { margin: 0 0 1.4rem; font: 600 26px/1.2 var(--sans); }
+.home > .kind + h1 { margin-top: 0; }
+.lead { max-width: 46rem; margin: 0 0 1.2rem; }
+.sets { border-top: 1px solid var(--blue-7); }
+.set { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: 0 1.5rem; padding: 0.95rem 0 1.1rem; border-bottom: 1px solid var(--blue-3); scroll-margin-top: 1rem; }
+.set-head .cap { font-size: 11px; color: var(--blue-9); }
+.set-head .count { color: var(--blue-7); }
+.set-head .gloss { margin-top: 0.15rem; font-size: 11.5px; line-height: 1.5; color: var(--blue-5); }
+.items > li { padding: 0.15rem 0 0.55rem; }
+.items .name { font: 600 16px/1.4 var(--sans); text-decoration-color: var(--blue-3); }
+.items .summary { margin: 0.15rem 0 0; max-width: 46rem; font-size: 14.5px; line-height: 1.5; }
+.items .summary code { font-size: 0.86em; }
+.items .red, .items .blue { margin-left: 0.5rem; white-space: nowrap; }
+.items > li.folder { padding-bottom: 0.2rem; }
+.items .folder > .path { display: block; }
+.items .folder > .items { margin: 0.2rem 0 0 0.3rem; padding-left: 0.9rem; border-left: 1px solid var(--blue-3); }
+.items .pack { scroll-margin-top: 1rem; }
+/* A folded set: each folder closed under ▸, giving how many it holds and the red marks inside it, and opening in place. */
+.folder > details > summary { display: block; width: fit-content; max-width: 100%; padding-right: 0.3rem; }
+.folder > details > summary::before { font: 11px var(--mono); color: var(--blue-7); }
+.folder > details > summary:hover { background: var(--blue-0); }
+.folder > details > summary > .red { margin-left: 0.5rem; white-space: nowrap; }
+.items .folder > details > .items { margin: 0.2rem 0 0 0.3rem; padding-left: 0.9rem; border-left: 1px solid var(--blue-3); }
+.pack-head { margin: 0; }
+.pack-head .says code { font: 12px/1.5 var(--mono); color: var(--blue-9); }
+.home > .part-title { margin: 2rem 0 0.7rem; font: 600 19px/1.3 var(--sans); scroll-margin-top: 1rem; }
+.command { margin-top: 0.2rem; }
+.check-id code { font: 12.5px/1.5 var(--mono); color: var(--blue-9); overflow-wrap: anywhere; }
+.command code { font: 12px/1.5 var(--mono); color: var(--blue-9); padding: 0.1rem 0.35rem; background: var(--blue-0); }
+.tree { margin: 0; }
+.tree .tree { margin: 0.1rem 0 0.2rem 0.3rem; padding-left: 0.9rem; border-left: 1px solid var(--blue-3); }
+.tree li { margin: 0.2rem 0; font-size: 14.5px; line-height: 1.45; }
+.tree .path { margin-right: 0.45rem; }
+.tree a { text-decoration-color: var(--blue-3); }
+.root { margin: 0 0 0.4rem; font-size: 14.5px; }
+.faults { margin: 0 0 0.6rem; }
+
+/* Review: what differs since the base, each record with each change Review names. */
+.change { padding: 0.2rem 0 0.9rem; }
+.change + .change { padding-top: 0.8rem; border-top: 1px solid var(--blue-3); }
+.change-head { font: 600 16px/1.4 var(--sans); }
+.change-head .red, .change-head .cap { margin-right: 0.4rem; }
+.change .part { margin: 0.45rem 0 0; }
+.change .field { margin: 0.25rem 0 0 0.9rem; }
+.change .field > p:not(.says) { font-size: 15px; }
+.diff { margin: 0.2rem 0 0.3rem; font-size: 15px; line-height: 1.5; }
+.diff li { padding: 0.1rem 0 0.1rem 0.7rem; }
+.diff .added { border-left: 2px solid var(--red); }
+.diff .gone { border-left: 2px solid transparent; color: var(--blue-5); }
+.before > summary { width: fit-content; font: 500 11.5px/1.5 var(--mono); letter-spacing: 0.02em; color: var(--red); }
+.before > :not(summary) { margin: 0.2rem 0 0.3rem; padding-left: 0.7rem; border-left: 1px solid var(--blue-3); font-size: 15px; }
+.limits { margin-top: 1rem; }
+.judged { margin-top: 1.6rem; padding-top: 0.6rem; border-top: 1px solid var(--blue-3); }
+.judged .cap { margin-right: 0.5rem; }
+.refusal { padding: 0.6rem 0.8rem; white-space: pre-wrap; border: 1px solid var(--blue-3); }
+.report-block { max-width: 52rem; }
+.handing { margin: 1.6rem 0 0.4rem; }
+
+/* Help: each word, move and mark in a column and what it means beside it. */
+.help section + section { margin-top: 1.4rem; }
+.help h2.cap { display: block; margin: 0 0 0.4rem; }
+.help dl { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: 0.4rem 1.5rem; padding-top: 0.5rem; border-top: 1px solid var(--blue-7); }
+.help dt { font: 600 12.5px/1.6 var(--mono); color: var(--blue-9); }
+.help dd { font-size: 15px; line-height: 1.55; }
+.help section > p { max-width: 46rem; margin-top: 0.4rem; }
+
+/* Outline and Help, laid over the page. */
+.layer { width: min(76rem, calc(100vw - 48px)); max-width: none; max-height: calc(100vh - 48px); padding: 0; color: var(--ink); background: var(--paper); border: 1px solid var(--blue-7); box-shadow: 0 8px 24px rgba(31, 58, 90, 0.18); }
+.layer::backdrop { background: rgba(31, 58, 90, 0.28); }
+.layer > header { position: sticky; top: 0; z-index: 1; display: flex; gap: 1rem; align-items: center; height: 52px; padding: 0 var(--gutter); background: var(--paper); border-bottom: 1px solid var(--blue-7); }
+.layer > header .title { font: 600 13px var(--mono); letter-spacing: 0.02em; color: var(--blue-9); }
+.layer .home { max-width: none; padding-top: 0.4rem; }
+.layer .sets { border-top: 0; }
+.layer .help h1 { display: none; }
+.layer [aria-current="page"] { font-weight: 700; background: var(--blue-1); box-shadow: 0 0 0 3px var(--blue-1); }
+
+/* A narrow screen: the margin follows the record, and each schedule's label stands above its list. */
+@media (max-width: 70rem) {
+  :root { --gutter: 1.1rem; }
+  .row { grid-template-columns: minmax(0, 1fr); }
+  .row > .record { padding-bottom: 1.4rem; border-right: 0; }
+  .row > .record::after { display: none; }
+  .panel, .panel .panel { margin-left: 0.5rem; }
+  .margin { position: static; max-height: none; padding: 1.1rem var(--gutter) 1.6rem; border-top: 1px solid var(--blue-7); }
+  .record h1 { font-size: 21px; }
+  .home > h1 { font-size: 22px; }
+  .set, .help dl { grid-template-columns: minmax(0, 1fr); }
+  .set-head { display: flex; flex-wrap: wrap; gap: 0 0.7rem; align-items: baseline; margin-bottom: 0.4rem; }
+  .set-head .gloss { flex-basis: 100%; margin: 0; }
+  .help dl { gap: 0; }
+  .help dd { margin-bottom: 0.45rem; }
+  .parts { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .parts dt { padding-top: 0.45rem; }
+}
+@media (pointer: coarse) { .ask input { font-size: 16px; } }

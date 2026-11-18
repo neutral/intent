@@ -1,120 +1,18 @@
 {
-  "name": "@neutral/intent",
-  "version": "0.1.1",
-  "description": "Preserve software project Knowledge across conversations, contributors, and coding agents.",
+  "name": "intent-source",
+  "version": "0.2.0",
+  "private": true,
   "type": "module",
   "license": "CC0-1.0 OR 0BSD",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/neutral/intent.git"
-  },
+  "packageManager": "pnpm@11.9.0",
   "engines": {
-    "node": ">=24.0.0"
+    "node": ">=22.23.2"
   },
-  "exports": {
-    ".": {
-      "types": "./dist/library/index.d.ts",
-      "import": "./dist/library/index.js"
-    },
-    "./schemas/*": "./spec/schemas/*",
-    "./editor": {
-      "types": "./dist/apps/editor/server.d.ts",
-      "import": "./dist/apps/editor/server.js"
-    },
-    "./processing": {
-      "types": "./dist/library/foundation.d.ts",
-      "import": "./dist/library/foundation.js"
-    },
-    "./portal": {
-      "types": "./dist/apps/portal/build.d.ts",
-      "import": "./dist/apps/portal/build.js"
-    },
-    "./library": {
-      "types": "./dist/library/index.d.ts",
-      "import": "./dist/library/index.js"
-    },
-    "./cli": {
-      "types": "./dist/apps/cli/cli.d.ts",
-      "import": "./dist/apps/cli/cli.js"
-    },
-    "./agent": {
-      "types": "./dist/apps/agent/agent.d.ts",
-      "import": "./dist/apps/agent/agent.js"
-    }
-  },
-  "bin": {
-    "intent": "./apps/cli/intent.mjs",
-    "intent-agent": "./apps/agent/intent-agent.mjs",
-    "intent-editor": "./apps/editor/intent-editor.mjs",
-    "intent-portal": "./apps/portal/portal-cli.mjs"
-  },
-  "files": [
-    "dist/library",
-    "dist/apps",
-    "apps/cli/intent.mjs",
-    "apps/agent/intent-agent.mjs",
-    "apps/agent/README.md",
-    "apps/agent/tools.json",
-    "apps/portal/portal-cli.mjs",
-    "spec/SPEC.md",
-    "spec/GLOSSARY.md",
-    "spec/OPERATING.md",
-    "spec/GUIDANCE.md",
-    "spec/guidance",
-    "spec/families",
-    "spec/spec",
-    "spec/schemas",
-    "README.md",
-    "CHANGELOG.md",
-    "THIRD_PARTY.md",
-    "LICENSE",
-    "LICENSE.CC0-1.0",
-    "LICENSE.0BSD",
-    "VERSION",
-    "library/README.md",
-    "apps/README.md",
-    "apps/cli/README.md",
-    "apps/editor/README.md",
-    "apps/portal/README.md",
-    "spec/README.md",
-    "apps/editor/intent-editor.mjs",
-    "CONTRIBUTING.md",
-    "SECURITY.md",
-    "distribution/README.md",
-    "docs"
-  ],
   "scripts": {
-    "build": "node distribution/build.mjs",
-    "test": "npm run build && node spec/tools/check-schemas.mjs && node --test tests/*.test.mjs",
-    "check": "tsc -p tsconfig.json --noEmit && tsc -p apps/tsconfig.ui.json && node distribution/check-docs.mjs",
-    "test:browser": "playwright test --config tests/browser/playwright.config.mjs",
-    "prepack": "npm run build",
-    "release:check": "node distribution/release-check.mjs",
-    "native:assemble": "npm run build && node distribution/assemble.mjs --native",
-    "payload:assemble": "npm run build && node distribution/assemble.mjs --payload",
-    "native:check": "node distribution/check-native.mjs",
-    "container:check": "node tests/qualification/container-journeys.mjs"
-  },
-  "dependencies": {
-    "ajv": "8.18.0",
-    "ajv-formats": "3.0.1",
-    "commonmark": "0.31.2"
+    "test": "node --test \"tests/library/*.test.mjs\" \"tests/conformance/*.test.mjs\" \"tests/cli/*.test.mjs\" \"tests/mcp/*.test.mjs\" \"tests/independent/*.test.mjs\" \"tests/captures/*.test.mjs\" \"tests/portal/*.test.mjs\"",
+    "test:types": "tsc --noEmit --strict --module nodenext --target es2022 --ignoreConfig library/src/index.d.ts"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.14.0",
-    "@playwright/test": "1.65.0",
-    "@types/commonmark": "0.27.10",
-    "@types/node": "24.10.0",
-    "@types/react": "19.3.0",
-    "@types/react-dom": "19.3.0",
-    "@vitejs/plugin-react": "6.3.0",
-    "react": "19.3.1",
-    "react-aria-components": "1.22.1",
-    "react-dom": "19.3.1",
-    "typescript": "7.0.2",
-    "vite": "8.3.8"
-  },
-  "publishConfig": {
-    "access": "public"
+    "typescript": "7.0.2"
   }
 }

@@ -1,0 +1,45 @@
+{
+  "record": {
+    "id": "description:tests.queue-test-js",
+    "layer": "description",
+    "title": "The queue's tests in one file",
+    "summary": "Tests of the reminder queue.",
+    "meaningHash": "9c66b6f3cadfe151",
+    "checks": [
+      {
+        "id": "description:tests.queue-test-js:isolated",
+        "line": 12,
+        "claim": "Each test leaves nothing behind.",
+        "failsWhen": "A test sees\rwhat another left.",
+        "holdsWhen": "",
+        "evidence": "",
+        "limits": "",
+        "appliedBy": "test",
+        "hash": "5368b52d05d27f2f"
+      }
+    ],
+    "relations": [
+      {
+        "verb": "applies",
+        "target": "behavior:queue:takes-due",
+        "test": "takes due entries",
+        "line": 19
+      },
+      {
+        "verb": "applies",
+        "target": "behavior:queue:takes-due",
+        "test": "line separator",
+        "line": 20
+      },
+      {
+        "verb": "applies",
+        "target": "behavior:queue:takes-due",
+        "test": "lone\rcarriage return",
+        "line": 21
+      }
+    ],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": []
+}

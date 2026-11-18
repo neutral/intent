@@ -1,0 +1,10 @@
+{
+  "name": "reminders-example",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A small reminders app that keeps its intent with Intent.",
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.js\""
+  }
+}

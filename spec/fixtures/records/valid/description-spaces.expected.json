@@ -1,0 +1,51 @@
+{
+  "record": {
+    "id": "description:src.a-b-js",
+    "layer": "description",
+    "title": "The a b module",
+    "summary": "Joins a and b.",
+    "meaningHash": "1c1043e9cb3101bc",
+    "checks": [],
+    "relations": [
+      {
+        "verb": "serves",
+        "target": "behavior:x",
+        "line": 14
+      },
+      {
+        "verb": "covers",
+        "target": "src/x y.js",
+        "line": 15
+      }
+    ],
+    "hasReadAgainst": true,
+    "readAgainst": [
+      {
+        "source": "src/a b.js",
+        "hash": "0123456789abcdef",
+        "line": 19
+      },
+      {
+        "source": "src/x y.js",
+        "hash": "1123456789abcdef",
+        "line": 20
+      },
+      {
+        "source": "src/p sha256:0123456789abcdef q.js",
+        "hash": "2123456789abcdef",
+        "line": 21
+      },
+      {
+        "source": " lead.js",
+        "hash": "3123456789abcdef",
+        "line": 22
+      },
+      {
+        "source": "behavior:x",
+        "hash": "4123456789abcdef",
+        "line": 23
+      }
+    ]
+  },
+  "diagnostics": []
+}

@@ -1,0 +1,11 @@
+{
+  "name": "@intent/mcp",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "license": "CC0-1.0 OR 0BSD",
+  "exports": {
+    "./server": "./src/server.mjs",
+    "./tools": "./src/tools.mjs"
+  }
+}

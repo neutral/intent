@@ -1,0 +1,21 @@
+{
+  "record": {
+    "id": "behavior:example",
+    "layer": "behavior",
+    "title": "Example",
+    "summary": "One paragraph.",
+    "meaningHash": "5c6bc3b26907881d",
+    "checks": [],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/fence-unclosed.md",
+      "line": 12,
+      "code": "FENCE_UNCLOSED",
+      "severity": "error"
+    }
+  ]
+}

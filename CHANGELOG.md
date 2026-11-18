@@ -1,5 +1,16 @@
 # Changes
 
+## 0.2.0
+
+- Checks are now written inside the records they protect, in five layers of
+  Markdown records.
+- A redesigned command line for agents: `intent fetch` brings the intent for a
+  task, and `intent checks` the Checks for a change. The MCP server offers the
+  same.
+- A new portal for reading the intent, served on this machine or exported as
+  pages. The editor is gone: agents make the changes.
+- Files written for 0.1 are not read.
+
 ## 0.1.1
 
 - Editor and Portal rebuild.
@@ -30,8 +41,8 @@ format and generated result versions are separate coordinates.
 
 npm use requires Node.js 24 or newer. Native build targets are macOS arm64/x64
 and glibc Linux arm64/x64; Windows and musl Linux bundles are outside the
-matrix. The [installation guide](docs/install.md) records runtime requirements
-and platform verification limits.
+matrix. The installation guide records runtime requirements and platform
+verification limits.
 
 Intent defines Checks. The implementation area performs verification and
 reports satisfaction. Structural validation and package qualification do not

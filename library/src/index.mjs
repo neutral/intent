@@ -1,0 +1,32 @@
+// The Intent Library: one function per operation, and the readers they share.
+export { fetch } from './fetch.mjs';
+export { search } from './search.mjs';
+export { read } from './read.mjs';
+export { checks } from './checks.mjs';
+export { report, assessForm } from './report.mjs';
+export { start } from './start.mjs';
+export { create } from './create.mjs';
+export { validate, faultCount } from './validate.mjs';
+export { review, reviewOf, changeLines } from './review.mjs';
+export { gaps, listGaps, kindOf, testsInForce } from './gaps.mjs';
+export { drift, stamp } from './drift.mjs';
+export { follow } from './follow.mjs';
+export { reports, keptReports } from './reports.mjs';
+export { adopt } from './adopt.mjs';
+export { guide, GUIDE_TOPICS } from './guide.mjs';
+
+export { sha256, short, decode, linesOf, byPath } from './text.mjs';
+export { parseJSON } from './json.mjs';
+export { LAYERS, isRecordId, isCheckId, isProjectPath, nameFromTitle, nameFromPath, freeName } from './ids.mjs';
+export { printDiagnostic, sortDiagnostics } from './diagnostics.mjs';
+export { parseRecord, readRecordText, readRecordBytes, parseRelationLine, heading, fenceOpen, fenceCloses, checkField } from './record.mjs';
+export { isGlob, globMatches } from './glob.mjs';
+export { readProjectText, projectFileText } from './project-file.mjs';
+export { readPackRelease, fingerprint } from './pack.mjs';
+export { findRoot, readProject, readProjectFile, codeFiles, sources, currentHash, driftOf } from './project.mjs';
+export { walk } from './walk.mjs';
+export { score, stem, terms } from './words.mjs';
+export { rank, stems, queryStems, fieldsOf, proseOf, unique, sentences, excerpt } from './rank.mjs';
+export { outOfDate, count } from './answer.mjs';
+export { explains, howApplied } from './render.mjs';
+export { readForm, changeFingerprint, formText, keptText } from './form.mjs';

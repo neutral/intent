@@ -1,0 +1,103 @@
+{
+  "record": {
+    "id": "description:src.app-js",
+    "layer": "description",
+    "title": "The app",
+    "summary": "Wires the app together.",
+    "meaningHash": "7f6b66f228c5b4ea",
+    "checks": [],
+    "relations": [
+      {
+        "verb": "serves",
+        "target": "behavior:reminder-fires-time-once-even",
+        "line": 10
+      },
+      {
+        "verb": "keeps",
+        "target": "assurance:reminder-app-accepted-never-lost",
+        "line": 21
+      },
+      {
+        "verb": "follows",
+        "target": "blueprint:one-stored-queue-holds-every",
+        "line": 26
+      }
+    ],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/relations-lines.md",
+      "line": 11,
+      "code": "RELATION_LINE",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/relations-lines.md",
+      "line": 12,
+      "code": "RELATION_LINE",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/relations-lines.md",
+      "line": 13,
+      "code": "RELATION_LINE",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/relations-lines.md",
+      "line": 14,
+      "code": "RELATION_LINE",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/relations-lines.md",
+      "line": 15,
+      "code": "RELATION_LINE",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/relations-lines.md",
+      "line": 16,
+      "code": "PATH_INVALID",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/relations-lines.md",
+      "line": 17,
+      "code": "PATH_INVALID",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/relations-lines.md",
+      "line": 18,
+      "code": "RELATION_LAYER",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/relations-lines.md",
+      "line": 19,
+      "code": "RELATION_LAYER",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/relations-lines.md",
+      "line": 20,
+      "code": "RELATION_LAYER",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/relations-lines.md",
+      "line": 22,
+      "code": "RELATION_LINE",
+      "severity": "error"
+    },
+    {
+      "file": "records/invalid/relations-lines.md",
+      "line": 23,
+      "code": "CHECK_PLACE",
+      "severity": "error"
+    }
+  ]
+}

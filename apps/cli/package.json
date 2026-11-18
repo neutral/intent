@@ -1,0 +1,13 @@
+{
+  "name": "@intent/cli",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "license": "CC0-1.0 OR 0BSD",
+  "bin": {
+    "intent": "src/cli.mjs"
+  },
+  "exports": {
+    "./run": "./src/run.mjs"
+  }
+}

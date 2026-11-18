@@ -1,0 +1,11 @@
+{
+  "record": null,
+  "diagnostics": [
+    {
+      "file": "records/invalid/header-missing.md",
+      "line": 1,
+      "code": "RECORD_HEADER",
+      "severity": "error"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "record": {
+    "id": "description:tests.reminders.firing-test-js",
+    "layer": "description",
+    "title": "Firing tests: reminders with the app running, killed and started again",
+    "summary": "Each test sets reminders, moves the clock past them and counts the notifications.",
+    "meaningHash": "3a4a4a6959cbabb8",
+    "checks": [],
+    "relations": [
+      {
+        "verb": "applies",
+        "target": "behavior:reminder-fires-time-once-even:fires-once",
+        "test": "one notification per reminder, \"running\" or restarted",
+        "line": 11
+      },
+      {
+        "verb": "applies",
+        "target": "assurance:reminder-app-accepted-never-lost:survives-kill",
+        "test": "survives a kill at each step",
+        "line": 12
+      },
+      {
+        "verb": "covers",
+        "target": "tests/reminders/clock.js",
+        "line": 13
+      }
+    ],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": []
+}

@@ -1,0 +1,17 @@
+{
+  "name": "tiny",
+  "code": [
+    "src",
+    "tests"
+  ],
+  "packs": [
+    {
+      "name": "js-async",
+      "version": "1.0.0",
+      "fingerprint": "sha256:d04cccf31e29724c0edb76f85f058d8dcf0f975144bc3bad5969a54f22134707",
+      "applies": [
+        "src/**/*.js"
+      ]
+    }
+  ]
+}

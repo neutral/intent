@@ -1,0 +1,11 @@
+{
+  "record": null,
+  "diagnostics": [
+    {
+      "file": "records/invalid/header-line3.md",
+      "line": 3,
+      "code": "RECORD_HEADER",
+      "severity": "error"
+    }
+  ]
+}

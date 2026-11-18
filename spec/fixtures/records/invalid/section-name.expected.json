@@ -1,0 +1,27 @@
+{
+  "record": {
+    "id": "behavior:example",
+    "layer": "behavior",
+    "title": "Example",
+    "summary": "One paragraph.",
+    "meaningHash": "de7dfab895af7873",
+    "checks": [],
+    "relations": [
+      {
+        "verb": "bounded by",
+        "target": "assurance:reminder-app-accepted-never-lost",
+        "line": 14
+      }
+    ],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/section-name.md",
+      "line": 12,
+      "code": "SECTION_NAME",
+      "severity": "error"
+    }
+  ]
+}

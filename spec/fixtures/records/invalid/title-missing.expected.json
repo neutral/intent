@@ -1,0 +1,21 @@
+{
+  "record": {
+    "id": "behavior:no-title",
+    "layer": "behavior",
+    "title": "",
+    "summary": "The summary without a title.",
+    "meaningHash": "cf58172c1b300c30",
+    "checks": [],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/title-missing.md",
+      "line": 5,
+      "code": "RECORD_TITLE",
+      "severity": "error"
+    }
+  ]
+}

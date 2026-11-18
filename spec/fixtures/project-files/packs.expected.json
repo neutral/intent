@@ -1,0 +1,62 @@
+{
+  "project": {
+    "name": "x",
+    "code": [
+      "src"
+    ],
+    "packs": [
+      {
+        "name": "c",
+        "version": "1.0.0",
+        "fingerprint": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "applies": [
+          "src/**/*.js"
+        ]
+      },
+      {
+        "name": "e",
+        "version": "1.0.0",
+        "fingerprint": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "applies": []
+      }
+    ]
+  },
+  "diagnostics": [
+    {
+      "file": "intent/intent.json",
+      "line": 5,
+      "code": "PACK_ENTRY",
+      "severity": "error"
+    },
+    {
+      "file": "intent/intent.json",
+      "line": 6,
+      "code": "PACK_ENTRY",
+      "severity": "error"
+    },
+    {
+      "file": "intent/intent.json",
+      "line": 8,
+      "code": "PACK_REPEATED",
+      "severity": "error"
+    },
+    {
+      "file": "intent/intent.json",
+      "line": 14,
+      "code": "GLOB_INVALID",
+      "severity": "error"
+    },
+    {
+      "file": "intent/intent.json",
+      "line": 15,
+      "code": "GLOB_INVALID",
+      "severity": "error"
+    },
+    {
+      "file": "intent/intent.json",
+      "line": 19,
+      "code": "PACK_APPLIES_EMPTY",
+      "severity": "warning"
+    }
+  ]
+}

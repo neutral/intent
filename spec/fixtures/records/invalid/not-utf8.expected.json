@@ -1,0 +1,11 @@
+{
+  "record": null,
+  "diagnostics": [
+    {
+      "file": "records/invalid/not-utf8.md",
+      "line": null,
+      "code": "FILE_UTF8",
+      "severity": "error"
+    }
+  ]
+}

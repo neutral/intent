@@ -1,27 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2023",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "rootDir": ".",
-    "outDir": "dist",
     "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-    "declaration": true,
-    "sourceMap": false,
-    "skipLibCheck": true,
-    "types": [
-      "node"
-    ]
+    "module": "nodenext",
+    "target": "es2022",
+    "noEmit": true,
+    "allowJs": false,
+    "skipLibCheck": false
   },
-  "include": [
-    "library/**/*.ts",
-    "apps/**/*.ts"
-  ],
-  "exclude": [
-    "apps/sheet",
-    "apps/editor/ui",
-    "apps/portal/ui"
-  ]
+  "files": ["library/src/index.d.ts"]
 }

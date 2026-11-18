@@ -1,0 +1,70 @@
+{
+  "project": "project/tiny",
+  "checksNow": [
+    "description:src.scheduler.queue-js:take-marks-nothing",
+    "description:src.scheduler.queue-js:committed-before-resolve",
+    "blueprint:one-stored-queue-holds-every:one-firer",
+    "blueprint:one-stored-queue-holds-every:failure-leaves-unfired",
+    "behavior:reminder-fires-time-once-even:fires-once",
+    "behavior:reminder-fires-time-once-even:on-time",
+    "assurance:reminder-app-accepted-never-lost:survives-kill",
+    "assurance:reminder-app-accepted-never-lost:set-means-saved",
+    "discipline:js-async.await-every-promise:no-floating-promise",
+    "discipline:js-async.timers-within-range:long-delay-split"
+  ],
+  "added": [],
+  "dropped": [],
+  "kept": true,
+  "codeMoved": false,
+  "results": [
+    {
+      "check": "description:src.scheduler.queue-js:take-marks-nothing",
+      "result": "did not decide"
+    },
+    {
+      "check": "description:src.scheduler.queue-js:committed-before-resolve",
+      "result": "not applied"
+    },
+    {
+      "check": "blueprint:one-stored-queue-holds-every:one-firer",
+      "result": "did not decide"
+    },
+    {
+      "check": "blueprint:one-stored-queue-holds-every:failure-leaves-unfired",
+      "result": "not applied"
+    },
+    {
+      "check": "behavior:reminder-fires-time-once-even:fires-once",
+      "result": "not applied"
+    },
+    {
+      "check": "behavior:reminder-fires-time-once-even:on-time",
+      "result": "not applied"
+    },
+    {
+      "check": "assurance:reminder-app-accepted-never-lost:survives-kill",
+      "result": "held"
+    },
+    {
+      "check": "assurance:reminder-app-accepted-never-lost:set-means-saved",
+      "result": "held"
+    },
+    {
+      "check": "discipline:js-async.await-every-promise:no-floating-promise",
+      "result": "held"
+    },
+    {
+      "check": "discipline:js-async.timers-within-range:long-delay-split",
+      "result": "held"
+    }
+  ],
+  "handingOn": {
+    "Tests that apply Checks": [
+      "description:src.scheduler.queue-js:committed-before-resolve, tests/queue.test.js \"takeDue marks nothing\""
+    ],
+    "Intent that looked missing, wrong or unclear": [
+      "src/scheduler/tick.js: nothing explains it, and the scheduler's Blueprint names no tick."
+    ]
+  },
+  "diagnostics": []
+}

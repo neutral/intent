@@ -1,4 +1,9 @@
+.DS_Store
+.scratch/
 node_modules/
+coverage/
 dist/
 *.tgz
-.DS_Store
+.pnpm-store/
+intent/.index/
+intent/.reports/

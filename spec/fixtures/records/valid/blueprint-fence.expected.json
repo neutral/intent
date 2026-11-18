@@ -1,0 +1,42 @@
+{
+  "record": {
+    "id": "blueprint:one-stored-queue-holds-every",
+    "layer": "blueprint",
+    "title": "One stored queue holds every pending reminder; only the scheduler fires them",
+    "summary": "Every reminder waiting to fire is an entry in one queue in local storage.",
+    "meaningHash": "af1e11fcc633622a",
+    "checks": [
+      {
+        "id": "blueprint:one-stored-queue-holds-every:one-firer",
+        "line": 18,
+        "claim": "Only the scheduler fires reminders or marks them fired.",
+        "failsWhen": "Code outside the scheduler marks an entry fired.",
+        "holdsWhen": "",
+        "evidence": "",
+        "limits": "",
+        "appliedBy": "judgment",
+        "hash": "a50b2eefda70681f"
+      }
+    ],
+    "relations": [
+      {
+        "verb": "serves",
+        "target": "behavior:reminder-fires-time-once-even",
+        "line": 29
+      },
+      {
+        "verb": "keeps",
+        "target": "assurance:reminder-app-accepted-never-lost",
+        "line": 30
+      },
+      {
+        "verb": "practice",
+        "target": "discipline:js-async.await-every-promise",
+        "line": 31
+      }
+    ],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": []
+}

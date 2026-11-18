@@ -1,0 +1,41 @@
+{
+  "record": {
+    "id": "behavior:example",
+    "layer": "behavior",
+    "title": "Example",
+    "summary": "One paragraph.",
+    "meaningHash": "de7dfab895af7873",
+    "checks": [
+      {
+        "id": "behavior:example:fires-once",
+        "line": 12,
+        "claim": "It fires once.",
+        "failsWhen": "It fires twice.",
+        "holdsWhen": "",
+        "evidence": "",
+        "limits": "",
+        "appliedBy": "test",
+        "hash": "35a83775506f0de0"
+      }
+    ],
+    "relations": [],
+    "hasReadAgainst": false,
+    "readAgainst": []
+  },
+  "diagnostics": [
+    {
+      "file": "records/invalid/check-unknown-evidence.md",
+      "line": 15,
+      "code": "CHECK_FIELD_UNKNOWN",
+      "severity": "error",
+      "standsFor": null
+    },
+    {
+      "file": "records/invalid/check-unknown-evidence.md",
+      "line": 16,
+      "code": "CHECK_FIELD_UNKNOWN",
+      "severity": "error",
+      "standsFor": "Limits"
+    }
+  ]
+}
