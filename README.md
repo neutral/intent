@@ -1,5 +1,7 @@
 # Intent
 
+> Intent has moved to [github.com/methodologies/intent](https://github.com/methodologies/intent), and its npm package to [`@methodologies/intent`](https://www.npmjs.com/package/@methodologies/intent). This repository is archived; it keeps Intent's history through 0.2.0.
+
 A coding agent starts each task with the task and the code. What the software
 is meant to do for the people who use it, what it must never do, what was
 agreed about its design: none of that is in front of it. So it writes a change
